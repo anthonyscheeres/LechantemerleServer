@@ -7,5 +7,9 @@ namespace ChantemerleApi.Models
 {
     public class MailModel
     {
+        private string username { get; set; }
+
+        private string password { get; set; }
+
     }
 }
