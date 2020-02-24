@@ -7,12 +7,18 @@ using System.Threading.Tasks;
 
 namespace ChantemerleApi.Dao
 {
+
+    /**
+	 * @author Anthony Scheeres
+	 */
     public class UserDao
     {
         private string cs = DataModel.databaseCredentials.cs;
 
-
-        public void sendQueryToDatabaseRegisterUser(string username, string password, string email)
+        /**
+	 * @author Anthony Scheeres
+	 */
+        public void sendQueryToDatabaseToRegisterUser(string username, string password, string email)
         {
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);

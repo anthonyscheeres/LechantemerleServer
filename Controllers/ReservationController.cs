@@ -7,11 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ChantemerleApi.Controllers
 {
+
+    /**
+	 * @author Anthony Scheeres
+	 */
+
     [Route("api/[controller]")]
     [ApiController]
+
     public class ReservationController : ControllerBase
     {
-        // GET: api/Reservation
+    /*    // GET: api/Reservation
         [HttpGet]
         public IEnumerable<string> Get()
         {
@@ -41,6 +47,6 @@ namespace ChantemerleApi.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-        }
+        }*/
     }
 }
