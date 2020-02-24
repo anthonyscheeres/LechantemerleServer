@@ -12,7 +12,7 @@ namespace ChantemerleApi.Dao
 
         public bool checkUsernameAndPassword(string username, string password)
         {
-            var sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM login_details WHERE username = @username AND password = @password)";
+            var sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE username = @username AND password = @password)";
 
 
            

@@ -95,3 +95,4 @@ D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.
 D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
 D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\Npgsql.dll
 D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+D:\school\Csharp\ChantemerleApi\obj\Debug\netcoreapp3.1\ChantemerleApi.MvcApplicationPartsAssemblyInfo.cache
