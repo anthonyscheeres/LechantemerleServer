@@ -30,9 +30,9 @@ namespace ChantemerleApi.Controllers
 */
         // POST: api/User
         [HttpPost]
-        public void Post([FromBody] UserModel user)
+        public string Post([FromBody] UserModel user)
         {
-            userService.registerValidateUserService(user);
+            return userService.registerValidateUserService(user);
         }
 /*
         // PUT: api/User/5

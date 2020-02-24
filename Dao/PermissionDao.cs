@@ -64,6 +64,7 @@ namespace ChantemerleApi.Dao
             var i = command.ExecuteReader();
             
             string json = JsonConvert.SerializeObject(i, Formatting.Indented);
+
             return json;
         }
 
