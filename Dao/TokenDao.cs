@@ -13,20 +13,29 @@ namespace ChantemerleApi.Dao
         public bool getPermissionFromDatabaseByToken(string token)
         {
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
-            connectionWithDatabase.Open();
-            string sql = "select is_super_user from app_users where token=" + token;
+            var sqlQueryForRegistingUser = "select is_super_user from app_users where token=@token" ;
 
-            using (NpgsqlCommand command = new NpgsqlCommand(sql, connectionWithDatabase))
-            {
-                bool val = false;
-                NpgsqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    val = bool.Parse(reader[0].ToString());
-                    //do whatever you like
-                }
-                return val;
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+
+            connectionWithDatabase.Open();
+
+
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+
+
+            command.Parameters.AddWithValue("token", token);
+
+
+
+
+       
+
+
+            command.Prepare();
+
+            var i = command.ExecuteReader();
+          
+
 
             }
         }

@@ -28,12 +28,12 @@ namespace ChantemerleApi.Services
         private string validateLoginUser(string username, string password)
         {
             string response = ResponseR.fail.ToString();
-  
-      
-                loginUser(username, password);
 
 
-                response = ResponseR.success.ToString();
+            response =loginUser(username, password);
+
+
+                
         
 
 
@@ -43,7 +43,7 @@ namespace ChantemerleApi.Services
 
         }
 
-        private void loginUser(string username, string password)
+        private string loginUser(string username, string password)
         {
 
         }
