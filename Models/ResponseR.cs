@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 
 namespace ChantemerleApi.Models
 {
-	public class DatabaseModel
+	public enum ResponseR
 	{
-		public string cs { get; }
-		public DatabaseModel(string cs)
-		{
-			this.cs = cs;
-		}
+		success,
+		fail
 	}
+
 }

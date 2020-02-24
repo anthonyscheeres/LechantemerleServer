@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ChantemerleApi.Models
+namespace ChantemerleApi.Dao
 {
-	public enum Response
-	{
-		success,
-		fail
-	}
-
+    public class ReservationDao
+    {
+    }
 }

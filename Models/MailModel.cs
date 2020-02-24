@@ -11,5 +11,11 @@ namespace ChantemerleApi.Models
 
         private string password { get; set; }
 
+        public MailModel(string username,  string password)
+        {
+            this.username = username;
+            this.password = password;
+        }
+
     }
 }

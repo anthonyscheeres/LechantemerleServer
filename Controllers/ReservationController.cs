@@ -9,29 +9,29 @@ namespace ChantemerleApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class ReservationController : ControllerBase
     {
-        // GET: api/User
+        // GET: api/Reservation
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/User/5
+        // GET: api/Reservation/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST: api/User
+        // POST: api/Reservation
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT: api/User/5
+        // PUT: api/Reservation/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
