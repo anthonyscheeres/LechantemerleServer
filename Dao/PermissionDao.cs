@@ -37,7 +37,7 @@ namespace ChantemerleApi.Dao
             command.Prepare();
 
             var i = command.ExecuteReader();
-
+            return i.GetBoolean(1);
 
 
         }
