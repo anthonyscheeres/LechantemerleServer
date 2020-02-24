@@ -88,5 +88,10 @@ D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysi
 D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\school\Csharp\ChantemerleApi\obj\Debug\netcoreapp3.1\ChantemerleApi.csprojAssemblyReference.cache
-D:\school\Csharp\ChantemerleApi\obj\Debug\netcoreapp3.1\ChantemerleApi.MvcApplicationPartsAssemblyInfo.cache
 D:\school\Csharp\ChantemerleApi\obj\Debug\netcoreapp3.1\ChantemerleApi.csproj.CopyComplete
+D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\JWT.dll
+D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\Npgsql.dll
+D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll

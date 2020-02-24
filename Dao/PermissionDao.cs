@@ -1,23 +1,21 @@
 ﻿using ChantemerleApi.Models;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+
+
 
 namespace ChantemerleApi.Dao
 {
     public class PermissionDao
     {
-
         private string cs = DataModel.databaseCredentials.cs;
+
         public bool checkUsernameAndPassword(string username, string password)
         {
-            string sql  = "SELECT EXISTS(SELECT * FROM login_details WHERE username = @username AND password = @password)";
+            var sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM login_details WHERE username = @username AND password = @password)";
 
 
-            var sqlQueryForRegistingUser = "select is_super_user from app_users where token=@token";
-
+           
             using var connectionWithDatabase = new NpgsqlConnection(cs);
 
             connectionWithDatabase.Open();
@@ -41,6 +39,34 @@ namespace ChantemerleApi.Dao
 
 
         }
+
+
+
+
+        public string getSensitiveUserInfoFromDatabaseByUsername(string username)
+        {
+
+            var sqlQueryForRegistingUser = "update app_users set token = oncat(md5(@username), md5((random()::text))) where username = @username  ; select is_super_user, username, token from app_users where username=@username;";
+
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+
+            connectionWithDatabase.Open();
+
+
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+
+
+            command.Parameters.AddWithValue("username", username);
+
+
+            command.Prepare();
+
+            var i = command.ExecuteReader();
+            
+            string json = JsonConvert.SerializeObject(i, Formatting.Indented);
+            return json;
+        }
+
 
 
     }

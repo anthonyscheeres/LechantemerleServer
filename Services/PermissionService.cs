@@ -7,10 +7,18 @@ using System.Threading.Tasks;
 
 namespace ChantemerleApi.Services
 {
+
+    /**
+* @author Anthony Scheeres
+*/
     public class PermissionService
     {
         PermissionDao permissionDao = new PermissionDao();
 
+
+        /**
+* @author Anthony Scheeres
+*/
         public string loginUserAfterValidation(string username, string password)
         {
             return validateLoginUser(username, password);
@@ -27,25 +35,26 @@ namespace ChantemerleApi.Services
 */
         private string validateLoginUser(string username, string password)
         {
-            string response = ResponseR.fail.ToString();
+         //filter invalide input here if needed
+            return loginUser(username, password);
 
 
-            response =loginUser(username, password);
-
-
-                
-        
-
-
-
-            return response;
 
 
         }
 
+        /**
+* @author Anthony Scheeres
+*/
         private string loginUser(string username, string password)
         {
-
+            string response = ResponseR.fail.ToString();
+            bool hasCorrectCrecdentials = permissionDao.checkUsernameAndPassword(username, password);
+            if (hasCorrectCrecdentials)
+            {
+               response = permissionDao.getSensitiveUserInfoFromDatabaseByUsername(username);
+            }
+            return response;
         }
 
 
