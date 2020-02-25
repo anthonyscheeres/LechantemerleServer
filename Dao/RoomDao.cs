@@ -32,25 +32,28 @@ namespace ChantemerleApi.Dao
         }
 
 
-        internal string getReservations(bool isOutOfOrder)
+        internal string getAllRoomsOutOrInOrder(bool isOutOfOrder)
         {
 
 
             var sqlQueryForRegistingUser = "select * from rooms";
-
+            //hard coded queries
             string queryExtensionToSelectOutOfOrder = " where rooms.out_of_order  = TRUE";
             string queryExtensionToSelectNotOutOfOrder = " where rooms.out_of_order  = FALSE";
+            string orderBy = " order by id";
 
             string tooAdTooQuery = queryExtensionToSelectNotOutOfOrder;
 
-
+            //you want to display in or the out of order rooms
             if (isOutOfOrder)
             {
                 tooAdTooQuery = queryExtensionToSelectOutOfOrder;
             }
 
-            sqlQueryForRegistingUser = sqlQueryForRegistingUser + tooAdTooQuery;
+            //construct the sql query here
+            sqlQueryForRegistingUser = sqlQueryForRegistingUser + tooAdTooQuery + orderBy;
 
+            //use database credentials to login and start a connection
             using var connectionWithDatabase = new NpgsqlConnection(cs);
 
             connectionWithDatabase.Open();
