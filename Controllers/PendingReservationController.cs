@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChantemerleApi.Models;
+using ChantemerleApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,36 +13,34 @@ namespace ChantemerleApi.Controllers
     [ApiController]
     public class PendingReservationController : ControllerBase
     {
-        // GET: api/PendingReservation
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
+        ReservationService reservationService = new ReservationService();
         // GET: api/PendingReservation/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{token}")]
+        public string Get(string token)
         {
             return "value";
         }
 
         // POST: api/PendingReservation
         [HttpPost]
-        public void Post([FromBody] string value)
+        public string Post([FromBody] ReservationModel reservation)
         {
+            return reservationService.addPendingReservation(reservation);
         }
 
         // PUT: api/PendingReservation/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{token}")]
+        public string Put(string token, [FromBody] ReservationModel reservation)
         {
+            return reservationService.acceptPendingReservation(reservation);
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{token}")]
+        public string Delete(string token, [FromBody] ReservationModel reservation)
         {
+            return reservationService.deleteReservationByModel(reservation);
         }
     }
 }

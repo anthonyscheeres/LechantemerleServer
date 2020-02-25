@@ -13,38 +13,33 @@ namespace ChantemerleApi.Controllers
     public class UserController : ControllerBase
     {
         UserService userService = new UserService();
-/*
-       // GET: api/User
-       [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET: api/User/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{token}")]
+        public string Get(string token)
         {
-            return "value";
+            return userService.validateShowAllUsersIncludingAdmins(token); ;
         }
-*/
+
         // POST: api/User
         [HttpPost]
         public string Post([FromBody] UserModel user)
         {
             return userService.registerValidateUserService(user);
         }
-/*
+
         // PUT: api/User/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{token}")]
+        public string Put(string token, [FromBody] UserModel value)
         {
+            return userService.letAnUserChangeItsOwnUsernameOrPassword(value, token);
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{token}")]
+        public string Delete(string token, [FromBody] UserModel user)
         {
-        }*/
+            return userService.validatDeleteUserByModel(token, user);
+        }
     }
 }

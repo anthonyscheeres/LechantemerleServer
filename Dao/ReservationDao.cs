@@ -14,7 +14,7 @@ namespace ChantemerleApi.Dao
 
 
 
-        public string getReservations(bool isAccepted)
+        internal string getReservations(bool isAccepted)
         {
 
 

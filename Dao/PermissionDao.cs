@@ -10,7 +10,7 @@ namespace ChantemerleApi.Dao
     {
         private string cs = DataModel.databaseCredentials.cs;
 
-        public bool checkUsernameAndPassword(string username, string password)
+        internal bool checkUsernameAndPassword(string username, string password)
         {
             var sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE username = @username AND password = @password)";
 
@@ -43,7 +43,7 @@ namespace ChantemerleApi.Dao
 
 
 
-        public string getSensitiveUserInfoFromDatabaseByUsername(string username)
+        internal string getSensitiveUserInfoFromDatabaseByUsername(string username)
         {
 
             var sqlQueryForRegistingUser = "update app_users set token = oncat(md5(@username), md5((random()::text))) where username = @username  ; select is_super_user, username, token from app_users where username=@username;";

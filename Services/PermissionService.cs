@@ -11,7 +11,7 @@ namespace ChantemerleApi.Services
     /**
 * @author Anthony Scheeres
 */
-    public class PermissionService
+    internal class PermissionService
     {
         PermissionDao permissionDao = new PermissionDao();
 
@@ -19,13 +19,13 @@ namespace ChantemerleApi.Services
         /**
 * @author Anthony Scheeres
 */
-        public string loginUserAfterValidation(string username, string password)
+        internal string loginUserAfterValidation(string username, string password)
         {
             return validateLoginUser(username, password);
         }
 
 
-        public string loginUserAfterValidation(UserModel user)
+        internal string loginUserAfterValidation(UserModel user)
         {
             return loginUserAfterValidation(user.username, user.password);
         }

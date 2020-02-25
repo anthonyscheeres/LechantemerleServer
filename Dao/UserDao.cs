@@ -18,7 +18,7 @@ namespace ChantemerleApi.Dao
         /**
 	 * @author Anthony Scheeres
 	 */
-        public void sendQueryToDatabaseToRegisterUser(string username, string password, string email)
+        internal void sendQueryToDatabaseToRegisterUser(string username, string password, string email)
         {
             bool is_super_user = false;
             using var connectionWithDatabase = new NpgsqlConnection(cs);

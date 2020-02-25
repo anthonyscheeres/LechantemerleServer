@@ -24,6 +24,11 @@ namespace ChantemerleApi.Services
             return validateRegisterUser(username, password, email);
         }
 
+        internal string validateShowAllUsersIncludingAdmins(string token)
+        {
+            throw new NotImplementedException();
+        }
+
         /**
 	 * @author Anthony Scheeres
 	 */
@@ -31,6 +36,11 @@ namespace ChantemerleApi.Services
         {
             //doing oveloading to accept models and variables alike
             return registerValidateUserService(user.username, user.password, user.email);
+        }
+
+        internal string letAnUserChangeItsOwnUsernameOrPassword(UserModel value, string token)
+        {
+            throw new NotImplementedException();
         }
 
 
@@ -54,6 +64,11 @@ namespace ChantemerleApi.Services
             return response;
 
 
+        }
+
+        internal string validatDeleteUserByModel(string token, UserModel user)
+        {
+            throw new NotImplementedException();
         }
 
 

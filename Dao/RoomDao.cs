@@ -13,7 +13,7 @@ namespace ChantemerleApi.Dao
 * @author Anthony Scheeres
 */
         private string cs = DataModel.databaseCredentials.cs;
-        public void sendQueryToDatabaseToAddBed(int amountOfBedsInTheRoom)
+        internal void sendQueryToDatabaseToAddBed(int amountOfBedsInTheRoom)
         {
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);

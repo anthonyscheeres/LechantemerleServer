@@ -13,20 +13,7 @@ namespace ChantemerleApi.Controllers
     public class PermissionController : ControllerBase
     {
         PermissionService permissionService = new PermissionService();
-        /*      // GET: api/Permission
-              [HttpGet]
-              public IEnumerable<string> Get()
-              {
-                  return new string[] { "value1", "value2" };
-              }
 
-              // GET: api/Permission/5
-              [HttpGet("{id}", Name = "Get")]
-              public string Get(int id)
-              {
-                  return "value";
-              }
-      */
         // POST: api/Permission
         [HttpPost("{token}")]
         public string Post(string token, [FromBody] UserModel user)
@@ -34,16 +21,6 @@ namespace ChantemerleApi.Controllers
             return permissionService.loginUserAfterValidation(user);
         }
 /*
-        // PUT: api/Permission/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }*/
+     
     }
 }
