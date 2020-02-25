@@ -20,7 +20,7 @@ namespace ChantemerleApi.Controllers
         {
             return permissionService.loginUserAfterValidation(user);
         }
-/*
+
      
     }
 }

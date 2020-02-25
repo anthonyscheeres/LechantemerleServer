@@ -1,4 +1,5 @@
 ﻿using ChantemerleApi.Models;
+using Newtonsoft.Json;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,43 @@ namespace ChantemerleApi.Dao
         }
 
 
+        internal string getReservations(bool isOutOfOrder)
+        {
+
+
+            var sqlQueryForRegistingUser = "select * from rooms";
+
+            string queryExtensionToSelectOutOfOrder = " where rooms.out_of_order  = TRUE";
+            string queryExtensionToSelectNotOutOfOrder = " where rooms.out_of_order  = FALSE";
+
+            string tooAdTooQuery = queryExtensionToSelectNotOutOfOrder;
+
+
+            if (isOutOfOrder)
+            {
+                tooAdTooQuery = queryExtensionToSelectOutOfOrder;
+            }
+
+            sqlQueryForRegistingUser = sqlQueryForRegistingUser + tooAdTooQuery;
+
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+
+            connectionWithDatabase.Open();
+
+
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+
+
+
+
+            command.Prepare();
+
+            var i = command.ExecuteReader();
+
+            string json = JsonConvert.SerializeObject(i, Formatting.Indented);
+
+            return json;
+        }
 
     }
 }

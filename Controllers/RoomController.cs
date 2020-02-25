@@ -4,24 +4,30 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChantemerleApi.Models;
 using ChantemerleApi.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ChantemerleApi.Controllers
 {
     [Route("api/[controller]")]
-    public class RoomController : Controller
+    [ApiController]
+    public class RoomController : ControllerBase
     {
         RoomService roomService = new RoomService();
 
+        // GET: api/room/
+        [HttpGet]
+        public string Get()
+        {
+            return roomService.getAllAvailableRoomsForReservation();
+        }
 
-        // POST api/<controller>
+
+        // POST api/room
         [HttpPost("{token}")]
         public string Post(string token, [FromBody] RoomModel room)
         {
             return roomService.ValidateAddRoom(room, token);
         }
-
     }
 }

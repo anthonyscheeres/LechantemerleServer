@@ -22,5 +22,11 @@ namespace ChantemerleApi.Services
             }
             return response;
         }
+
+        internal string getAllAvailableRoomsForReservation()
+        {
+            bool isOutOfOrder = false;
+            return roomDao.getReservations(isOutOfOrder);
+        }
     }
 }
