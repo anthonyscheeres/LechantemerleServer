@@ -12,9 +12,9 @@ namespace ChantemerleApi.Dao
     {
         private string cs = DataModel.databaseCredentials.cs;
 
-        private string constructSqlQueryForPreparedStatment(bool isAccepted)
+        private string constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(bool isAccepted)
         {
-            var sqlQueryForRegistingUser = "select app_users.username, app_users.email, reservations.time_from, reservations.time_till, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at  from reservations full join app_users on reservations.user_id = app_users.id";
+            var sqlQueryFroGettingReservationInformation = "select app_users.username, app_users.email, reservations.time_from, reservations.time_till, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at  from reservations full join app_users on reservations.user_id = app_users.id";
 
             string queryExtensionToSelectAcceptedReservations = " where reservations.accepted_by_super_user = TRUE";
             string queryExtensionToSelectNonAcceptedReservations = " where reservations.accepted_by_super_user = FALSE";
@@ -29,15 +29,15 @@ namespace ChantemerleApi.Dao
 
             }
 
-            sqlQueryForRegistingUser = sqlQueryForRegistingUser + tooAdTooQuery;
+            sqlQueryFroGettingReservationInformation = sqlQueryFroGettingReservationInformation + tooAdTooQuery;
 
-            return sqlQueryForRegistingUser;
+            return sqlQueryFroGettingReservationInformation;
         }
 
         internal string getReservations(bool isAccepted)
         {
 
-            string sqlQueryForRegistingUser = constructSqlQueryForPreparedStatment(isAccepted);
+            string sqlQueryForRegistingUser = constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(isAccepted);
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);
 
