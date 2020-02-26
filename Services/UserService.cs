@@ -13,6 +13,7 @@ namespace ChantemerleApi.Services
 	 */
     public class UserService
     {
+        UserDao userDao = new UserDao();
         ValidateInputUtilities validateInputUtilities = new ValidateInputUtilities();
 
 
@@ -68,9 +69,17 @@ namespace ChantemerleApi.Services
 
         internal string validatDeleteUserByModel(string token, UserModel user)
         {
-            throw new NotImplementedException();
+            string response = ResponseR.fail.ToString();
+            TokenService tokenService = new TokenService();
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByToken(token);
+            if (hasAdminInDatabaseOverApi)
+            {
+                userDao.deleteUserByUsername(user);
+                response = ResponseR.success.ToString();
+            }
+                return response;           
+            
         }
-
 
 
         /**
@@ -78,7 +87,7 @@ namespace ChantemerleApi.Services
 	 */
         private void registerUser(string username, string password, string email)
         {
-            UserDao userDao = new UserDao();
+       
             userDao.sendQueryToDatabaseToRegisterUser(username, password, email);
         }
 

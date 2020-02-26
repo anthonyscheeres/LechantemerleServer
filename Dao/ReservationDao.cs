@@ -1,4 +1,5 @@
 ﻿using ChantemerleApi.Models;
+using ChantemerleApi.Utilities;
 using Newtonsoft.Json;
 using Npgsql;
 using System;
@@ -11,6 +12,7 @@ namespace ChantemerleApi.Dao
     public class ReservationDao
     {
         private string cs = DataModel.databaseCredentials.cs;
+        DatabaseUtilities databaseUtilities = new DatabaseUtilities();
 
         private string constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(bool isAccepted)
         {
@@ -19,43 +21,26 @@ namespace ChantemerleApi.Dao
             string queryExtensionToSelectAcceptedReservations = " where reservations.accepted_by_super_user = TRUE";
             string queryExtensionToSelectNonAcceptedReservations = " where reservations.accepted_by_super_user = FALSE";
 
-            string tooAdTooQuery = queryExtensionToSelectNonAcceptedReservations;
+            string tooAdToQuery = queryExtensionToSelectNonAcceptedReservations;
 
 
             if (isAccepted)
             {
-                tooAdTooQuery = queryExtensionToSelectAcceptedReservations;
+                tooAdToQuery = queryExtensionToSelectAcceptedReservations;
 
 
             }
 
-            sqlQueryFroGettingReservationInformation = sqlQueryFroGettingReservationInformation + tooAdTooQuery;
+            sqlQueryFroGettingReservationInformation = sqlQueryFroGettingReservationInformation + tooAdToQuery;
 
             return sqlQueryFroGettingReservationInformation;
         }
 
         internal string getReservations(bool isAccepted)
         {
-
             string sqlQueryForRegistingUser = constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(isAccepted);
-
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
-
-            connectionWithDatabase.Open();
-
-
-            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
-
-
-
-
-            command.Prepare();
-
-            var readerContainingTheDataFromTheDatabase = command.ExecuteReader();
-
-            string jsonResultFromDatabaseConvertedToJsonFormat = JsonConvert.SerializeObject(readerContainingTheDataFromTheDatabase, Formatting.Indented);
-
-            return jsonResultFromDatabaseConvertedToJsonFormat;
+            string jsonString = databaseUtilities.sendSelectQueryToDatabaseeturnJson(sqlQueryForRegistingUser);
+            return jsonString;
         }
     }
 }

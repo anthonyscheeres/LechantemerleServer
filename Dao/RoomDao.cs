@@ -1,4 +1,5 @@
 ﻿using ChantemerleApi.Models;
+using ChantemerleApi.Utilities;
 using Newtonsoft.Json;
 using Npgsql;
 using System;
@@ -13,6 +14,8 @@ namespace ChantemerleApi.Dao
         /**
 * @author Anthony Scheeres
 */
+
+        private DatabaseUtilities databaseUtilities = new DatabaseUtilities();
         private string cs = DataModel.databaseCredentials.cs;
         internal void sendQueryToDatabaseToAddBed(int amountOfBedsInTheRoom)
         {
@@ -31,10 +34,8 @@ namespace ChantemerleApi.Dao
 
         }
 
-
-        internal string getAllRoomsOutOrInOrder(bool isOutOfOrder)
+        private string generateQueryForAllRoomsOitOrInOrder(bool isOutOfOrder)
         {
-
 
             var sqlQueryForRegistingUser = "select * from rooms";
             //hard coded queries
@@ -52,24 +53,22 @@ namespace ChantemerleApi.Dao
 
             //construct the sql query here
             sqlQueryForRegistingUser = sqlQueryForRegistingUser + tooAdTooQuery + orderBy;
+            return sqlQueryForRegistingUser;
 
-            //use database credentials to login and start a connection
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
-
-            connectionWithDatabase.Open();
+        }
 
 
-            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+        internal string getAllRoomsOutOrInOrder(bool isOutOfOrder)
+        {
+
+            //construct the sql query here
+            string sqlQueryForRegistingUser = generateQueryForAllRoomsOitOrInOrder(isOutOfOrder);
 
 
+            //send query to database
+            string json = databaseUtilities.sendSelectQueryToDatabaseeturnJson(sqlQueryForRegistingUser);
 
-
-            command.Prepare();
-
-            var i = command.ExecuteReader();
-
-            string json = JsonConvert.SerializeObject(i, Formatting.Indented);
-
+            //send database response data back 
             return json;
         }
 

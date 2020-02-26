@@ -42,5 +42,23 @@ namespace ChantemerleApi.Dao
         }
 
 
+        /**
+  * @author Anthony Scheeres
+  */
+        internal void deleteUserByUsername(UserModel user)
+        {
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            connectionWithDatabase.Open();
+
+
+            var sqlQueryForRegistingUser = "delete from app_users where username = @username";
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+
+            command.Parameters.AddWithValue("username", user.username);
+  
+            command.Prepare();
+
+            command.ExecuteNonQuery();
+        }
     }
 }

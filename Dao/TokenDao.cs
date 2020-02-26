@@ -25,12 +25,6 @@ namespace ChantemerleApi.Dao
 
             command.Parameters.AddWithValue("token", token);
 
-
-
-
-       
-
-
             command.Prepare();
 
             var i = command.ExecuteReader();
