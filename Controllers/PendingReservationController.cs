@@ -19,7 +19,7 @@ namespace ChantemerleApi.Controllers
         [HttpGet("{token}")]
         public string Get(string token)
         {
-            return "value";
+            return reservationService.getPendingReservation(token);
         }
 
         // POST: api/PendingReservation

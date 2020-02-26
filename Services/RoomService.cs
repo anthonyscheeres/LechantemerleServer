@@ -12,7 +12,7 @@ namespace ChantemerleApi.Services
         TokenService tokenService = new TokenService();
         RoomDao roomDao = new RoomDao();
 
-       public string ValidateAddRoom(RoomModel roomModel, string token)
+        internal string ValidateAddRoom(RoomModel roomModel, string token)
         {
             string response = ResponseR.fail.ToString();
             bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByToken(token);
