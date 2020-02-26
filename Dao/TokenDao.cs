@@ -13,7 +13,7 @@ namespace ChantemerleApi.Dao
         internal bool getPermissionFromDatabaseByToken(string token)
         {
 
-            var sqlQueryForRegistingUser = "select is_super_user from app_users where token=@token" ;
+            var sqlQueryForRegistingUser = "select is_super_user from app_users where token=@token";
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);
 
@@ -32,5 +32,5 @@ namespace ChantemerleApi.Dao
             return i.GetBoolean(1);
 
         }
-        }
+    }
 }
