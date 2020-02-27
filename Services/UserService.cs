@@ -2,9 +2,6 @@
 using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChantemerleApi.Services
 {
@@ -13,8 +10,10 @@ namespace ChantemerleApi.Services
 	 */
     public class UserService
     {
-        UserDao userDao = new UserDao();
-        ValidateInputUtilities validateInputUtilities = new ValidateInputUtilities();
+
+        readonly TokenService tokenService = new TokenService();
+        readonly private UserDao userDao = new UserDao();
+        readonly private ValidateInputUtilities validateInputUtilities = new ValidateInputUtilities();
 
 
         /**
@@ -27,7 +26,15 @@ namespace ChantemerleApi.Services
 
         internal string validateShowAllUsersIncludingAdmins(string token)
         {
-            throw new NotImplementedException();
+            string response = ResponseR.fail.ToString();
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByToken(token);
+            if (hasAdminInDatabaseOverApi)
+            {
+
+                response = userDao.showAllUsersIncludingAdmins();
+            }
+
+            return response;
         }
 
         /**
@@ -77,8 +84,8 @@ namespace ChantemerleApi.Services
                 userDao.deleteUserByUsername(user);
                 response = ResponseR.success.ToString();
             }
-                return response;           
-            
+            return response;
+
         }
 
 
@@ -87,7 +94,7 @@ namespace ChantemerleApi.Services
 	 */
         private void registerUser(string username, string password, string email)
         {
-       
+
             userDao.sendQueryToDatabaseToRegisterUser(username, password, email);
         }
 
@@ -96,7 +103,7 @@ namespace ChantemerleApi.Services
 	 */
         private bool isValideUsernamePasswordEmail(string username, string password, string email)
         {
-           return !validateInputUtilities.isNullOrEmty(username) && !validateInputUtilities.isNullOrEmty(password) && validateInputUtilities.IsValidEmail(email);
+            return !validateInputUtilities.isNullOrEmty(username) && !validateInputUtilities.isNullOrEmty(password) && validateInputUtilities.IsValidEmail(email);
 
         }
 

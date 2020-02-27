@@ -11,7 +11,7 @@ namespace ChantemerleApi.Dao
 {
     public class ReservationDao
     {
-        private string cs = DataModel.databaseCredentials.cs;
+        private readonly string cs = DataModel.databaseCredentials.cs;
         DatabaseUtilities databaseUtilities = new DatabaseUtilities();
 
         private string constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(bool isAccepted)
@@ -34,6 +34,23 @@ namespace ChantemerleApi.Dao
             sqlQueryFroGettingReservationInformation = sqlQueryFroGettingReservationInformation + tooAdToQuery;
 
             return sqlQueryFroGettingReservationInformation;
+        }
+
+        internal void deleteReservationByIdInDatabase(int id)
+        {
+            const string sqlQueryForDeletingAnreservation = "delete from reservations where id = @id";
+
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            connectionWithDatabase.Open();
+
+
+            
+            using var command = new NpgsqlCommand(sqlQueryForDeletingAnreservation, connectionWithDatabase);
+
+            command.Parameters.AddWithValue("id", id);
+            command.Prepare();
+
+            command.ExecuteNonQuery();
         }
 
         internal string getReservations(bool isAccepted)

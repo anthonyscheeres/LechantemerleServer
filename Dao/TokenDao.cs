@@ -9,7 +9,7 @@ namespace ChantemerleApi.Dao
 {
     public class TokenDao
     {
-        private string cs = DataModel.databaseCredentials.cs;
+        private readonly string cs = DataModel.databaseCredentials.cs;
         internal bool getPermissionFromDatabaseByToken(string token)
         {
 

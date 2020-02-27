@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ChantemerleApi.Models
+﻿namespace ChantemerleApi.Models
 {
-    public class ReservationModel
-    {
+	public class ReservationModel
+	{
 		public int id;
 
 		public int roomno;
@@ -28,11 +23,11 @@ namespace ChantemerleApi.Models
 	string time_till,
 	int price,
 	bool accepted_by_super_user)
-        {
-			this.id = id ;
+		{
+			this.id = id;
 
 			this.roomno = roomno;
-			this.created_at= created_at;
+			this.created_at = created_at;
 
 
 			this.time_from = time_from;
@@ -42,5 +37,5 @@ namespace ChantemerleApi.Models
 		}
 
 
-    }
+	}
 }

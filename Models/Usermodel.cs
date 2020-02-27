@@ -4,12 +4,12 @@
 	 */
 public class UserModel
 {
-    public int user_id { get;  }
+    public int user_id { get; }
     public string username { get; }
-    public string password { get;  }
-    public string email { get;  }
-   public bool is_super_user { get;  }
-    public string token { get;  }
+    public string password { get; }
+    public string email { get; }
+    public bool is_super_user { get; }
+    public string token { get; }
 
 
 

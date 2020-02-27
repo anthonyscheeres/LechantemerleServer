@@ -16,7 +16,7 @@ namespace ChantemerleApi.Dao
 */
 
         private DatabaseUtilities databaseUtilities = new DatabaseUtilities();
-        private string cs = DataModel.databaseCredentials.cs;
+        private readonly string cs = DataModel.databaseCredentials.cs;
         internal void sendQueryToDatabaseToAddBed(int amountOfBedsInTheRoom)
         {
 
@@ -24,7 +24,7 @@ namespace ChantemerleApi.Dao
             connectionWithDatabase.Open();
 
 
-            var sqlQueryForRegistingUser = "INSERT INTO rooms(amount_of_beds) VALUES(@amount_of_beds)";
+            const string sqlQueryForRegistingUser = "INSERT INTO rooms(amount_of_beds) VALUES(@amount_of_beds)";
             using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
 
             command.Parameters.AddWithValue("amount_of_beds", amountOfBedsInTheRoom);
@@ -37,7 +37,7 @@ namespace ChantemerleApi.Dao
         private string generateQueryForAllRoomsOitOrInOrder(bool isOutOfOrder)
         {
 
-            var sqlQueryForRegistingUser = "select * from rooms";
+            string sqlQueryForRegistingUser = "select * from rooms";
             //hard coded queries
             string queryExtensionToSelectOutOfOrder = " where rooms.out_of_order  = TRUE";
             string queryExtensionToSelectNotOutOfOrder = " where rooms.out_of_order  = FALSE";

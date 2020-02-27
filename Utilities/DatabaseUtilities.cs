@@ -1,17 +1,13 @@
 ﻿using ChantemerleApi.Models;
 using Newtonsoft.Json;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChantemerleApi.Utilities
 {
     public class DatabaseUtilities
     {
 
-        private string cs = DataModel.databaseCredentials.cs;
+        private readonly string cs = DataModel.databaseCredentials.cs;
         internal string sendSelectQueryToDatabaseeturnJson(string sqlQuery)
         {
             using var connectionWithDatabase = new NpgsqlConnection(cs);

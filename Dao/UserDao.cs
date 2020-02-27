@@ -1,4 +1,5 @@
 using ChantemerleApi.Models;
+using ChantemerleApi.Utilities;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -13,14 +14,14 @@ namespace ChantemerleApi.Dao
 	 */
     public class UserDao
     {
-        private string cs = DataModel.databaseCredentials.cs;
-
+        private readonly string cs = DataModel.databaseCredentials.cs;
+        private readonly DatabaseUtilities databaseUtilities = new DatabaseUtilities();
         /**
 	 * @author Anthony Scheeres
 	 */
         internal void sendQueryToDatabaseToRegisterUser(string username, string password, string email)
         {
-            bool is_super_user = false;
+            const bool is_super_user = false;
             using var connectionWithDatabase = new NpgsqlConnection(cs);
             connectionWithDatabase.Open();
            
@@ -31,7 +32,7 @@ namespace ChantemerleApi.Dao
             command.Parameters.AddWithValue("username", username);
             command.Parameters.AddWithValue("password", password);
             command.Parameters.AddWithValue("is_super_user", is_super_user);
-            command.Parameters.AddWithValue("email", email);
+            command.Parameters.AddWithValue("is_super_user", email);
 
 
 
@@ -41,6 +42,20 @@ namespace ChantemerleApi.Dao
 
         }
 
+        internal string showAllUsersIncludingAdmins()
+        {
+            const string sqlQueryForLoginUser = "select username, is_super_user, is_super_user from app_users";
+
+            string json = databaseUtilities.sendSelectQueryToDatabaseeturnJson(sqlQueryForLoginUser);
+            return json;
+        }
+        internal string showAllUsersExcludingAdmins()
+        {
+            const string sqlQueryForLoginUser = "select username, is_super_user from app_users where  is_super_user = false";
+
+            string json = databaseUtilities.sendSelectQueryToDatabaseeturnJson(sqlQueryForLoginUser);
+            return json;
+        }
 
         /**
   * @author Anthony Scheeres

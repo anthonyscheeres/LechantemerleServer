@@ -1,9 +1,5 @@
 ﻿using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChantemerleApi.Services
 {
@@ -13,7 +9,7 @@ namespace ChantemerleApi.Services
 */
     internal class PermissionService
     {
-        PermissionDao permissionDao = new PermissionDao();
+        readonly PermissionDao permissionDao = new PermissionDao();
 
 
         /**
@@ -35,7 +31,7 @@ namespace ChantemerleApi.Services
 */
         private string validateLoginUser(string username, string password)
         {
-         //filter invalide input here if needed
+            //filter invalide input here if needed
             return loginUser(username, password);
 
 
@@ -52,7 +48,7 @@ namespace ChantemerleApi.Services
             bool hasCorrectCrecdentials = permissionDao.checkUsernameAndPassword(username, password);
             if (hasCorrectCrecdentials)
             {
-               response = permissionDao.getSensitiveUserInfoFromDatabaseByUsername(username);
+                response = permissionDao.getSensitiveUserInfoFromDatabaseByUsername(username);
             }
             return response;
         }

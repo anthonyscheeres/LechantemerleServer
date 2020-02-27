@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ChantemerleApi.Models;
+﻿using ChantemerleApi.Models;
 using ChantemerleApi.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChantemerleApi.Controllers
@@ -33,14 +28,14 @@ namespace ChantemerleApi.Controllers
         [HttpPut("{token}")]
         public string Put(string token, [FromBody] ReservationModel reservation)
         {
-            return reservationService.acceptPendingReservation(reservation);
+            return reservationService.acceptPendingReservation(reservation, token);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{token}")]
         public string Delete(string token, [FromBody] ReservationModel reservation)
         {
-            return reservationService.deleteReservationByModel(reservation);
+            return reservationService.validatDeleteReservationByModel(reservation, token);
         }
     }
 }

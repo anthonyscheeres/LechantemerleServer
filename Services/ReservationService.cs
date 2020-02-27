@@ -1,18 +1,24 @@
 ﻿using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChantemerleApi.Services
 {
     public class ReservationService
     {
-        ReservationDao reservationDao = new ReservationDao();
-        internal string deleteReservationByModel(ReservationModel reservation)
+        readonly TokenService tokenService = new TokenService();
+        readonly ReservationDao reservationDao = new ReservationDao();
+        internal string validatDeleteReservationByModel(ReservationModel reservation, string token)
         {
-            throw new NotImplementedException();
+            string response = ResponseR.fail.ToString();
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByToken(token);
+            if (hasAdminInDatabaseOverApi)
+            {
+                response = ResponseR.success.ToString();
+                reservationDao.deleteReservationByIdInDatabase(reservation.id);
+            }
+
+            return response;
         }
 
         internal string addPendingReservation(ReservationModel reservation)
@@ -20,38 +26,47 @@ namespace ChantemerleApi.Services
             throw new NotImplementedException();
         }
 
-        internal string acceptPendingReservation(ReservationModel reservation)
+        internal string acceptPendingReservation(ReservationModel reservation, string token)
         {
-            throw new NotImplementedException();
+            string response = ResponseR.fail.ToString();
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByToken(token);
+            if (hasAdminInDatabaseOverApi)
+            {
+                response = ResponseR.success.ToString();
+                reservationDao.deleteReservationByIdInDatabase(reservation.id);
+            }
+
+            return response;
         }
 
         internal string getPendingReservation(string token)
         {
-            bool isAccepted = false;
+            const bool isAccepted = false;
             return validateGetReservation(isAccepted, token);
         }
 
         internal string getAccpetedReservation(string token)
         {
-            bool isAccepted = true;
+            const bool isAccepted = true;
             return validateGetReservation(isAccepted, token);
         }
 
 
 
 
-        private string validateGetReservation(bool isAccepted,string token) {
-            TokenService tokenService = new TokenService();
+        private string validateGetReservation(bool isAccepted, string token)
+        {
+
             string response = ResponseR.fail.ToString();
             bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByToken(token);
             if (hasAdminInDatabaseOverApi)
             {
-               
-                 response = reservationDao.getReservations(isAccepted);
+
+                response = reservationDao.getReservations(isAccepted);
 
             }
             return response;
-        
+
         }
 
     }

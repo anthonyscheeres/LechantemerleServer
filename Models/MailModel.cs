@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ChantemerleApi.Models
+﻿namespace ChantemerleApi.Models
 {
     public class MailModel
     {
-        private string username { get; set; }
+        private string username { get; }
 
-        private string password { get; set; }
+        private string password { get; }
 
-        public MailModel(string username,  string password)
+        public MailModel(string username, string password)
         {
             this.username = username;
             this.password = password;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace ChantemerleApi.Utilities
 {
@@ -16,7 +12,7 @@ namespace ChantemerleApi.Utilities
         /**
 	 * @author Anthony Scheeres
 	 */
-        public bool isNullOrEmty(string theStringToCheckIfItsNullorEmty)
+        internal bool isNullOrEmty(string theStringToCheckIfItsNullorEmty)
         {
             return theStringToCheckIfItsNullorEmty.Length == 0;
         }
@@ -24,7 +20,7 @@ namespace ChantemerleApi.Utilities
         /**
 	 * @author Anthony Scheeres
 	 */
-        public bool isNumeric(string s)
+        internal bool isNumeric(string s)
         {
             return Regex.IsMatch(s, @"^\d+$");
         }
@@ -32,7 +28,7 @@ namespace ChantemerleApi.Utilities
         /**
 	 * @author Anthony Scheeres
 	 */
-        public bool IsValidEmail(string email)
+        internal bool IsValidEmail(string email)
         {
             try
             {

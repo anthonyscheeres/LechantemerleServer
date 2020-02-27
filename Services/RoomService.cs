@@ -1,22 +1,19 @@
 ﻿using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChantemerleApi.Services
 {
     public class RoomService
     {
-        TokenService tokenService = new TokenService();
-        RoomDao roomDao = new RoomDao();
+        private readonly TokenService tokenService = new TokenService();
+        private readonly RoomDao roomDao = new RoomDao();
 
         internal string ValidateAddRoom(RoomModel roomModel, string token)
         {
             string response = ResponseR.fail.ToString();
             bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByToken(token);
-            if (hasAdminInDatabaseOverApi) {
+            if (hasAdminInDatabaseOverApi)
+            {
                 roomDao.sendQueryToDatabaseToAddBed(roomModel.amountOfBeds);
                 response = ResponseR.success.ToString();
             }
@@ -25,7 +22,7 @@ namespace ChantemerleApi.Services
 
         internal string getAllAvailableRoomsForReservation()
         {
-            bool isOutOfOrder = false;
+            const bool isOutOfOrder = false;
             return roomDao.getAllRoomsOutOrInOrder(isOutOfOrder);
         }
     }

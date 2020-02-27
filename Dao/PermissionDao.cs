@@ -7,12 +7,12 @@ namespace ChantemerleApi.Dao
 {
     public class PermissionDao
     {
-        DatabaseUtilities databaseUtilities = new DatabaseUtilities();
-        private string cs = DataModel.databaseCredentials.cs;
+        private readonly DatabaseUtilities databaseUtilities = new DatabaseUtilities();
+        private readonly string cs = DataModel.databaseCredentials.cs;
 
         internal bool checkUsernameAndPassword(string username, string password)
         {
-            var sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE username = @username AND password = @password)";
+            const string sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE username = @username AND password = @password)";
 
 
            
@@ -46,10 +46,10 @@ namespace ChantemerleApi.Dao
         internal string getSensitiveUserInfoFromDatabaseByUsername(string username)
         {
 
-            var sqlQueryForLoginUser = "update app_users set token = oncat(md5(@username), md5((random()::text))) where username = @username  ; select is_super_user, username, token from app_users where username=@username;";
+            const string sqlQueryForLoginUser = "update app_users set token = oncat(md5(@username), md5((random()::text))) where username = @username  ; select is_super_user, username, token from app_users where username=@username;";
 
             string json = databaseUtilities.sendSelectQueryToDatabaseeturnJson(sqlQueryForLoginUser);
-            return json
+            return json;
         }
 
 
