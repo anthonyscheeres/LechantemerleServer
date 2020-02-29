@@ -2,16 +2,16 @@
 {
 	public class ReservationModel
 	{
-		public int id;
+		public int id { get; set; }
 
-		public int roomno;
-		public string created_at;
+		public int roomno { get; set; }
+		public string created_at { get; set; }
 
 
-		public string time_from;
-		public string time_till;
-		public int price;
-		public bool accepted_by_super_user;
+		public string time_from { get; set; }
+		public string time_till { get; set; }
+		public int price { get; set; }
+		public bool accepted_by_super_user { get; set; }
 
 		public ReservationModel(int id,
 
