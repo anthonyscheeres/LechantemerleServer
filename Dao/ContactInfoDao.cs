@@ -14,16 +14,23 @@ namespace ChantemerleApi.Dao
         private DatabaseUtilities databaseUtilities = new DatabaseUtilities();
         internal void changeContactInfoByModelInDatabase(ContactInfoModel contactInfo)
         {
-            const string sqlQueryForDeletingAnreservation = "delete from reservations where id = @id";
+            const string sqlQueryForChangingContactInfo = "update contact_information_owner set house_nickname = @house_nickname, place = @place ,address = @address,postal_code = @postal_code ,family_name = @family_name,telephone = @telephone,mail = @mail IF @@ROWCOUNT = 0 insert into contact_information_owner(house_nickname, place ,address ,postal_code,family_name,telephone,mail) values(@house_nickname, @place ,@address,@postal_code ,@family_name,@telephone, @mail); ";
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);
             connectionWithDatabase.Open();
 
 
 
-            using var command = new NpgsqlCommand(sqlQueryForDeletingAnreservation, connectionWithDatabase);
+            using var command = new NpgsqlCommand(sqlQueryForChangingContactInfo, connectionWithDatabase);
 
-            command.Parameters.AddWithValue("id", id);
+            command.Parameters.AddWithValue("@house_nickname", contactInfo.house_nickname);
+            command.Parameters.AddWithValue("@place", contactInfo.place);
+            command.Parameters.AddWithValue("@address", contactInfo.address);
+            command.Parameters.AddWithValue("@postal_code", contactInfo.postal_code);
+            command.Parameters.AddWithValue("@family_name", contactInfo.family_name);
+            command.Parameters.AddWithValue("@telephone", contactInfo.telephone);
+            command.Parameters.AddWithValue("@mail", contactInfo.mail);
+
             command.Prepare();
 
             command.ExecuteNonQuery();
@@ -31,7 +38,7 @@ namespace ChantemerleApi.Dao
 
         internal string getContactInfoAsJsonFormatForPublicUsersFromDatabase()
         {
-            string sqlQueryForChangingContactInfo = "";
+            string sqlQueryForChangingContactInfo = "select * from contact_information_owner;";
             string jsonString = databaseUtilities.sendSelectQueryToDatabaseeturnJson(sqlQueryForChangingContactInfo);
             return jsonString;
         }
