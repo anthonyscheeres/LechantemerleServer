@@ -42,8 +42,7 @@ namespace ChantemerleApi.Controllers
         [HttpPut("{token}")]
         public string Put(string token, [FromBody] ReservationModel reservation)
         {
-            if (reservation == null) throw new ArgumentNullException(nameof(reservation));
-
+           
             return reservationService.updateAcceptResevationByModel(token, reservation);
         }
 

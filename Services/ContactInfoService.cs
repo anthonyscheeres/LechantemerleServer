@@ -17,7 +17,7 @@ namespace ChantemerleApi.Services
         {
             //failed response by default
             string response = ResponseR.fail.ToString();
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByToken(token);
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
             if (hasAdminInDatabaseOverApi)
             {
                 contactInfoDao.changeContactInfoByModelInDatabase(contactInfo);

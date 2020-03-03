@@ -10,7 +10,7 @@ namespace ChantemerleApi.Dao
     public class TokenDao
     {
         private readonly string cs = DataModel.databaseCredentials.cs;
-        internal bool getPermissionFromDatabaseByToken(string token)
+        internal bool getPermissionFromDatabaseByTokenHasAdmin(string token)
         {
 
             var sqlQueryForRegistingUser = "select is_super_user from app_users where token=@token";

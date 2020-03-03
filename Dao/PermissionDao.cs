@@ -41,6 +41,34 @@ namespace ChantemerleApi.Dao
         }
 
 
+        internal bool checkUsernameAndToken(string username, string token)
+        {
+            const string sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE token = @token AND username = @username)";
+
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+
+            connectionWithDatabase.Open();
+
+
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+
+
+            command.Parameters.AddWithValue("username", username);
+
+            command.Parameters.AddWithValue("token", token);
+
+
+
+
+
+            command.Prepare();
+
+            var i = command.ExecuteReader();
+            return i.GetBoolean(1);
+
+
+        }
+
 
 
         internal string getSensitiveUserInfoFromDatabaseByUsername(string username)

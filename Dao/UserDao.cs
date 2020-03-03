@@ -57,6 +57,26 @@ namespace ChantemerleApi.Dao
             return json;
         }
 
+        internal void changePasswordByUsernameInDatabase(string username, string password)
+        {
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            connectionWithDatabase.Open();
+
+
+            var sqlQueryForRegistingUser = "update  app_users set password = @password where username = @username;";
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+
+            command.Parameters.AddWithValue("username", username);
+            command.Parameters.AddWithValue("password", password);
+     
+
+
+
+            command.Prepare();
+
+            command.ExecuteNonQuery();
+        }
+
         /**
   * @author Anthony Scheeres
   */

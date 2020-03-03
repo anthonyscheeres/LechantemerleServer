@@ -27,10 +27,9 @@ namespace ChantemerleApi.Services
         internal string validateShowAllUsersIncludingAdmins(string token)
         {
             string response = ResponseR.fail.ToString();
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByToken(token);
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
             if (hasAdminInDatabaseOverApi)
             {
-
                 response = userDao.showAllUsersIncludingAdmins();
             }
 
@@ -42,13 +41,29 @@ namespace ChantemerleApi.Services
 	 */
         public string registerValidateUserService(UserModel user)
         {
+            if (user == null) throw new ArgumentNullException(nameof(user));
+
             //doing oveloading to accept models and variables alike
             return registerValidateUserService(user.username, user.password, user.email);
         }
 
-        internal string letAnUserChangeItsOwnUsernameOrPassword(UserModel value, string token)
+        internal string letAnUserChangeItsOwnUsernameOrPassword(UserModel user, string token)
         {
-            throw new NotImplementedException();
+
+            PermissionDao permissionDao = new PermissionDao();
+
+
+            string response = ResponseR.fail.ToString();
+            bool hasOwnershipOfTheAccountInDatabaseOverApi = permissionDao.checkUsernameAndToken(user.username, token);
+            if (hasOwnershipOfTheAccountInDatabaseOverApi)
+            {
+                userDao.changePasswordByUsernameInDatabase(user.username, user.password);
+                response = ResponseR.success.ToString();
+            }
+
+            return response;
+
+
         }
 
 
@@ -76,9 +91,11 @@ namespace ChantemerleApi.Services
 
         internal string validatDeleteUserByModel(string token, UserModel user)
         {
+            if (user == null) throw new ArgumentNullException(nameof(user));
+
             string response = ResponseR.fail.ToString();
             TokenService tokenService = new TokenService();
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByToken(token);
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
             if (hasAdminInDatabaseOverApi)
             {
                 userDao.deleteUserByUsername(user);

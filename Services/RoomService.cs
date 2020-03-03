@@ -10,8 +10,10 @@ namespace ChantemerleApi.Services
 
         internal string ValidateAddRoom(RoomModel roomModel, string token)
         {
+            if (room == null) throw new ArgumentNullException(nameof(room));
+
             string response = ResponseR.fail.ToString();
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByToken(token);
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
             if (hasAdminInDatabaseOverApi)
             {
                 roomDao.sendQueryToDatabaseToAddBed(roomModel.amountOfBeds);

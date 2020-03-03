@@ -23,8 +23,7 @@ namespace ChantemerleApi.Controllers
         [HttpPost("{token}")]
         public string Post(string token, [FromBody] RoomModel room)
         {
-            if (room == null) throw new ArgumentNullException(nameof(room));
-
+            
             return roomService.ValidateAddRoom(room, token);
         }
     }

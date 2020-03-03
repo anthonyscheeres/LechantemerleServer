@@ -21,8 +21,7 @@ namespace ChantemerleApi.Controllers
         [HttpPost]
         public string Post([FromBody] UserModel user)
         {
-            if (user == null) throw new ArgumentNullException(nameof(user));
-
+           
 
             return userService.registerValidateUserService(user);
         }
@@ -31,8 +30,7 @@ namespace ChantemerleApi.Controllers
         [HttpPut("{token}")]
         public string Put(string token, [FromBody] UserModel user)
         {
-            if (user == null) throw new ArgumentNullException(nameof(user));
-
+           
             return userService.letAnUserChangeItsOwnUsernameOrPassword(user, token);
         }
 
@@ -40,7 +38,7 @@ namespace ChantemerleApi.Controllers
         [HttpDelete("{token}")]
         public string Delete(string token, [FromBody] UserModel user)
         {
-            if (user == null) throw new ArgumentNullException(nameof(user));
+            
 
             return userService.validatDeleteUserByModel(token, user);
         }
