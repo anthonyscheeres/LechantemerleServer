@@ -1,4 +1,5 @@
-﻿using ChantemerleApi.Services;
+﻿using ChantemerleApi.Models;
+using ChantemerleApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChantemerleApi.Controllers
@@ -29,23 +30,24 @@ namespace ChantemerleApi.Controllers
         {
             return reservationService.getAccpetedReservation(token);
         }
-        /*
-                // POST: api/Reservation
-                [HttpPost]
-                public void Post([FromBody] string value)
-                {
-                }
 
-                // PUT: api/Reservation/5
-                [HttpPut("{id}")]
-                public void Put(int id, [FromBody] string value)
-                {
-                }
+  /*      // POST: api/Reservation
+        [HttpPost]
+        public void Post([FromBody] string value)
+        {
+        }*/
 
-                // DELETE: api/ApiWithActions/5
-                [HttpDelete("{id}")]
-                public void Delete(int id)
-                {
-                }*/
+        // PUT: api/Reservation/5
+        [HttpPut("{token}")]
+        public string Put(string token, [FromBody] ReservationModel reservation)
+        {
+            return reservationService.updateAcceptResevationByModel(token, reservation);
+        }
+
+   /*     // DELETE: api/ApiWithActions/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }*/
     }
 }

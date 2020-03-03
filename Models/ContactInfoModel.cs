@@ -27,9 +27,6 @@ namespace ChantemerleApi.Models
             this.mail = mail;
         }
 
-        internal void changeContactInfoByModelInDatabase(ContactInfoModel contactInfo)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

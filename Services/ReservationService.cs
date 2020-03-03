@@ -39,6 +39,19 @@ namespace ChantemerleApi.Services
             return response;
         }
 
+        internal string updateAcceptResevationByModel(string token, ReservationModel reservation)
+        {
+            string response = ResponseR.fail.ToString();
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByToken(token);
+            if (hasAdminInDatabaseOverApi)
+            {
+                response = ResponseR.success.ToString();
+                reservationDao.updateAcceptResevationByModelInDatbase(reservation.id);
+            }
+
+            return response;
+        }
+
         internal string getPendingReservation(string token)
         {
             const bool isAccepted = false;

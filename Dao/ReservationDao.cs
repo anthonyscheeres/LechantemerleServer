@@ -1,11 +1,6 @@
 ﻿using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
-using Newtonsoft.Json;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChantemerleApi.Dao
 {
@@ -16,10 +11,10 @@ namespace ChantemerleApi.Dao
 
         private string constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(bool isAccepted)
         {
-            var sqlQueryFroGettingReservationInformation = "select app_users.username, app_users.email, reservations.time_from, reservations.time_till, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at  from reservations full join app_users on reservations.user_id = app_users.id";
+            string sqlQueryFroGettingReservationInformation = "select app_users.username, app_users.email, reservations.time_from, reservations.time_till, reservations.id, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at  from reservations full join app_users on reservations.user_id = app_users.id";
 
-            string queryExtensionToSelectAcceptedReservations = " where reservations.accepted_by_super_user = TRUE";
-            string queryExtensionToSelectNonAcceptedReservations = " where reservations.accepted_by_super_user = FALSE";
+            const string queryExtensionToSelectAcceptedReservations = " where reservations.accepted_by_super_user = TRUE";
+            const string queryExtensionToSelectNonAcceptedReservations = " where reservations.accepted_by_super_user = FALSE";
 
             string tooAdToQuery = queryExtensionToSelectNonAcceptedReservations;
 
@@ -27,8 +22,6 @@ namespace ChantemerleApi.Dao
             if (isAccepted)
             {
                 tooAdToQuery = queryExtensionToSelectAcceptedReservations;
-
-
             }
 
             sqlQueryFroGettingReservationInformation = sqlQueryFroGettingReservationInformation + tooAdToQuery;
@@ -44,8 +37,27 @@ namespace ChantemerleApi.Dao
             connectionWithDatabase.Open();
 
 
-            
+
             using var command = new NpgsqlCommand(sqlQueryForDeletingAnreservation, connectionWithDatabase);
+
+            command.Parameters.AddWithValue("id", id);
+            command.Prepare();
+
+            command.ExecuteNonQuery();
+        }
+
+        internal void updateAcceptResevationByModelInDatbase(int id)
+        {
+            const string sqlQueryForDeletingAnreservation = "update reservations set accepted_by_super_user = @accepted_by_super_user where id = @id";
+            const bool accepted_by_super_user = true;
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            connectionWithDatabase.Open();
+
+
+
+            using var command = new NpgsqlCommand(sqlQueryForDeletingAnreservation, connectionWithDatabase);
+
+            command.Parameters.AddWithValue("accepted_by_super_user", accepted_by_super_user);
 
             command.Parameters.AddWithValue("id", id);
             command.Prepare();
