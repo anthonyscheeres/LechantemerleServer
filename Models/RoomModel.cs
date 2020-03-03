@@ -2,7 +2,7 @@
 {
     public class RoomModel
     {
-        public int amountOfBeds { get; }
+        public int amountOfBeds { get; set; }
 
         public RoomModel(int amountOfBeds)
         {

@@ -17,9 +17,6 @@ namespace ChantemerleApi.Utilities
 
             using var command = new NpgsqlCommand(sqlQuery, connectionWithDatabase);
 
-
-
-
             command.Prepare();
 
             var readerContainingTheDataFromTheDatabase = command.ExecuteReader();

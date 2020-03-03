@@ -1,6 +1,7 @@
 ﻿using ChantemerleApi.Models;
 using ChantemerleApi.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace ChantemerleApi.Controllers
 {
@@ -28,6 +29,8 @@ namespace ChantemerleApi.Controllers
         [HttpPut("{token}")]
         public string Put(string token, [FromBody] ReservationModel reservation)
         {
+            if (reservation == null) throw new ArgumentNullException(nameof(reservation));
+
             return reservationService.acceptPendingReservation(reservation, token);
         }
 
@@ -35,6 +38,8 @@ namespace ChantemerleApi.Controllers
         [HttpDelete("{token}")]
         public string Delete(string token, [FromBody] ReservationModel reservation)
         {
+            if (reservation == null) throw new ArgumentNullException(nameof(reservation));
+
             return reservationService.validatDeleteReservationByModel(reservation, token);
         }
     }

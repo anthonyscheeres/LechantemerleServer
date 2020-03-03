@@ -15,11 +15,14 @@ namespace ChantemerleApi.Services
 
         internal string validateChangeContactInfo(string token, ContactInfoModel contactInfo)
         {
+            //failed response by default
             string response = ResponseR.fail.ToString();
             bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByToken(token);
             if (hasAdminInDatabaseOverApi)
             {
                 contactInfoDao.changeContactInfoByModelInDatabase(contactInfo);
+
+                //change to success response and return 
                 response = ResponseR.success.ToString();
                
             }

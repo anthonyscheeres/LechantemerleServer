@@ -27,16 +27,16 @@ namespace ChantemerleApi.Controllers
 
         // PUT: api/ContactInfo/5
         [HttpPut("{token}")]
-        public return Put(string token, [FromBody] ContactInfoModel contactInfo)
+        public string Put(string token, [FromBody] ContactInfoModel contactInfo)
         {
             return contactInfoService.validateChangeContactInfo(token, contactInfo);
         }
 
-        // DELETE: api/ApiWithActions/5
+/*        // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
 
-        }
+        }*/
     }
 }
