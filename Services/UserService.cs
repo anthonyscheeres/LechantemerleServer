@@ -41,6 +41,7 @@ namespace ChantemerleApi.Services
 	 */
         public string registerValidateUserService(UserModel user)
         {
+            //check for emty models
             if (user == null) throw new ArgumentNullException(nameof(user));
 
             //doing oveloading to accept models and variables alike

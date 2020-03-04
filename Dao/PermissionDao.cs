@@ -76,7 +76,7 @@ namespace ChantemerleApi.Dao
 
             const string sqlQueryForLoginUser = "update app_users set token = oncat(md5(@username), md5((random()::text))) where username = @username  ; select is_super_user, username, token from app_users where username=@username;";
 
-            string json = databaseUtilities.sendSelectQueryToDatabaseeturnJson(sqlQueryForLoginUser);
+            string json = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForLoginUser);
             return json;
         }
 

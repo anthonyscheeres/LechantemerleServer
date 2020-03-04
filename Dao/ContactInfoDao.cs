@@ -39,7 +39,7 @@ namespace ChantemerleApi.Dao
         internal string getContactInfoAsJsonFormatForPublicUsersFromDatabase()
         {
             string sqlQueryForChangingContactInfo = "select * from contact_information_owner;";
-            string jsonString = databaseUtilities.sendSelectQueryToDatabaseeturnJson(sqlQueryForChangingContactInfo);
+            string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForChangingContactInfo);
             return jsonString;
         }
     }

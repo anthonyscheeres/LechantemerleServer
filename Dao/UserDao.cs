@@ -46,14 +46,14 @@ namespace ChantemerleApi.Dao
         {
             const string sqlQueryForLoginUser = "select username, is_super_user, is_super_user from app_users";
 
-            string json = databaseUtilities.sendSelectQueryToDatabaseeturnJson(sqlQueryForLoginUser);
+            string json = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForLoginUser);
             return json;
         }
         internal string showAllUsersExcludingAdmins()
         {
             const string sqlQueryForLoginUser = "select username, is_super_user from app_users where  is_super_user = false";
 
-            string json = databaseUtilities.sendSelectQueryToDatabaseeturnJson(sqlQueryForLoginUser);
+            string json = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForLoginUser);
             return json;
         }
 

@@ -2,9 +2,9 @@
 {
     public class MailModel
     {
-        private string username { get; }
+        public string username { get; }
 
-        private string password { get; }
+        public string password { get; }
 
         public MailModel(string username, string password)
         {

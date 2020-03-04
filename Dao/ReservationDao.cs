@@ -68,7 +68,7 @@ namespace ChantemerleApi.Dao
         internal string getReservations(bool isAccepted)
         {
             string sqlQueryForRegistingUser = constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(isAccepted);
-            string jsonString = databaseUtilities.sendSelectQueryToDatabaseeturnJson(sqlQueryForRegistingUser);
+            string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForRegistingUser);
             return jsonString;
         }
     }

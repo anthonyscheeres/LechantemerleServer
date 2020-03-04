@@ -66,7 +66,7 @@ namespace ChantemerleApi.Dao
 
 
             //send query to database
-            string json = databaseUtilities.sendSelectQueryToDatabaseeturnJson(sqlQueryForRegistingUser);
+            string json = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForRegistingUser);
 
             //send database response data back 
             return json;
