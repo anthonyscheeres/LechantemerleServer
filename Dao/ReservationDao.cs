@@ -14,8 +14,8 @@ namespace ChantemerleApi.Dao
         {
             string sqlQueryFroGettingReservationInformation = "select app_users.username, app_users.email, reservations.time_from, reservations.time_till, reservations.id, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at  from reservations full join app_users on reservations.user_id = app_users.id";
 
-            const string queryExtensionToSelectAcceptedReservations = " where reservations.accepted_by_super_user = TRUE";
-            const string queryExtensionToSelectNonAcceptedReservations = " where reservations.accepted_by_super_user = FALSE";
+            const string queryExtensionToSelectAcceptedReservations = " where reservations.user_id IS NOT NULL";
+            const string queryExtensionToSelectNonAcceptedReservations = " where reservations.accepted_by_super_user = FALSE && reservations.user_id IS NULL";
 
             string tooAdToQuery = queryExtensionToSelectNonAcceptedReservations;
 
