@@ -22,23 +22,34 @@ namespace ChantemerleApi.Services
             return response;
         }
 
-        internal string addPendingReservation(ReservationModel reservation)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal string acceptPendingReservation(ReservationModel reservation, string token)
+        internal string addPendingReservation(ReservationModel reservation, string token)
         {
             if (reservation == null) throw new ArgumentNullException(nameof(reservation));
 
+            // admin adds a Reservation 
 
             string response = ResponseR.fail.ToString();
             bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
             if (hasAdminInDatabaseOverApi)
             {
                 response = ResponseR.success.ToString();
-                reservationDao.deleteReservationByIdInDatabase(reservation.id);
+                reservationDao.addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(reservation);
             }
+
+            return response;
+        }
+
+        internal string customerAcceptPendingReservationPotential(ReservationModel reservation, string token)
+        {
+            if (reservation == null) throw new ArgumentNullException(nameof(reservation));
+
+
+            string response = ResponseR.fail.ToString();
+
+            // token to user id here 
+
+            double userId = tokenService.TokenToUserId(token);
+            reservationDao.customerAcceptPendingReservationPotentialInDatabase(userId, reservation.id);
 
             return response;
         }

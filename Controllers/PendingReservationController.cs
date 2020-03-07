@@ -19,10 +19,10 @@ namespace ChantemerleApi.Controllers
         }
 
         // POST: api/PendingReservation
-        [HttpPost]
-        public string Post([FromBody] ReservationModel reservation)
+        [HttpPost("{token}")]
+        public string Post([FromBody] ReservationModel reservation, string token)
         {
-            return reservationService.addPendingReservation(reservation);
+            return reservationService.addPendingReservation(reservation, token);
         }
 
         // PUT: api/PendingReservation/5
@@ -31,7 +31,7 @@ namespace ChantemerleApi.Controllers
         {
             
 
-            return reservationService.acceptPendingReservation(reservation, token);
+            return reservationService.customerAcceptPendingReservationPotential(reservation, token);
         }
 
         // DELETE: api/ApiWithActions/5

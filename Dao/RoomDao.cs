@@ -31,7 +31,7 @@ namespace ChantemerleApi.Dao
             command.Prepare();
 
             command.ExecuteNonQuery();
-
+            connectionWithDatabase.Close();
         }
 
         private string generateQueryForAllRoomsOitOrInOrder(bool isOutOfOrder)

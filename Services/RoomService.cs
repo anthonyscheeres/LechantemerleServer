@@ -1,5 +1,6 @@
 ﻿using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
+using System;
 
 namespace ChantemerleApi.Services
 {
@@ -10,7 +11,7 @@ namespace ChantemerleApi.Services
 
         internal string ValidateAddRoom(RoomModel roomModel, string token)
         {
-            if (room == null) throw new ArgumentNullException(nameof(room));
+            if (roomModel == null) throw new ArgumentNullException(nameof(roomModel));
 
             string response = ResponseR.fail.ToString();
             bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);

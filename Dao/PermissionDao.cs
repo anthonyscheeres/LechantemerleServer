@@ -35,7 +35,9 @@ namespace ChantemerleApi.Dao
             command.Prepare();
 
             var i = command.ExecuteReader();
-            return i.GetBoolean(1);
+            bool credentialsAreValid = i.GetBoolean(1);
+            connectionWithDatabase.Close();
+            return credentialsAreValid;
 
 
         }
@@ -64,6 +66,8 @@ namespace ChantemerleApi.Dao
             command.Prepare();
 
             var i = command.ExecuteReader();
+            bool areTheseCredentialsValid = i.GetBoolean(1);
+            connectionWithDatabase.Close();
             return i.GetBoolean(1);
 
 

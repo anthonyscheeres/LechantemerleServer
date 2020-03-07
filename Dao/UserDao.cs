@@ -1,10 +1,6 @@
 using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChantemerleApi.Dao
 {
@@ -24,11 +20,12 @@ namespace ChantemerleApi.Dao
             const bool is_super_user = false;
             using var connectionWithDatabase = new NpgsqlConnection(cs);
             connectionWithDatabase.Open();
-           
 
-           var sqlQueryForRegistingUser = "INSERT INTO app_users(username, password, is_super_user, email, token) VALUES(@username, @password, @is_super_user, @email, concat(md5(@username), md5((random()::text))));";
-            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
 
+            var sqlQueryForRegistingUser = "INSERT INTO app_users(username, password, is_super_user, email, token) VALUES(@username, @password, @is_super_user, @email, concat(md5(@username), md5((random()::text))));";
+            using NpgsqlCommand command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+
+            //add parameters 
             command.Parameters.AddWithValue("username", username);
             command.Parameters.AddWithValue("password", password);
             command.Parameters.AddWithValue("is_super_user", is_super_user);
@@ -36,14 +33,15 @@ namespace ChantemerleApi.Dao
 
 
 
-           command.Prepare();
+            command.Prepare();
 
             command.ExecuteNonQuery();
-
+            connectionWithDatabase.Close();
         }
 
         internal string showAllUsersIncludingAdmins()
         {
+            //query for selecting user credentials
             const string sqlQueryForLoginUser = "select username, is_super_user, is_super_user from app_users";
 
             string json = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForLoginUser);
@@ -66,9 +64,10 @@ namespace ChantemerleApi.Dao
             var sqlQueryForRegistingUser = "update  app_users set password = @password where username = @username;";
             using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
 
+
             command.Parameters.AddWithValue("username", username);
             command.Parameters.AddWithValue("password", password);
-     
+
 
 
 
@@ -90,7 +89,7 @@ namespace ChantemerleApi.Dao
             using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
 
             command.Parameters.AddWithValue("username", user.username);
-  
+
             command.Prepare();
 
             command.ExecuteNonQuery();

@@ -34,6 +34,8 @@ namespace ChantemerleApi.Utilities
 
             string jsonResultFromDatabaseConvertedToJsonFormat = JsonConvert.SerializeObject(readerContainingTheDataFromTheDatabase, Formatting.Indented);
 
+            connectionWithDatabase.Close();
+
             return jsonResultFromDatabaseConvertedToJsonFormat;
         }
     }

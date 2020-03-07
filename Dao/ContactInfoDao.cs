@@ -34,6 +34,7 @@ namespace ChantemerleApi.Dao
             command.Prepare();
 
             command.ExecuteNonQuery();
+            connectionWithDatabase.Close();
         }
 
         internal string getContactInfoAsJsonFormatForPublicUsersFromDatabase()
