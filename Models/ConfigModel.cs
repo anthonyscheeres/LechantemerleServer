@@ -7,9 +7,9 @@ namespace ChantemerleApi.Models
 {
     public class ConfigModel
     {
-        public DatabaseModel databaseCredentials = new DatabaseModel("Host=92.65.83.65;Username=pi;Password=good passw0rd; Database=chantemerle");
-        public MailModel mailCredentials = new MailModel("testlab8990@gmail.com", "6t7yuuhi");
-        public RestApiModel server = new RestApiModel(44314,"localhost", true); //this is needed do the token system can call itself
+        public DatabaseModel databaseCredentials { get; set; }
+        public MailModel mailCredentials { get; set; }
+        public RestApiModel server { get; set; }
 
 
         public ConfigModel()

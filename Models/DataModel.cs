@@ -3,7 +3,7 @@
 
     public static class DataModel
     {
-        private static ConfigModel config = new ConfigModel();
+        public static ConfigModel config = new ConfigModel();
 
 
         public static void set(ConfigModel config)

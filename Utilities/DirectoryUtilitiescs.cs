@@ -9,8 +9,8 @@ namespace ChantemerleApi.Utilities
     public class DirectoryUtilitiescs
     {
 
-        string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/ChantemerleServer/";
-        string filename = "file.txt";
+         string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/ChantemerleServer/";
+        string filename = "config.json";
 
         public DirectoryUtilitiescs(string path, string filename)
         {
@@ -24,13 +24,18 @@ namespace ChantemerleApi.Utilities
             this.filename = filename;
         }
 
+        public DirectoryUtilitiescs()
+        {
+        }
 
-        public void writeDataModelToJsonFileInDocumetsFolder()
+        public ConfigModel writeDataModelToJsonFileInDocumetsFolder()
         {
 
             string pathToFile = path + filename;
             Console.WriteLine(pathToFile);
-            ConfigModel dataForDefaultConfigModel = DataModel.get();
+            ConfigModel dataForDefaultConfigModel = new ConfigModel(new DatabaseModel("Host=*******;Username=****;Password=****; Database=****"), 
+                new MailModel("****@gmail.com", "****"), new RestApiModel(44314, "localhost", true) //this is needed do the token system can call itself
+);
 
 
 
@@ -51,11 +56,12 @@ namespace ChantemerleApi.Utilities
 
 
             ConfigModel configTemp = JsonConvert.DeserializeObject<ConfigModel>(File.ReadAllText(pathToFile));
+            DataModel.config = configTemp;
+            Console.WriteLine(configTemp.databaseCredentials.cs);
 
-            if (configTemp != null)
-            {
-                DataModel.set(configTemp);
-            }
+            return configTemp;
+
+
         }
 
     }

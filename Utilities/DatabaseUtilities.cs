@@ -8,7 +8,7 @@ namespace ChantemerleApi.Utilities
     public class DatabaseUtilities
     {
 
-        private readonly string cs = DataModel.get().databaseCredentials.cs;
+        private string cs = DataModel.get().databaseCredentials.cs;
 
         public DatabaseUtilities(string cs)
         {
@@ -17,6 +17,8 @@ namespace ChantemerleApi.Utilities
 
         public DatabaseUtilities()
         {
+            DirectoryUtilitiescs directoryUtilitiescs = new DirectoryUtilitiescs();
+            this.cs = directoryUtilitiescs.writeDataModelToJsonFileInDocumetsFolder().databaseCredentials.cs;
         }
 
         public string sendSelectQueryToDatabaseReturnJson(string sqlQuery)
