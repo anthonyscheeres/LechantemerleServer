@@ -1,7 +1,6 @@
 using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
 using Npgsql;
-using System;
 
 namespace ChantemerleApi.Dao
 {
@@ -11,8 +10,27 @@ namespace ChantemerleApi.Dao
 	 */
     public class UserDao
     {
-        private readonly string cs = DataModel.databaseCredentials.cs;
+        private string cs = DataModel.get().databaseCredentials.cs;
         private readonly DatabaseUtilities databaseUtilities = new DatabaseUtilities();
+
+        /**
+   * @author Anthony Scheeres
+   */
+        public UserDao(string cs)
+        {
+            this.cs = cs;
+        }
+
+        /**
+   * @author Anthony Scheeres
+   */
+        public UserDao()
+        {
+        }
+
+
+
+
         /**
 	 * @author Anthony Scheeres
 	 */
@@ -68,7 +86,7 @@ namespace ChantemerleApi.Dao
 
             command.Parameters.AddWithValue("id", id);
             command.Parameters.AddWithValue("password", password);
- 
+
 
 
 

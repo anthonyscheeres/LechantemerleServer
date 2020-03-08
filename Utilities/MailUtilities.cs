@@ -11,8 +11,8 @@ namespace ChantemerleApi.Utilities
     public class MailUtilities
 
     {
-        MailAddress fromAddress = new MailAddress(DataModel.mailCredentials.username, "Chantemerle");
-        string fromPassword = DataModel.mailCredentials.password;
+        MailAddress fromAddress = new MailAddress(DataModel.get().mailCredentials.username, "Chantemerle");
+        string fromPassword = DataModel.get().mailCredentials.password;
 
         public MailUtilities()
         {

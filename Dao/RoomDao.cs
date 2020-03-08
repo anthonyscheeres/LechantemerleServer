@@ -16,7 +16,17 @@ namespace ChantemerleApi.Dao
 */
 
         private DatabaseUtilities databaseUtilities = new DatabaseUtilities();
-        private readonly string cs = DataModel.databaseCredentials.cs;
+        private string cs = DataModel.get().databaseCredentials.cs;
+
+        public RoomDao(string cs)
+        {
+            this.cs = cs;
+        }
+
+        public RoomDao()
+        {
+        }
+
         internal void sendQueryToDatabaseToAddBed(int amountOfBedsInTheRoom)
         {
 

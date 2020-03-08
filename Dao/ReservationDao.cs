@@ -7,9 +7,17 @@ namespace ChantemerleApi.Dao
 {
     public class ReservationDao
     {
-        private readonly string cs = DataModel.databaseCredentials.cs;
+        private string cs = DataModel.get().databaseCredentials.cs;
         private DatabaseUtilities databaseUtilities = new DatabaseUtilities();
 
+        public ReservationDao(string cs)
+        {
+            this.cs = cs;
+        }
+
+        public ReservationDao()
+        {
+        }
 
         private string constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(bool isAccepted)
         {

@@ -1,7 +1,6 @@
 ﻿using ChantemerleApi.Models;
 using Newtonsoft.Json;
 using Npgsql;
-using System.Collections.Generic;
 using System.Data;
 
 namespace ChantemerleApi.Utilities
@@ -9,7 +8,16 @@ namespace ChantemerleApi.Utilities
     public class DatabaseUtilities
     {
 
-        private readonly string cs = DataModel.databaseCredentials.cs;
+        private readonly string cs = DataModel.get().databaseCredentials.cs;
+
+        public DatabaseUtilities(string cs)
+        {
+            this.cs = cs;
+        }
+
+        public DatabaseUtilities()
+        {
+        }
 
         public string sendSelectQueryToDatabaseReturnJson(string sqlQuery)
         {
@@ -42,7 +50,7 @@ namespace ChantemerleApi.Utilities
             connectionWithDatabase.Close();
             return JSONString;
 
-           
+
 
 
 
@@ -50,7 +58,7 @@ namespace ChantemerleApi.Utilities
 
 
 
-   
+
 
     }
 }

@@ -1,5 +1,4 @@
 ﻿using ChantemerleApi.Dao;
-using ChantemerleApi.Models;
 using System;
 using System.Security.Authentication;
 
@@ -8,7 +7,6 @@ namespace ChantemerleApi.Services
     public class TokenService
     {
         private readonly TokenDao tokenDao = new TokenDao();
-        private readonly string cs = DataModel.databaseCredentials.cs;
         internal bool getPermissionFromDatabaseByTokenIsAdmin(string token)
         {
             bool response = false;

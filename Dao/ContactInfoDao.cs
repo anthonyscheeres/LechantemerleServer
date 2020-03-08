@@ -10,8 +10,20 @@ namespace ChantemerleApi.Dao
 {
     public class ContactInfoDao
     {
-        private readonly string cs = DataModel.databaseCredentials.cs;
+        private string cs = DataModel.get().databaseCredentials.cs;
         private DatabaseUtilities databaseUtilities = new DatabaseUtilities();
+
+        public ContactInfoDao()
+        {
+        }
+
+        public ContactInfoDao(string cs)
+        {
+            this.cs = cs;
+        }
+
+   
+
         internal void changeContactInfoByModelInDatabase(ContactInfoModel contactInfo)
         {
             const string sqlQueryForChangingContactInfo = "update contact_information_owner set house_nickname = @house_nickname, place = @place ,address = @address,postal_code = @postal_code ,family_name = @family_name,telephone = @telephone,mail = @mail IF @@ROWCOUNT = 0 insert into contact_information_owner(house_nickname, place ,address ,postal_code,family_name,telephone,mail) values(@house_nickname, @place ,@address,@postal_code ,@family_name,@telephone, @mail); ";

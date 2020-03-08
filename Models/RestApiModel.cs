@@ -2,9 +2,9 @@
 {
     public class RestApiModel
     {
-        private int portNumber { get; set; }
+        public int portNumber { get;  }
 
-        private string hostName { get; set; }
+        public string hostName { get; }
 
         public RestApiModel(string hostName, int portNumber)
         {

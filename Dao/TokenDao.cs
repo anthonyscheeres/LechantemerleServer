@@ -1,15 +1,35 @@
 ﻿using ChantemerleApi.Models;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChantemerleApi.Dao
 {
     public class TokenDao
     {
-        private readonly string cs = DataModel.databaseCredentials.cs;
+        private string cs = DataModel.get().databaseCredentials.cs;
+
+
+
+        /**
+   * @author Anthony Scheeres
+   */
+        public TokenDao(string cs)
+        {
+            this.cs = cs;
+        }
+
+
+
+        /**
+   * @author Anthony Scheeres
+   */
+        public TokenDao()
+        {
+        }
+
+
+        /**
+   * @author Anthony Scheeres
+   */
         internal bool getPermissionFromDatabaseByTokenHasAdmin(string token)
         {
 
