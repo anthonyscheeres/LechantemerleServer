@@ -17,8 +17,7 @@ namespace ChantemerleApi.Utilities
 
         public DatabaseUtilities()
         {
-            DirectoryUtilitiescs directoryUtilitiescs = new DirectoryUtilitiescs();
-            this.cs = directoryUtilitiescs.writeDataModelToJsonFileInDocumetsFolder().databaseCredentials.cs;
+ 
         }
 
         public string sendSelectQueryToDatabaseReturnJson(string sqlQuery)
