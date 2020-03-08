@@ -10,15 +10,17 @@ namespace ChantemerleApi.Controllers
     {
         UserService userService = new UserService();
 
-        // GET: api/User/5
+        // GET: api/User/showAllUsers
+        [Route("showAllUsers")]
         [HttpGet("{token}")]
         public string Get(string token)
         {
             return userService.validateShowAllUsersIncludingAdmins(token); ;
         }
 
-        // POST: api/User
+        // POST: api/User/register
         [HttpPost]
+        [Route("register")]
         public string Post([FromBody] UserModel user)
         {
            
@@ -26,20 +28,21 @@ namespace ChantemerleApi.Controllers
             return userService.registerValidateUserService(user);
         }
 
-        // PUT: api/User/5
+        // PUT: api/User/{token}
         [HttpPut("{token}")]
-        public string Put(string token, [FromBody] UserModel user)
+        [Route("chanceUsernamePassword")]
+        public string letAnUserChangeItsOwnUsernameOrPassword(string token, [FromBody] UserModel user)
         {
            
             return userService.letAnUserChangeItsOwnUsernameOrPassword(user, token);
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/User/deleteUser
         [HttpDelete("{token}")]
-        public string Delete(string token, [FromBody] UserModel user)
+        [Route("deleteUser")]
+        public string deleteUserByModel(string token, [FromBody] UserModel user)
         {
-            
-
+ 
             return userService.validatDeleteUserByModel(token, user);
         }
     }

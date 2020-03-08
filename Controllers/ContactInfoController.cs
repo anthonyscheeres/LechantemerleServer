@@ -11,27 +11,22 @@ namespace ChantemerleApi.Controllers
         ContactInfoService contactInfoService = new ContactInfoService();
 
 
-        // GET: api/ContactInfo
+        // GET: api/ContactInfo/getContactInfo
+        [Route("getContactInfo")]
         [HttpGet]
-        public string Get()
+        public string getContactInfo()
         {
             return contactInfoService.getContactInfoAsJsonFormatForPublicUsers();
         }
 
 
 
-        // PUT: api/ContactInfo/5
+        // PUT: api/ContactInfo/ChangeContactInfo/{token}
+        [Route("changeContactInfo")]
         [HttpPut("{token}")]
-        public string Put(string token, [FromBody] ContactInfoModel contactInfo)
+        public string changeContactInfo(string token, [FromBody] ContactInfoModel contactInfo)
         {
             return contactInfoService.validateChangeContactInfo(token, contactInfo);
         }
-
-        /*        // DELETE: api/ApiWithActions/5
-                [HttpDelete("{id}")]
-                public void Delete(int id)
-                {
-
-                }*/
     }
 }

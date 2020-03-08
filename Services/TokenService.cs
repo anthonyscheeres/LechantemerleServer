@@ -1,5 +1,6 @@
 ﻿using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
+using System;
 using System.Security.Authentication;
 
 namespace ChantemerleApi.Services
@@ -10,8 +11,19 @@ namespace ChantemerleApi.Services
         private readonly string cs = DataModel.databaseCredentials.cs;
         internal bool getPermissionFromDatabaseByTokenIsAdmin(string token)
         {
-            return tokenDao.getPermissionFromDatabaseByTokenHasAdmin(token);
-        }
+            bool response = false;
+            try {
+                response = tokenDao.getPermissionFromDatabaseByTokenHasAdmin(token);
+
+            }
+
+            catch (InvalidCastException error)
+            {
+
+            }
+
+            return response
+
 
         internal void throwErrorIfInvalideCredentials(string token) 
         {

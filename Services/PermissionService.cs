@@ -1,5 +1,6 @@
 ﻿using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
+using System;
 
 namespace ChantemerleApi.Services
 {
@@ -9,7 +10,7 @@ namespace ChantemerleApi.Services
 */
     internal class PermissionService
     {
-        readonly PermissionDao permissionDao = new PermissionDao();
+        private readonly PermissionDao permissionDao = new PermissionDao();
 
 
         /**
@@ -44,12 +45,25 @@ namespace ChantemerleApi.Services
 */
         private string loginUser(string username, string password)
         {
+            //response fail message
             string response = ResponseR.fail.ToString();
-            bool hasCorrectCrecdentials = permissionDao.checkUsernameAndPassword(username, password);
-            if (hasCorrectCrecdentials)
+
+            try
             {
-                response = permissionDao.getSensitiveUserInfoFromDatabaseByUsername(username);
+                //check if username and password combo exist only works if usernames stay unique
+                bool hasCorrectCrecdentials = permissionDao.checkUsernameAndPassword(username, password);
+
             }
+            catch (InvalidCastException error)
+            {
+                //return the reponse so the unauthorised user doesn't get a token
+                return response;
+            }
+
+
+
+                response = permissionDao.getSensitiveUserInfoFromDatabaseByUsername(username);
+        
             return response;
         }
 

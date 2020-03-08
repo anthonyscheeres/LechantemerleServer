@@ -1,6 +1,7 @@
 ﻿using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
+using Npgsql;
 using System;
 
 namespace ChantemerleApi.Services
@@ -51,16 +52,36 @@ namespace ChantemerleApi.Services
         internal string letAnUserChangeItsOwnUsernameOrPassword(UserModel user, string token)
         {
 
-            PermissionDao permissionDao = new PermissionDao();
+            TokenService tokenService = new TokenService();
 
+            string response = ResponseR.success.ToString();
 
-            string response = ResponseR.fail.ToString();
-            bool hasOwnershipOfTheAccountInDatabaseOverApi = permissionDao.checkUsernameAndToken(user.username, token);
-            if (hasOwnershipOfTheAccountInDatabaseOverApi)
+            try
             {
-                userDao.changePasswordByUsernameInDatabase(user.username, user.password);
-                response = ResponseR.success.ToString();
+                //check if the token is valide
+                double id = tokenService.TokenToUserId(token);
+
+                userDao.changePasswordByUserIdInDatabase(user.password, id);
+
+
+
             }
+            //catch if no id was found in database based on the token
+            catch (InvalidCastException error)
+            {
+
+                response = ResponseR.fail.ToString();
+                return response;
+            }
+
+
+
+
+         
+       
+
+
+
 
             return response;
 

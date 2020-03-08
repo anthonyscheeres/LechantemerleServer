@@ -18,38 +18,51 @@ namespace ChantemerleApi.Controllers
 
         ReservationService reservationService = new ReservationService();
 
-        /*        // GET: api/Reservation
-                [HttpGet]
-                public IEnumerable<string> Get()
-                {
-                    return new string[] { "value1", "value2" };
-                }
-        */
-        // GET: api/Reservation/5
         [HttpGet("{token}")]
-        public string Get(string token)
+        public string getAccpetedReservation(string token)
         {
             return reservationService.getAccpetedReservation(token);
         }
 
-  /*      // POST: api/Reservation
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }*/
+
 
         // PUT: api/Reservation/5
         [HttpPut("{token}")]
-        public string Put(string token, [FromBody] ReservationModel reservation)
+        public string updateAcceptResevationByModel(string token, [FromBody] ReservationModel reservation)
         {
-           
+
             return reservationService.updateAcceptResevationByModel(token, reservation);
         }
-
-   /*     // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [Route("getPendingReservation")]
+        [HttpGet("{token}")]
+        public string getPendingReservation(string token)
         {
-        }*/
+            return reservationService.getPendingReservation(token);
+        }
+
+       [Route("addPendingReservation")]
+        [HttpPost("{token}")]
+        public string addPendingReservation([FromBody] ReservationModel reservation, string token)
+        {
+            return reservationService.addPendingReservation(reservation, token);
+        }
+
+        [Route("claimReservations")]
+        [HttpPut("{token}")]
+        public string customerAcceptPendingReservationPotential(string token, [FromBody] ReservationModel reservation)
+        {
+
+            return reservationService.customerAcceptPendingReservationPotential(reservation, token);
+        }
+
+        //DELETE : api/Reservation/deleteReservation
+        [Route("deleteReservation")]
+        [HttpDelete("{token}")]
+        public string deleteReservationByModel(string token, [FromBody] ReservationModel reservation)
+        {
+
+
+            return reservationService.validatDeleteReservationByModel(reservation, token);
+        }
     }
 }

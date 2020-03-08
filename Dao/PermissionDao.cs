@@ -68,7 +68,7 @@ namespace ChantemerleApi.Dao
             var i = command.ExecuteReader();
             bool areTheseCredentialsValid = i.GetBoolean(1);
             connectionWithDatabase.Close();
-            return i.GetBoolean(1);
+            return areTheseCredentialsValid;
 
 
         }

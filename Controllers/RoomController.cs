@@ -11,19 +11,21 @@ namespace ChantemerleApi.Controllers
     {
         RoomService roomService = new RoomService();
 
-        // GET: api/room/
+        // GET: api/room/listAvailableRooms
+        [Route("listAvailableRooms")]
         [HttpGet]
-        public string Get()
+        public string getAllAvailableRoomsForReservation()
         {
             return roomService.getAllAvailableRoomsForReservation();
         }
 
 
-        // POST api/room
+        // POST api/room/addRoom/{token}
+
+        [Route("addRoom")]
         [HttpPost("{token}")]
-        public string Post(string token, [FromBody] RoomModel room)
+        public string addRoom(string token, [FromBody] RoomModel room)
         {
-            
             return roomService.ValidateAddRoom(room, token);
         }
     }

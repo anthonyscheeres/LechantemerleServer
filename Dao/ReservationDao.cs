@@ -10,6 +10,7 @@ namespace ChantemerleApi.Dao
         private readonly string cs = DataModel.databaseCredentials.cs;
         private DatabaseUtilities databaseUtilities = new DatabaseUtilities();
 
+
         private string constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(bool isAccepted)
         {
             string sqlQueryFroGettingReservationInformation = "select app_users.username, app_users.email, reservations.time_from, reservations.time_till, reservations.id, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at  from reservations full join app_users on reservations.user_id = app_users.id";

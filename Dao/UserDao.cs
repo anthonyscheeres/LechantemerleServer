@@ -1,6 +1,7 @@
 using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
 using Npgsql;
+using System;
 
 namespace ChantemerleApi.Dao
 {
@@ -55,6 +56,28 @@ namespace ChantemerleApi.Dao
             return json;
         }
 
+        internal void changePasswordByUserIdInDatabase(string password, double id)
+        {
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            connectionWithDatabase.Open();
+
+
+            var sqlQueryForRegistingUser = "update  app_users set password = @password where id = @id;";
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+
+
+            command.Parameters.AddWithValue("id", id);
+            command.Parameters.AddWithValue("password", password);
+ 
+
+
+
+            command.Prepare();
+
+            command.ExecuteNonQuery();
+            connectionWithDatabase.Close();
+        }
+
         internal void changePasswordByUsernameInDatabase(string username, string password)
         {
             using var connectionWithDatabase = new NpgsqlConnection(cs);
@@ -74,6 +97,7 @@ namespace ChantemerleApi.Dao
             command.Prepare();
 
             command.ExecuteNonQuery();
+            connectionWithDatabase.Close();
         }
 
         /**
@@ -93,6 +117,7 @@ namespace ChantemerleApi.Dao
             command.Prepare();
 
             command.ExecuteNonQuery();
+            connectionWithDatabase.Close();
         }
     }
 }
