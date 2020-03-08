@@ -39,15 +39,16 @@ namespace ChantemerleApi.Utilities
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
+
+
+                string json = JsonConvert.SerializeObject(dataForDefaultConfigModel, Formatting.Indented);
+
+
+
+                File.WriteAllText(pathToFile, json);
+
             }
 
-            Console.WriteLine(pathToFile);
-
-            string json = JsonConvert.SerializeObject(dataForDefaultConfigModel, Formatting.Indented);
-
-
-
-            File.WriteAllText(pathToFile, json);
 
             ConfigModel configTemp = JsonConvert.DeserializeObject<ConfigModel>(File.ReadAllText(pathToFile));
 
