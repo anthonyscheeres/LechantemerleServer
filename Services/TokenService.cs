@@ -12,7 +12,9 @@ namespace ChantemerleApi.Services
         internal bool getPermissionFromDatabaseByTokenIsAdmin(string token)
         {
             bool response = false;
-            try {
+
+            try
+            {
                 response = tokenDao.getPermissionFromDatabaseByTokenHasAdmin(token);
 
             }
@@ -22,10 +24,10 @@ namespace ChantemerleApi.Services
 
             }
 
-            return response
+            return response;
+        }
 
-
-        internal void throwErrorIfInvalideCredentials(string token) 
+        internal void throwErrorIfInvalideCredentials(string token)
         {
             bool hasAdminInDatabaseOverApi = getPermissionFromDatabaseByTokenIsAdmin(token);
             if (!hasAdminInDatabaseOverApi)
@@ -33,15 +35,19 @@ namespace ChantemerleApi.Services
                 throw new InvalidCredentialException();
             }
         }
+
+
+
         internal double TokenToUserId(string token)
         {
-           return tokenDao.TokenToUserId(token);
+            return tokenDao.TokenToUserId(token);
         }
 
     }
-
-
-
-
 }
+
+
+
+
+
 

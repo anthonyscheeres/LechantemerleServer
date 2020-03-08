@@ -1,6 +1,8 @@
 ﻿using ChantemerleApi.Models;
 using Newtonsoft.Json;
 using Npgsql;
+using System.Collections.Generic;
+using System.Data;
 
 namespace ChantemerleApi.Utilities
 {
@@ -32,11 +34,23 @@ namespace ChantemerleApi.Utilities
 
             var readerContainingTheDataFromTheDatabase = command.ExecuteReader();
 
-            string jsonResultFromDatabaseConvertedToJsonFormat = JsonConvert.SerializeObject(readerContainingTheDataFromTheDatabase, Formatting.Indented);
+            var dataTable = new DataTable();
+            dataTable.Load(readerContainingTheDataFromTheDatabase);
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(dataTable);
 
             connectionWithDatabase.Close();
+            return JSONString;
 
-            return jsonResultFromDatabaseConvertedToJsonFormat;
+           
+
+
+
         }
+
+
+
+   
+
     }
 }

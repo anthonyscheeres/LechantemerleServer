@@ -32,8 +32,9 @@ namespace ChantemerleApi.Services
             bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
             if (hasAdminInDatabaseOverApi)
             {
-                response = ResponseR.success.ToString();
+            
                 reservationDao.addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(reservation);
+                response = ResponseR.success.ToString();
             }
 
             return response;
@@ -69,32 +70,39 @@ namespace ChantemerleApi.Services
             return response;
         }
 
-        internal string getPendingReservation(string token)
+        internal string getPendingReservation()
         {
             const bool isAccepted = false;
-            return validateGetReservation(isAccepted, token);
+            return validateGetReservation(isAccepted);
         }
 
         internal string getAccpetedReservation(string token)
         {
             const bool isAccepted = true;
-            return validateGetReservation(isAccepted, token);
-        }
 
 
-
-
-        private string validateGetReservation(bool isAccepted, string token)
-        {
 
             string response = ResponseR.fail.ToString();
             bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
             if (hasAdminInDatabaseOverApi)
             {
 
-                response = reservationDao.getReservations(isAccepted);
-
+                response = validateGetReservation(isAccepted);
             }
+
+            return response;
+
+        }
+
+
+
+
+        private string validateGetReservation(bool isAccepted)
+        {
+
+         
+            string response = reservationDao.getReservations(isAccepted);
+
             return response;
 
         }

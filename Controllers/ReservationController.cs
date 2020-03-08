@@ -33,11 +33,12 @@ namespace ChantemerleApi.Controllers
 
             return reservationService.updateAcceptResevationByModel(token, reservation);
         }
+
         [Route("getPendingReservation")]
-        [HttpGet("{token}")]
-        public string getPendingReservation(string token)
+        [HttpGet]
+        public string getPendingReservation()
         {
-            return reservationService.getPendingReservation(token);
+            return reservationService.getPendingReservation();
         }
 
        [Route("addPendingReservation")]
@@ -49,7 +50,7 @@ namespace ChantemerleApi.Controllers
 
         [Route("claimReservations")]
         [HttpPut("{token}")]
-        public string customerAcceptPendingReservationPotential(string token, [FromBody] ReservationModel reservation)
+        public string customerAcceptPendingReservation(string token, [FromBody] ReservationModel reservation)
         {
 
             return reservationService.customerAcceptPendingReservationPotential(reservation, token);
@@ -58,7 +59,7 @@ namespace ChantemerleApi.Controllers
         //DELETE : api/Reservation/deleteReservation
         [Route("deleteReservation")]
         [HttpDelete("{token}")]
-        public string deleteReservationByModel(string token, [FromBody] ReservationModel reservation)
+        public string deleteReservation(string token, [FromBody] ReservationModel reservation)
         {
 
 
