@@ -88,6 +88,22 @@ namespace ChantemerleApi.Services
 
         }
 
+        internal string validateToken(string token)
+        {
+            TokenService tokenService = new TokenService();
+            try
+            {
+                tokenService.TokenToUserId(token);
+            }
+            catch (InvalidCastException error)
+            {
+                return "URL was expired or invalide please try again!";
+            }
+
+            return "Success; Your account has been verified!";
+
+        }
+
 
         /**
 	 * @author Anthony Scheeres
@@ -101,7 +117,8 @@ namespace ChantemerleApi.Services
             if (isValideInput)
             {
                 registerUser(username, password, email);
-                response = ResponseR.success.ToString();
+                validateAUsersEmail(username, email);
+                 response = ResponseR.success.ToString();
             }
 
 
@@ -109,6 +126,18 @@ namespace ChantemerleApi.Services
             return response;
 
 
+        }
+
+
+        private void validateAUsersEmail(string toEmailAddress, string username)
+        {
+            MailUtilities mailUtilities = new MailUtilities();
+            string subject = "Please verifieer je email";
+            //link to verify email to change the is_email_verified boolean record
+            string body = "";
+
+
+            mailUtilities.sendEmailToAdressWithABodyAndSubjectUsingCredentialsInDataModel(toEmailAddress, username, subject,  body);
         }
 
         internal string validatDeleteUserByModel(string token, UserModel user)

@@ -14,6 +14,17 @@ namespace ChantemerleApi.Utilities
         MailAddress fromAddress = new MailAddress(DataModel.mailCredentials.username, "Chantemerle");
         string fromPassword = DataModel.mailCredentials.password;
 
+        public MailUtilities()
+        {
+
+        }
+
+        public MailUtilities(MailAddress fromAddress, string fromPassword)
+        {
+            this.fromAddress = fromAddress;
+            this.fromPassword = fromPassword;
+        }
+
         public void sendEmailToAdressWithABodyAndSubjectUsingCredentialsInDataModel(string toEmailAddress, string username, string subject, string body)
         {
             sendEmailWithGmailToAdressWithABodyAndSubject(toEmailAddress, username, subject, body);

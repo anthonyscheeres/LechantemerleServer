@@ -24,7 +24,7 @@ namespace ChantemerleApi.Controllers
         [Route("register")]
         public string Post([FromBody] UserModel user)
         {
-           
+
 
             return userService.registerValidateUserService(user);
         }
@@ -34,7 +34,7 @@ namespace ChantemerleApi.Controllers
         [Route("chanceUsernamePassword")]
         public string letAnUserChangeItsOwnUsernameOrPassword(string token, [FromBody] UserModel user)
         {
-           
+
             return userService.letAnUserChangeItsOwnUsernameOrPassword(user, token);
         }
 
@@ -43,10 +43,17 @@ namespace ChantemerleApi.Controllers
         [Route("deleteUser")]
         public string deleteUserByModel(string token, [FromBody] UserModel user)
         {
- 
+
             return userService.validatDeleteUserByModel(token, user);
         }
 
+        [HttpGet("token")]
+        [Route("validateToken")]
+        public string validateToken(string token)
+        {
+            return userService.validateToken(token);
+
+        }
 
   
         // POST: api/User/login
