@@ -12,7 +12,7 @@ namespace ChantemerleApi.Utilities
         /**
 	 * @author Anthony Scheeres
 	 */
-        public bool isNullOrEmty(string theStringToCheckIfItsNullorEmty)
+        public static bool isNullOrEmty(string theStringToCheckIfItsNullorEmty)
         {
             return theStringToCheckIfItsNullorEmty.Length == 0;
         }
@@ -20,7 +20,7 @@ namespace ChantemerleApi.Utilities
         /**
 	 * @author Anthony Scheeres
 	 */
-        public bool isNumeric(string s)
+        public static bool isNumeric(string s)
         {
             return Regex.IsMatch(s, @"^\d+$");
         }
@@ -28,7 +28,7 @@ namespace ChantemerleApi.Utilities
         /**
 	 * @author Anthony Scheeres
 	 */
-        public bool IsValidEmail(string email)
+        public static bool IsValidEmail(string email)
         {
             try
             {

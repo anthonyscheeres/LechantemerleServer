@@ -6,13 +6,16 @@ namespace ChantemerleApi.Services
 {
     public class ReservationService
     {
-        readonly TokenService tokenService = new TokenService();
+
         readonly ReservationDao reservationDao = new ReservationDao();
         internal string validatDeleteReservationByModel(ReservationModel reservation, string token)
         {
             if (reservation == null) throw new ArgumentNullException(nameof(reservation));
             string response = ResponseR.fail.ToString();
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+
+            TokenService tokenService = new TokenService(token);
+
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
             if (hasAdminInDatabaseOverApi)
             {
                 response = ResponseR.success.ToString();
@@ -29,7 +32,11 @@ namespace ChantemerleApi.Services
             // admin adds a Reservation 
 
             string response = ResponseR.fail.ToString();
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+
+            TokenService tokenService = new TokenService(token);
+
+
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
             if (hasAdminInDatabaseOverApi)
             {
             
@@ -44,12 +51,12 @@ namespace ChantemerleApi.Services
         {
             if (reservation == null) throw new ArgumentNullException(nameof(reservation));
 
-
+            TokenService tokenService = new TokenService(token);
             string response = ResponseR.fail.ToString();
 
             // token to user id here 
 
-            double userId = tokenService.TokenToUserId(token);
+            double userId = tokenService.TokenToUserId();
             reservationDao.customerAcceptPendingReservationPotentialInDatabase(userId, reservation.id);
 
             return response;
@@ -58,9 +65,9 @@ namespace ChantemerleApi.Services
         internal string updateAcceptResevationByModel(string token, ReservationModel reservation)
         {
             if (reservation == null) throw new ArgumentNullException(nameof(reservation));
-
+            TokenService tokenService = new TokenService(token);
             string response = ResponseR.fail.ToString();
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
             if (hasAdminInDatabaseOverApi)
             {
                 response = ResponseR.success.ToString();
@@ -80,10 +87,10 @@ namespace ChantemerleApi.Services
         {
             const bool isAccepted = true;
 
-
+            TokenService tokenService = new TokenService(token);
 
             string response = ResponseR.fail.ToString();
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
             if (hasAdminInDatabaseOverApi)
             {
 

@@ -10,14 +10,14 @@ namespace ChantemerleApi.Dao
         private readonly DatabaseUtilities databaseUtilities = new DatabaseUtilities();
         private string cs = DataModel.get().databaseCredentials.cs;
 
-        public PermissionDao(string cs)
+        internal PermissionDao(string cs)
         {
             this.cs = cs;
         }
 
- 
 
-        public PermissionDao()
+
+        internal PermissionDao()
         {
         }
 
@@ -89,7 +89,7 @@ namespace ChantemerleApi.Dao
         internal string getSensitiveUserInfoFromDatabaseByUsername(string username)
         {
 
-            const string sqlQueryForLoginUser = "update app_users set token = oncat(md5(@username), md5((random()::text))) where username = @username  ; select is_super_user, username, token from app_users where username=@username;";
+            const string sqlQueryForLoginUser = "update app_users set token = oncat(md5(@username), md5((random()::text))) where username = @username  ; select is_super_user, username, token, is_email_verified from app_users where username=@username;";
 
             string json = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForLoginUser);
             return json;

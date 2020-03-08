@@ -6,15 +6,15 @@ namespace ChantemerleApi.Services
 {
     public class RoomService
     {
-        private readonly TokenService tokenService = new TokenService();
+
         private readonly RoomDao roomDao = new RoomDao();
 
         internal string ValidateAddRoom(RoomModel roomModel, string token)
         {
             if (roomModel == null) throw new ArgumentNullException(nameof(roomModel));
-
+            TokenService tokenService = new TokenService(token);
             string response = ResponseR.fail.ToString();
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
             if (hasAdminInDatabaseOverApi)
             {
                 roomDao.sendQueryToDatabaseToAddBed(roomModel.amountOfBeds);

@@ -28,7 +28,28 @@ namespace ChantemerleApi.Dao
         {
         }
 
+        internal string getEmailUsingToken(string token)
+        {
 
+            var sqlQueryForRegistingUser = "select email from app_users where token = @token";
+
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+
+            connectionWithDatabase.Open();
+
+
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+
+
+            command.Parameters.AddWithValue("token", token);
+
+            command.Prepare();
+
+            var i = command.ExecuteReader();
+            string hasAdmin = i.GetString(1);
+            connectionWithDatabase.Close();
+            return hasAdmin;
+        }
 
 
         /**
@@ -61,7 +82,7 @@ namespace ChantemerleApi.Dao
         internal string showAllUsersIncludingAdmins()
         {
             //query for selecting user credentials
-            const string sqlQueryForLoginUser = "select username, is_super_user, is_super_user from app_users";
+            const string sqlQueryForLoginUser = "select username, is_super_user from app_users";
 
             string json = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForLoginUser);
             return json;

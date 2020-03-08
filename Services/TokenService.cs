@@ -7,13 +7,20 @@ namespace ChantemerleApi.Services
     public class TokenService
     {
         private readonly TokenDao tokenDao = new TokenDao();
-        internal bool getPermissionFromDatabaseByTokenIsAdmin(string token)
+        private string token;
+
+        public TokenService(string token)
+        {
+            this.token = token;
+        }
+
+        internal bool getPermissionFromDatabaseByTokenIsAdmin()
         {
             bool response = false;
 
             try
             {
-                response = tokenDao.getPermissionFromDatabaseByTokenHasAdmin(token);
+                response = tokenDao.getPermissionFromDatabaseByTokenHasAdmin(this.token);
 
             }
 
@@ -25,20 +32,12 @@ namespace ChantemerleApi.Services
             return response;
         }
 
-        internal void throwErrorIfInvalideCredentials(string token)
+
+
+
+        internal double TokenToUserId()
         {
-            bool hasAdminInDatabaseOverApi = getPermissionFromDatabaseByTokenIsAdmin(token);
-            if (!hasAdminInDatabaseOverApi)
-            {
-                throw new InvalidCredentialException();
-            }
-        }
-
-
-
-        internal double TokenToUserId(string token)
-        {
-            return tokenDao.TokenToUserId(token);
+            return tokenDao.TokenToUserId(this.token);
         }
 
     }

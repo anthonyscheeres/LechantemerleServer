@@ -47,6 +47,7 @@ namespace ChantemerleApi.Controllers
             return userService.validatDeleteUserByModel(token, user);
         }
 
+        // GET: api/User/validateToken
         [HttpGet("token")]
         [Route("validateToken")]
         public string validateToken(string token)
@@ -65,5 +66,15 @@ namespace ChantemerleApi.Controllers
             //ask the permission layer what permission this user has after an validation
             return permissionService.loginUserAfterValidation(user);
         }
+
+
+        [HttpPost("token")]
+        [Route("validateMail")]
+        public string sendNewValidateEmailLink(string token)
+        {
+            return userService.validateMailAgain(token);
+        }
+
+
     }
 }

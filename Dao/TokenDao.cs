@@ -54,6 +54,56 @@ namespace ChantemerleApi.Dao
 
         }
 
+
+        internal string getTokenByUsernameExtremelyClassified(string username)
+        {
+
+            var sqlQueryForRegistingUser = "select token from app_users where username = @username";
+
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+
+            connectionWithDatabase.Open();
+
+
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+
+
+            command.Parameters.AddWithValue("username", username);
+
+            command.Prepare();
+
+            var i = command.ExecuteReader();
+            string hasAdmin = i.GetString(1);
+            connectionWithDatabase.Close();
+            return hasAdmin;
+        }
+
+
+
+        internal string getTokenByUsernameExtremelyClassified(double id)
+        {
+
+            var sqlQueryForRegistingUser = "select token from app_users where id = @id";
+
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+
+            connectionWithDatabase.Open();
+
+
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+
+
+            command.Parameters.AddWithValue("id", id);
+
+            command.Prepare();
+
+            var i = command.ExecuteReader();
+            string hasAdmin = i.GetString(1);
+            connectionWithDatabase.Close();
+            return hasAdmin;
+        }
+
+
         internal double TokenToUserId(string token)
         {
             var sqlQueryForRegistingUser = "select id from app_users where token=@token";

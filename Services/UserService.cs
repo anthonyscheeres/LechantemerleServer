@@ -1,7 +1,6 @@
 ﻿using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
-using Npgsql;
 using System;
 
 namespace ChantemerleApi.Services
@@ -12,9 +11,8 @@ namespace ChantemerleApi.Services
     public class UserService
     {
 
-        readonly TokenService tokenService = new TokenService();
         readonly private UserDao userDao = new UserDao();
-        readonly private ValidateInputUtilities validateInputUtilities = new ValidateInputUtilities();
+
 
 
         /**
@@ -25,10 +23,16 @@ namespace ChantemerleApi.Services
             return validateRegisterUser(username, password, email);
         }
 
+
+
+        /**
+* @author Anthony Scheeres
+*/
         internal string validateShowAllUsersIncludingAdmins(string token)
         {
             string response = ResponseR.fail.ToString();
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            TokenService tokenService = new TokenService(token);
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
             if (hasAdminInDatabaseOverApi)
             {
                 response = userDao.showAllUsersIncludingAdmins();
@@ -49,17 +53,22 @@ namespace ChantemerleApi.Services
             return registerValidateUserService(user.username, user.password, user.email);
         }
 
+
+
+        /**
+* @author Anthony Scheeres
+*/
         internal string letAnUserChangeItsOwnUsernameOrPassword(UserModel user, string token)
         {
 
-            TokenService tokenService = new TokenService();
+            TokenService tokenService = new TokenService(token);
 
             string response = ResponseR.success.ToString();
 
             try
             {
                 //check if the token is valide
-                double id = tokenService.TokenToUserId(token);
+                double id = tokenService.TokenToUserId();
 
                 userDao.changePasswordByUserIdInDatabase(user.password, id);
 
@@ -77,8 +86,8 @@ namespace ChantemerleApi.Services
 
 
 
-         
-       
+
+
 
 
 
@@ -88,12 +97,41 @@ namespace ChantemerleApi.Services
 
         }
 
-        internal string validateToken(string token)
+        internal string validateMailAgain(string token)
         {
-            TokenService tokenService = new TokenService();
+            string response = ResponseR.fail.ToString();
+            UserDao userDao = new UserDao();
+            string email = null;
+
             try
             {
-                tokenService.TokenToUserId(token);
+                email = userDao.getEmailUsingToken(token);
+            }
+            catch (InvalidCastException)
+            {
+                return response;
+            }
+
+
+
+            if (email != null)
+            {
+                validateAUsersEmailUsingAValidationEmaill(email, token);
+                response = ResponseR.success.ToString();
+            }
+            return response;
+        }
+
+
+        /**
+* @author Anthony Scheeres
+*/
+        internal string validateToken(string token)
+        {
+            TokenService tokenService = new TokenService(token);
+            try
+            {
+                tokenService.TokenToUserId();
             }
             catch (InvalidCastException error)
             {
@@ -117,8 +155,14 @@ namespace ChantemerleApi.Services
             if (isValideInput)
             {
                 registerUser(username, password, email);
-                validateAUsersEmail(username, email);
-                 response = ResponseR.success.ToString();
+
+                TokenDao tokenDao = new TokenDao();
+
+                string token = tokenDao.getTokenByUsernameExtremelyClassified(username);
+
+
+                validateAUsersEmailUsingAValidationEmaill(username, email, token);
+                response = ResponseR.success.ToString();
             }
 
 
@@ -129,24 +173,53 @@ namespace ChantemerleApi.Services
         }
 
 
-        private void validateAUsersEmail(string toEmailAddress, string username)
+
+        /**
+* @author Anthony Scheeres
+*/
+        private void validateAUsersEmailUsingAValidationEmaill(string toEmailAddress, string username, string token)
         {
+
             MailUtilities mailUtilities = new MailUtilities();
             string subject = "Please verifieer je email";
             //link to verify email to change the is_email_verified boolean record
-            string body = "";
+            RestApiModel server = DataModel.get().server;
+
+            string body = server.hostName + ":" + server.portNumber + "/api/User/validateToken/" + token;
 
 
-            mailUtilities.sendEmailToAdressWithABodyAndSubjectUsingCredentialsInDataModel(toEmailAddress, username, subject,  body);
+            mailUtilities.sendEmailToAdressWithABodyAndSubjectUsingCredentialsInDataModel(toEmailAddress, username, subject, body);
         }
 
+        /**
+* @author Anthony Scheeres
+*/
+        private void validateAUsersEmailUsingAValidationEmaill(string toEmailAddress, string token)
+        {
+
+            MailUtilities mailUtilities = new MailUtilities();
+            string subject = "Please verifieer je email";
+            //link to verify email to change the is_email_verified boolean record
+            RestApiModel server = DataModel.get().server;
+
+            string body = server.hostName + ":" + server.portNumber + "/api/User/validateToken/" + token;
+            string username = "ChantemerleApi Gebruiker";
+
+            mailUtilities.sendEmailToAdressWithABodyAndSubjectUsingCredentialsInDataModel(toEmailAddress, username, subject, body);
+        }
+
+
+
+        /**
+* @author Anthony Scheeres
+*/
         internal string validatDeleteUserByModel(string token, UserModel user)
         {
             if (user == null) throw new ArgumentNullException(nameof(user));
 
             string response = ResponseR.fail.ToString();
-            TokenService tokenService = new TokenService();
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            TokenService tokenService = new TokenService(token);
+            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
             if (hasAdminInDatabaseOverApi)
             {
                 userDao.deleteUserByUsername(user);
@@ -171,7 +244,7 @@ namespace ChantemerleApi.Services
 	 */
         private bool isValideUsernamePasswordEmail(string username, string password, string email)
         {
-            return !validateInputUtilities.isNullOrEmty(username) && !validateInputUtilities.isNullOrEmty(password) && validateInputUtilities.IsValidEmail(email);
+            return !ValidateInputUtilities.isNullOrEmty(username) && !ValidateInputUtilities.isNullOrEmty(password) && ValidateInputUtilities.IsValidEmail(email);
 
         }
 
