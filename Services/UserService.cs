@@ -97,6 +97,10 @@ namespace ChantemerleApi.Services
 
         }
 
+        /**
+* @author Anthony Scheeres
+*/
+
         internal string validateMailAgain(string token)
         {
             string response = ResponseR.fail.ToString();
@@ -116,7 +120,7 @@ namespace ChantemerleApi.Services
 
             if (email != null)
             {
-                validateAUsersEmailUsingAValidationEmaill(email, token);
+                validateAUsersEmailUsingAValidationEmaill(email, "Gebruiker", token);
                 response = ResponseR.success.ToString();
             }
             return response;
@@ -181,29 +185,13 @@ namespace ChantemerleApi.Services
         {
 
             MailUtilities mailUtilities = new MailUtilities();
-            string subject = "Please verifieer je email";
+            string protocol = ProtocolModel.http.ToString();
+            string subject = "Please, verifiëer uw email";
             //link to verify email to change the is_email_verified boolean record
             RestApiModel server = DataModel.get().server;
-
+            if (server.UseHttps) protocol = ProtocolModel.https.ToString();
             string body = server.hostName + ":" + server.portNumber + "/api/User/validateToken/" + token;
 
-
-            mailUtilities.sendEmailToAdressWithABodyAndSubjectUsingCredentialsInDataModel(toEmailAddress, username, subject, body);
-        }
-
-        /**
-* @author Anthony Scheeres
-*/
-        private void validateAUsersEmailUsingAValidationEmaill(string toEmailAddress, string token)
-        {
-
-            MailUtilities mailUtilities = new MailUtilities();
-            string subject = "Please verifieer je email";
-            //link to verify email to change the is_email_verified boolean record
-            RestApiModel server = DataModel.get().server;
-
-            string body = server.hostName + ":" + server.portNumber + "/api/User/validateToken/" + token;
-            string username = "ChantemerleApi Gebruiker";
 
             mailUtilities.sendEmailToAdressWithABodyAndSubjectUsingCredentialsInDataModel(toEmailAddress, username, subject, body);
         }

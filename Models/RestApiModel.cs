@@ -6,10 +6,13 @@
 
         public string hostName { get; }
 
-        public RestApiModel(string hostName, int portNumber)
+        public bool UseHttps { get; } //else use http
+
+        public RestApiModel(int portNumber, string hostName, bool useHttps)
         {
             this.portNumber = portNumber;
             this.hostName = hostName;
+            UseHttps = useHttps;
         }
     }
 }
