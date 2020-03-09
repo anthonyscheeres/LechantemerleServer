@@ -28,6 +28,10 @@ namespace ChantemerleApi.Dao
         {
         }
 
+
+        /**
+* @author Anthony Scheeres
+*/
         internal string getEmailUsingToken(string token)
         {
 
@@ -79,6 +83,11 @@ namespace ChantemerleApi.Dao
             connectionWithDatabase.Close();
         }
 
+
+
+        /**
+* @author Anthony Scheeres
+*/
         internal string showAllUsersIncludingAdmins()
         {
             //query for selecting user credentials
@@ -87,6 +96,12 @@ namespace ChantemerleApi.Dao
             string json = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForLoginUser);
             return json;
         }
+
+
+
+        /**
+* @author Anthony Scheeres
+*/
         internal string showAllUsersExcludingAdmins()
         {
             const string sqlQueryForLoginUser = "select username, is_super_user from app_users where  is_super_user = false";
@@ -95,6 +110,11 @@ namespace ChantemerleApi.Dao
             return json;
         }
 
+
+
+        /**
+* @author Anthony Scheeres
+*/
         internal void changePasswordByUserIdInDatabase(string password, double id)
         {
             using var connectionWithDatabase = new NpgsqlConnection(cs);
@@ -117,6 +137,12 @@ namespace ChantemerleApi.Dao
             connectionWithDatabase.Close();
         }
 
+
+
+
+        /**
+* @author Anthony Scheeres
+*/
         internal void changePasswordByUsernameInDatabase(string username, string password)
         {
             using var connectionWithDatabase = new NpgsqlConnection(cs);
@@ -138,6 +164,9 @@ namespace ChantemerleApi.Dao
             command.ExecuteNonQuery();
             connectionWithDatabase.Close();
         }
+
+
+
 
         /**
   * @author Anthony Scheeres
