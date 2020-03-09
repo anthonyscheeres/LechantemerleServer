@@ -14,7 +14,7 @@ namespace ChantemerleApi
     {
         public static void Main(string[] args)
         {
-            DirectoryUtilitiescs directoryUtilitiescs = new DirectoryUtilitiescs("config.json");
+            ConfigFileInDocumetsFolderUtililities directoryUtilitiescs = new ConfigFileInDocumetsFolderUtililities("config.json");
             directoryUtilitiescs.writeDataModelToJsonFileInDocumetsFolder();
 
             CreateHostBuilder(args).Build().Run();

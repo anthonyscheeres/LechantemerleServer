@@ -10,7 +10,7 @@ namespace ChantemerleApi.Dao
 	 */
     public class UserDao
     {
-        private string cs = DataModel.get().databaseCredentials.cs;
+        private string cs = DataModel.getConfigModel().databaseCredentials.cs;
         private readonly DatabaseUtilities databaseUtilities = new DatabaseUtilities();
 
         /**

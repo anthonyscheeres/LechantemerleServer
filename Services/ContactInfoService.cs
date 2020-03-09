@@ -6,7 +6,7 @@ namespace ChantemerleApi.Services
 {
     public class ContactInfoService
     {
-        ContactInfoDao contactInfoDao = new ContactInfoDao();
+        private readonly ContactInfoDao contactInfoDao = new ContactInfoDao();
 
         internal string getContactInfoAsJsonFormatForPublicUsers()
         {
@@ -19,6 +19,8 @@ namespace ChantemerleApi.Services
             //failed response by default
             string response = ResponseR.fail.ToString();
             bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+
+
             if (hasAdminInDatabaseOverApi)
             {
                 contactInfoDao.changeContactInfoByModelInDatabase(contactInfo);
@@ -28,6 +30,7 @@ namespace ChantemerleApi.Services
                
             }
 
+            //return fail or success response
             return response;
         }
 

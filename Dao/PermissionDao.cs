@@ -8,7 +8,7 @@ namespace ChantemerleApi.Dao
     public class PermissionDao
     {
         private readonly DatabaseUtilities databaseUtilities = new DatabaseUtilities();
-        private string cs = DataModel.get().databaseCredentials.cs;
+        private string cs = DataModel.getConfigModel().databaseCredentials.cs;
 
         internal PermissionDao(string cs)
         {

@@ -5,7 +5,7 @@ namespace ChantemerleApi.Dao
 {
     public class TokenDao
     {
-        private string cs = DataModel.get().databaseCredentials.cs;
+        private string cs = DataModel.getConfigModel().databaseCredentials.cs;
 
 
 

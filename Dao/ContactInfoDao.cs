@@ -10,7 +10,7 @@ namespace ChantemerleApi.Dao
 {
     public class ContactInfoDao
     {
-        private string cs = DataModel.get().databaseCredentials.cs;
+        private string cs = DataModel.getConfigModel().databaseCredentials.cs;
         private DatabaseUtilities databaseUtilities = new DatabaseUtilities();
 
         public ContactInfoDao()

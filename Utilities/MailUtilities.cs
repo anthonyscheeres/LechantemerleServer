@@ -8,34 +8,57 @@ using ChantemerleApi.Models;
 
 namespace ChantemerleApi.Utilities
 {
+
+    /**
+* @author Anthony Scheeres
+*/
     public class MailUtilities
 
     {
-        MailAddress fromAddress = new MailAddress(DataModel.get().mailCredentials.username, "Chantemerle");
-        string fromPassword = DataModel.get().mailCredentials.password;
+        MailAddress fromAddress = new MailAddress(DataModel.getConfigModel().mailCredentials.username, "Chantemerle");
+        string fromPassword = DataModel.getConfigModel().mailCredentials.password;
 
+        /**
+* @author Anthony Scheeres
+*/
         public MailUtilities()
         {
 
         }
 
+
+        /**
+* @author Anthony Scheeres
+*/
         public MailUtilities(MailAddress fromAddress, string fromPassword)
         {
             this.fromAddress = fromAddress;
             this.fromPassword = fromPassword;
         }
 
+
+        /**
+* @author Anthony Scheeres
+*/
         public void sendEmailToAdressWithABodyAndSubjectUsingCredentialsInDataModel(string toEmailAddress, string username, string subject, string body)
         {
             sendEmailWithGmailToAdressWithABodyAndSubject(toEmailAddress, username, subject, body);
         }
 
+
+        /**
+* @author Anthony Scheeres
+*/
         public void sendEmailToAdressWithABodyAndSubjectUsingCredentialsInDataModel(string toEmailAddress, string subject, string body)
         {
             string user = "Gebruiker";
             sendEmailWithGmailToAdressWithABodyAndSubject(toEmailAddress, user, subject, body);
         }
 
+
+        /**
+* @author Anthony Scheeres
+*/
         private void sendEmailWithGmailToAdressWithABodyAndSubject(string toEmailAddress, string username, string subject, string body)
         {
 

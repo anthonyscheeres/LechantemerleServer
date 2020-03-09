@@ -4,9 +4,9 @@
     {
         public int portNumber { get;  }
 
-        public string hostName { get; }
+        public string hostName { get; set; }
 
-        public bool UseHttps { get; } //else use http
+        public bool UseHttps { get; set; } //else use http
 
         public RestApiModel(int portNumber, string hostName, bool useHttps)
         {

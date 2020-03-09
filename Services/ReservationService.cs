@@ -4,10 +4,14 @@ using System;
 
 namespace ChantemerleApi.Services
 {
+
+    /**
+* @author Anthony Scheeres
+*/
     public class ReservationService
     {
 
-        readonly ReservationDao reservationDao = new ReservationDao();
+        private readonly ReservationDao reservationDao = new ReservationDao();
         internal string validatDeleteReservationByModel(ReservationModel reservation, string token)
         {
             if (reservation == null) throw new ArgumentNullException(nameof(reservation));

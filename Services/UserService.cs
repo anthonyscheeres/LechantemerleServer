@@ -11,7 +11,7 @@ namespace ChantemerleApi.Services
     public class UserService
     {
 
-        readonly private UserDao userDao = new UserDao();
+        private readonly private UserDao userDao = new UserDao();
 
 
 
@@ -60,7 +60,7 @@ namespace ChantemerleApi.Services
 */
         internal string letAnUserChangeItsOwnUsernameOrPassword(UserModel user, string token)
         {
-
+            //Get tokenServices by passsing the token
             TokenService tokenService = new TokenService(token);
 
             string response = ResponseR.success.ToString();
@@ -188,7 +188,7 @@ namespace ChantemerleApi.Services
             string protocol = ProtocolModel.http.ToString();
             string subject = "Please, verifiëer uw email";
             //link to verify email to change the is_email_verified boolean record
-            RestApiModel server = DataModel.get().server;
+            RestApiModel server = DataModel.getConfigModel().server;
             if (server.UseHttps) protocol = ProtocolModel.https.ToString();
             string body = server.hostName + ":" + server.portNumber + "/api/User/validateToken/" + token;
 

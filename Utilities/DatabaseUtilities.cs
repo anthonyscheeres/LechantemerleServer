@@ -8,7 +8,7 @@ namespace ChantemerleApi.Utilities
     public class DatabaseUtilities
     {
 
-        private string cs = DataModel.get().databaseCredentials.cs;
+        private string cs = DataModel.getConfigModel().databaseCredentials.cs;
 
         public DatabaseUtilities(string cs)
         {

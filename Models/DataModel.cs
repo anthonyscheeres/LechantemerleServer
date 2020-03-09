@@ -3,15 +3,15 @@
 
     public static class DataModel
     {
-        public static ConfigModel config = new ConfigModel();
+        private static ConfigModel config = new ConfigModel();
 
 
-        public static void set(ConfigModel config)
+        public static void setConfigModel(ConfigModel config)
         {
             DataModel.config = config;
         }
 
-        public static ConfigModel get()
+        public static ConfigModel getConfigModel()
         {
             return config;
         }

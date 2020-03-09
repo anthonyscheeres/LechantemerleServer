@@ -29,7 +29,7 @@ namespace ChantemerleApi.Controllers
             return userService.registerValidateUserService(user);
         }
 
-        // PUT: api/User/{token}
+        // PUT: api/User/chanceUsernamePassword/{token}
         [HttpPut("{token}")]
         [Route("chanceUsernamePassword")]
         public string letAnUserChangeItsOwnUsernameOrPassword(string token, [FromBody] UserModel user)
@@ -38,7 +38,7 @@ namespace ChantemerleApi.Controllers
             return userService.letAnUserChangeItsOwnUsernameOrPassword(user, token);
         }
 
-        // DELETE: api/User/deleteUser
+        // DELETE: api/User/deleteUser/{token}
         [HttpDelete("{token}")]
         [Route("deleteUser")]
         public string deleteUserByModel(string token, [FromBody] UserModel user)
@@ -47,7 +47,7 @@ namespace ChantemerleApi.Controllers
             return userService.validatDeleteUserByModel(token, user);
         }
 
-        // GET: api/User/validateToken
+        // GET: api/User/validateToken/{token}
         [HttpGet("token")]
         [Route("validateToken")]
         public string validateToken(string token)
@@ -67,9 +67,10 @@ namespace ChantemerleApi.Controllers
             return permissionService.loginUserAfterValidation(user);
         }
 
-
+        // POST: api/User/validateMail/{token}
         [HttpPost("token")]
         [Route("validateMail")]
+
         public string sendNewValidateEmailLink(string token)
         {
             return userService.validateMailAgain(token);

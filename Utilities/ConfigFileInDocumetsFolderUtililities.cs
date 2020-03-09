@@ -6,33 +6,27 @@ using System.IO;
 
 namespace ChantemerleApi.Utilities
 {
-    public class DirectoryUtilitiescs
+    public class ConfigFileInDocumetsFolderUtililities
     {
 
          string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/ChantemerleServer/";
         string filename = "config.json";
 
-        public DirectoryUtilitiescs(string path, string filename)
-        {
+  
 
-            this.path = path;
-            this.filename = filename;
-        }
-
-        public DirectoryUtilitiescs(string filename)
+        public ConfigFileInDocumetsFolderUtililities(string filename)
         {
             this.filename = filename;
         }
 
-        public DirectoryUtilitiescs()
-        {
-        }
 
-        public ConfigModel writeDataModelToJsonFileInDocumetsFolder()
+        public void writeDataModelToJsonFileInDocumetsFolder()
         {
-
+            //Construct path to file
             string pathToFile = path + filename;
-            Console.WriteLine(pathToFile);
+           
+
+            //Defeault config model
             ConfigModel dataForDefaultConfigModel = new ConfigModel(new DatabaseModel("Host=*******;Username=****;Password=****; Database=****"), 
                 new MailModel("****@gmail.com", "****"), new RestApiModel(44314, "localhost", true) //this is needed do the token system can call itself
 );
@@ -45,23 +39,22 @@ namespace ChantemerleApi.Utilities
             {
                 Directory.CreateDirectory(path);
 
-
+               //Object to indented json string 
                 string json = JsonConvert.SerializeObject(dataForDefaultConfigModel, Formatting.Indented);
 
 
-
+                //Write the json string to a file
                 File.WriteAllText(pathToFile, json);
 
             }
 
-
+            //read file from directory to object
             ConfigModel configTemp = JsonConvert.DeserializeObject<ConfigModel>(File.ReadAllText(pathToFile));
-            DataModel.config = configTemp;
-            Console.WriteLine(configTemp.databaseCredentials.cs);
 
-            return configTemp;
+            //Overwrite the static config model 
+            DataModel.setConfigModel(configTemp);
 
-
+           
         }
 
     }
