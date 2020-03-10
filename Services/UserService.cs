@@ -11,7 +11,7 @@ namespace ChantemerleApi.Services
     public class UserService
     {
 
-        private readonly private UserDao userDao = new UserDao();
+        private readonly UserDao userDao = new UserDao();
 
 
 
@@ -30,7 +30,7 @@ namespace ChantemerleApi.Services
 */
         internal string validateShowAllUsersIncludingAdmins(string token)
         {
-            string response = ResponseR.fail.ToString();
+            string failResponse = ResponseR.fail.ToString(); string response = failResponse;
             TokenService tokenService = new TokenService(token);
             bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
             if (hasAdminInDatabaseOverApi)
@@ -83,15 +83,6 @@ namespace ChantemerleApi.Services
                 return response;
             }
 
-
-
-
-
-
-
-
-
-
             return response;
 
 
@@ -103,7 +94,7 @@ namespace ChantemerleApi.Services
 
         internal string validateMailAgain(string token)
         {
-            string response = ResponseR.fail.ToString();
+            string failResponse = ResponseR.fail.ToString(); string response = failResponse;
             UserDao userDao = new UserDao();
             string email = null;
 
@@ -132,6 +123,8 @@ namespace ChantemerleApi.Services
 */
         internal string validateToken(string token)
         {
+            string failMessage = "URL was expired or invalide please try again!";
+            string response = failMessage;
             TokenService tokenService = new TokenService(token);
             try
             {
@@ -139,10 +132,14 @@ namespace ChantemerleApi.Services
             }
             catch (InvalidCastException error)
             {
+                response = failMessage;
                 return "URL was expired or invalide please try again!";
+
             }
 
-            return "Success; Your account has been verified!";
+            string successMessage = "Success; Your account has been verified!";
+
+            return successMessage;
 
         }
 
@@ -152,7 +149,7 @@ namespace ChantemerleApi.Services
 	 */
         private string validateRegisterUser(string username, string password, string email)
         {
-            string response = ResponseR.fail.ToString();
+            string failResponse = ResponseR.fail.ToString(); string response = failResponse;
             bool isValideInput = isValideUsernamePasswordEmail(username, password, email);
 
             //validate the input if so register user in the database
@@ -164,8 +161,8 @@ namespace ChantemerleApi.Services
 
                 string token = tokenDao.getTokenByUsernameExtremelyClassified(username);
 
-
-                validateAUsersEmailUsingAValidationEmaill(username, email, token);
+                MailService mailService = new MailService(email);
+                mailService.validateAUsersEmailUsingAValidationEmaill(username, token);
                 response = ResponseR.success.ToString();
             }
 
@@ -205,7 +202,7 @@ namespace ChantemerleApi.Services
         {
             if (user == null) throw new ArgumentNullException(nameof(user));
 
-            string response = ResponseR.fail.ToString();
+            string failResponse = ResponseR.fail.ToString(); string response = failResponse;
             TokenService tokenService = new TokenService(token);
             bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
             if (hasAdminInDatabaseOverApi)

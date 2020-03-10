@@ -32,10 +32,10 @@ namespace ChantemerleApi.Controllers
         // PUT: api/Reservation/updateAcceptResevation/{token}
         [Route("updateAcceptResevation")]
         [HttpPut("{token}")]
-        public string updateAcceptResevationByModel(string token, [FromBody] ReservationModel reservation)
+        public string updateAdminAcceptResevationByModel(string token, [FromBody] ReservationModel reservation)
         {
 
-            return reservationService.updateAcceptResevationByModel(token, reservation);
+            return reservationService.updateAdminAcceptResevationByModel(token, reservation);
         }
 
         // GET: api/Reservation/getPendingReservation

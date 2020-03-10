@@ -1,6 +1,7 @@
 using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
 using Npgsql;
+using System;
 
 namespace ChantemerleApi.Dao
 {
@@ -81,6 +82,35 @@ namespace ChantemerleApi.Dao
 
             command.ExecuteNonQuery();
             connectionWithDatabase.Close(); //close the connection to save bandwith
+        }
+
+        internal bool isEnailValideByModel(string token)
+        {
+            const string sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE token = @token AND is_email_verified = true)";
+
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+
+            connectionWithDatabase.Open(); //open the connection
+
+
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+
+
+
+            command.Parameters.AddWithValue("token", token);
+
+
+
+
+
+            command.Prepare(); //Construct and optimize query
+
+            var i = command.ExecuteReader();
+            bool areTheseCredentialsValid = i.GetBoolean(1);
+            connectionWithDatabase.Close(); //close the connection to save bandwith
+            return areTheseCredentialsValid;
+
+
         }
 
 

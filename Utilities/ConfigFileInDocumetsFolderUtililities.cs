@@ -27,8 +27,10 @@ namespace ChantemerleApi.Utilities
            
 
             //Defeault config model
-            ConfigModel dataForDefaultConfigModel = new ConfigModel(new DatabaseModel("Host=*******;Username=****;Password=****; Database=****"), 
-                new MailModel("****@gmail.com", "****"), new RestApiModel(44314, "localhost", true) //this is needed do the token system can call itself
+            ConfigModel dataForDefaultConfigModel = new ConfigModel(
+                new DatabaseModel("Host=*******;Username=****;Password=****; Database=****"), 
+                new MailModel("****@gmail.com", "****"), //email for validation of a users email 
+                new RestApiModel(44314, "localhost", true) //this is needed so the token system can call itself
 );
 
 

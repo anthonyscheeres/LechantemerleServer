@@ -46,7 +46,7 @@ namespace ChantemerleApi.Services
         private string loginUser(string username, string password)
         {
             //response fail message
-            string response = ResponseR.fail.ToString();
+            string failResponse = ResponseR.fail.ToString(); string response = failResponse;
 
             try
             {

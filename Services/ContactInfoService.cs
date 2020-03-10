@@ -17,7 +17,7 @@ namespace ChantemerleApi.Services
         {
             TokenService tokenService = new TokenService(token);
             //failed response by default
-            string response = ResponseR.fail.ToString();
+            string failResponse = ResponseR.fail.ToString(); string response = failResponse;
             bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
 
 

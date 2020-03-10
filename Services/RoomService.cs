@@ -22,7 +22,7 @@ namespace ChantemerleApi.Services
         {
             if (roomModel == null) throw new ArgumentNullException(nameof(roomModel));
             TokenService tokenService = new TokenService(token);
-            string response = ResponseR.fail.ToString();
+            string failResponse = ResponseR.fail.ToString(); string response = failResponse;
             bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
             if (hasAdminInDatabaseOverApi)
             {
