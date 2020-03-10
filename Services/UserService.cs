@@ -2,6 +2,7 @@
 using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
 using System;
+using System.Threading;
 
 namespace ChantemerleApi.Services
 {
@@ -161,8 +162,15 @@ namespace ChantemerleApi.Services
 
                 string token = tokenDao.getTokenByUsernameExtremelyClassified(username);
 
-                MailService mailService = new MailService(email);
-                mailService.validateAUsersEmailUsingAValidationEmaill(username, token);
+
+                new Thread(() =>
+                {
+                    Thread.CurrentThread.IsBackground = true;
+
+                    MailService mailService = new MailService(email);
+                    mailService.validateAUsersEmailUsingAValidationEmaill(username, token);
+                }).Start();
+
                 response = ResponseR.success.ToString();
             }
 

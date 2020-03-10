@@ -48,7 +48,7 @@ namespace ChantemerleApi.Dao
             command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
-            bool hasAdmin = i.GetBoolean(1);
+            bool hasAdmin = i.GetBoolean(i.GetOrdinal("is_super_user"));
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return hasAdmin;
 
@@ -73,7 +73,7 @@ namespace ChantemerleApi.Dao
             command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
-            string hasAdmin = i.GetString(1);
+            string hasAdmin = i.GetString(i.GetOrdinal("token"));
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return hasAdmin;
         }
@@ -98,7 +98,7 @@ namespace ChantemerleApi.Dao
             command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
-            string hasAdmin = i.GetString(1);
+            string hasAdmin = i.GetString(i.GetOrdinal("token"));
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return hasAdmin;
         }
@@ -122,7 +122,7 @@ namespace ChantemerleApi.Dao
 
             var i = command.ExecuteReader();
 
-            double id = i.GetDouble(1);
+            double id = i.GetDouble(i.GetOrdinal("id"));
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return id;
 

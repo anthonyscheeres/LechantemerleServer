@@ -52,7 +52,7 @@ namespace ChantemerleApi.Dao
             command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
-            bool credentialsAreValid = i.GetBoolean(1);
+            bool credentialsAreValid = i.GetBoolean(i.GetOrdinal("username"));
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return credentialsAreValid;
 
@@ -85,7 +85,7 @@ namespace ChantemerleApi.Dao
             command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
-            bool areTheseCredentialsValid = i.GetBoolean(1);
+            bool areTheseCredentialsValid = i.GetBoolean(i.GetOrdinal("username"));
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return areTheseCredentialsValid;
 

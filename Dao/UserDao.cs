@@ -51,7 +51,7 @@ namespace ChantemerleApi.Dao
             command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
-            string hasAdmin = i.GetString(1);
+            string hasAdmin = i.GetString(i.GetOrdinal("email"));
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return hasAdmin;
         }
@@ -63,6 +63,7 @@ namespace ChantemerleApi.Dao
         internal void sendQueryToDatabaseToRegisterUser(string username, string password, string email)
         {
             const bool is_super_user = false;
+            const bool is_email_verified = false;
             using var connectionWithDatabase = new NpgsqlConnection(cs);
             connectionWithDatabase.Open(); //open the connection
 
@@ -74,7 +75,7 @@ namespace ChantemerleApi.Dao
             command.Parameters.AddWithValue("username", username);
             command.Parameters.AddWithValue("password", password);
             command.Parameters.AddWithValue("is_super_user", is_super_user);
-            command.Parameters.AddWithValue("is_email_verified", email);
+            command.Parameters.AddWithValue("is_email_verified", is_email_verified);
             command.Parameters.AddWithValue("email", email);
 
 
@@ -106,7 +107,7 @@ namespace ChantemerleApi.Dao
             command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
-            bool areTheseCredentialsValid = i.GetBoolean(1);
+            bool areTheseCredentialsValid = i.GetBoolean(i.GetOrdinal("username"));
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return areTheseCredentialsValid;
 
