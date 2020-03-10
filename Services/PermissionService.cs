@@ -46,24 +46,32 @@ namespace ChantemerleApi.Services
         private string loginUser(string username, string password)
         {
             //response fail message
-            string failResponse = ResponseR.fail.ToString(); string response = failResponse;
+
+            string failResponse = ResponseR.fail.ToString();
+
+            string response = failResponse;
+            bool hasCorrectCrecdentials = false;
 
             try
             {
                 //check if username and password combo exist only works if usernames stay unique
-                bool hasCorrectCrecdentials = permissionDao.checkUsernameAndPassword(username, password);
+                hasCorrectCrecdentials = permissionDao.checkUsernameAndPassword(username, password);
 
             }
-            catch (InvalidCastException error)
+            catch (InvalidOperationException error)
             {
                 //return the reponse so the unauthorised user doesn't get a token
                 return response;
             }
 
-
+            if (hasCorrectCrecdentials)
+            {
+                string successfulResponse = ResponseR.success.ToString(); response = successfulResponse;
 
                 response = permissionDao.getSensitiveUserInfoFromDatabaseByUsername(username);
-        
+            }
+
+
             return response;
         }
 

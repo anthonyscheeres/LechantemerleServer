@@ -11,6 +11,10 @@ public class UserModel
     public bool is_super_user { get; set; }
     public string token { get; set; }
 
+    public UserModel()
+    {
+    }
+
 
 
     /**

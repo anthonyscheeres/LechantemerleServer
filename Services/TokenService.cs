@@ -34,7 +34,7 @@ namespace ChantemerleApi.Services
 
             }
 
-            catch (InvalidCastException error)
+            catch (InvalidOperationException error)
             {
                 //pars error means a problem in the query. 
                 response = false;

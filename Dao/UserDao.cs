@@ -67,15 +67,15 @@ namespace ChantemerleApi.Dao
             connectionWithDatabase.Open(); //open the connection
 
 
-            var sqlQueryForRegistingUser = "INSERT INTO app_users(username, password, is_super_user, email, token) VALUES(@username, @password, @is_super_user, @email, concat(md5(@username), md5((random()::text))));";
+            var sqlQueryForRegistingUser = "INSERT INTO app_users(username, password, is_super_user, email,  is_email_verified, token) VALUES(@username, @password, @is_super_user, @email,  @is_email_verified,concat(md5(@username), md5((random()::text))));";
             using NpgsqlCommand command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
 
             //add parameters 
             command.Parameters.AddWithValue("username", username);
             command.Parameters.AddWithValue("password", password);
             command.Parameters.AddWithValue("is_super_user", is_super_user);
-            command.Parameters.AddWithValue("is_super_user", email);
-
+            command.Parameters.AddWithValue("is_email_verified", email);
+            command.Parameters.AddWithValue("email", email);
 
 
             command.Prepare(); //Construct and optimize query

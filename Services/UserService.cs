@@ -76,7 +76,7 @@ namespace ChantemerleApi.Services
 
             }
             //catch if no id was found in database based on the token
-            catch (InvalidCastException error)
+            catch (InvalidOperationException error)
             {
 
                 response = ResponseR.fail.ToString();
@@ -102,7 +102,7 @@ namespace ChantemerleApi.Services
             {
                 email = userDao.getEmailUsingToken(token);
             }
-            catch (InvalidCastException)
+            catch (InvalidOperationException)
             {
                 return response;
             }
@@ -130,7 +130,7 @@ namespace ChantemerleApi.Services
             {
                 tokenService.TokenToUserId();
             }
-            catch (InvalidCastException error)
+            catch (InvalidOperationException error)
             {
                 response = failMessage;
                 return "URL was expired or invalide please try again!";
