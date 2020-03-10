@@ -21,26 +21,26 @@ namespace ChantemerleApi.Dao
 
         private string constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(bool isAccepted)
         {
-            string sqlQueryFroGettingReservationInformation = "select app_users.username, app_users.email, reservations.time_from, reservations.time_till, reservations.id, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at  from reservations left join app_users on reservations.user_id = app_users.id";
+            const string sqlQueryFroGettingReservationInformation = "select app_users.username, app_users.email, reservations.time_from, reservations.time_till, reservations.id, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at  from reservations left join app_users on reservations.user_id = app_users.id";
 
             string sqlDontSelectPastResrvations = " and reservations.time_till>now()";
 
             const string queryExtensionToSelectAcceptedReservations = " where reservations.user_id IS NOT NULL";
             const string queryExtensionToSelectNonAcceptedReservations = " where reservations.user_id IS NULL";
 
-            string tooAdToQuery = queryExtensionToSelectNonAcceptedReservations ;
+            string tooAdToQuery = queryExtensionToSelectNonAcceptedReservations; 
 
 
-            if (isAccepted)
+            if (isAccepted) //if reservation is accepted bij admin display these reservations
             {
-                tooAdToQuery = queryExtensionToSelectAcceptedReservations;
+                tooAdToQuery = queryExtensionToSelectAcceptedReservations; //add to query
             }
 
             tooAdToQuery = tooAdToQuery + sqlDontSelectPastResrvations; //add to query to only display future reservations
 
-            sqlQueryFroGettingReservationInformation = sqlQueryFroGettingReservationInformation + tooAdToQuery;
+            string sqlQueryFroGettingReservationInformationConstuctedBasedOnWheterIsAccpetedOrNot = sqlQueryFroGettingReservationInformation + tooAdToQuery; //construc the query and return
 
-            return sqlQueryFroGettingReservationInformation;
+            return sqlQueryFroGettingReservationInformationConstuctedBasedOnWheterIsAccpetedOrNot;
         }
 
         internal void addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(ReservationModel reservation)
