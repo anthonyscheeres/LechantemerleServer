@@ -34,12 +34,12 @@ namespace ChantemerleApi.Utilities
         {
             using var connectionWithDatabase = new NpgsqlConnection(cs);
 
-            connectionWithDatabase.Open();
+            connectionWithDatabase.Open(); //open the connection
 
 
             using NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connectionWithDatabase);
 
-            command.Prepare();
+            command.Prepare(); //Construct and optimize query
 
             var readerContainingTheDataFromTheDatabase = command.ExecuteReader();
 
@@ -48,7 +48,7 @@ namespace ChantemerleApi.Utilities
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(dataTable);
 
-            connectionWithDatabase.Close();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
             return JSONString;
 
 

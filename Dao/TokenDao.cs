@@ -37,7 +37,7 @@ namespace ChantemerleApi.Dao
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);
 
-            connectionWithDatabase.Open();
+            connectionWithDatabase.Open(); //open the connection
 
 
             using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
@@ -45,11 +45,11 @@ namespace ChantemerleApi.Dao
 
             command.Parameters.AddWithValue("token", token);
 
-            command.Prepare();
+            command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
             bool hasAdmin = i.GetBoolean(1);
-            connectionWithDatabase.Close();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
             return hasAdmin;
 
         }
@@ -62,7 +62,7 @@ namespace ChantemerleApi.Dao
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);
 
-            connectionWithDatabase.Open();
+            connectionWithDatabase.Open(); //open the connection
 
 
             using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
@@ -70,11 +70,11 @@ namespace ChantemerleApi.Dao
 
             command.Parameters.AddWithValue("username", username);
 
-            command.Prepare();
+            command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
             string hasAdmin = i.GetString(1);
-            connectionWithDatabase.Close();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
             return hasAdmin;
         }
 
@@ -87,7 +87,7 @@ namespace ChantemerleApi.Dao
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);
 
-            connectionWithDatabase.Open();
+            connectionWithDatabase.Open(); //open the connection
 
 
             using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
@@ -95,11 +95,11 @@ namespace ChantemerleApi.Dao
 
             command.Parameters.AddWithValue("id", id);
 
-            command.Prepare();
+            command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
             string hasAdmin = i.GetString(1);
-            connectionWithDatabase.Close();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
             return hasAdmin;
         }
 
@@ -110,7 +110,7 @@ namespace ChantemerleApi.Dao
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);
 
-            connectionWithDatabase.Open();
+            connectionWithDatabase.Open(); //open the connection
 
 
             using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
@@ -118,12 +118,12 @@ namespace ChantemerleApi.Dao
 
             command.Parameters.AddWithValue("token", token);
 
-            command.Prepare();
+            command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
 
             double id = i.GetDouble(1);
-            connectionWithDatabase.Close();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
             return id;
 
         }

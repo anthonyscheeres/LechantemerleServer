@@ -35,7 +35,7 @@ namespace ChantemerleApi.Dao
            
             using var connectionWithDatabase = new NpgsqlConnection(cs);
 
-            connectionWithDatabase.Open();
+            connectionWithDatabase.Open(); //open the connection
 
 
             using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
@@ -49,11 +49,11 @@ namespace ChantemerleApi.Dao
 
 
 
-            command.Prepare();
+            command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
             bool credentialsAreValid = i.GetBoolean(1);
-            connectionWithDatabase.Close();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
             return credentialsAreValid;
 
 
@@ -68,7 +68,7 @@ namespace ChantemerleApi.Dao
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);
 
-            connectionWithDatabase.Open();
+            connectionWithDatabase.Open(); //open the connection
 
 
             using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
@@ -82,11 +82,11 @@ namespace ChantemerleApi.Dao
 
 
 
-            command.Prepare();
+            command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
             bool areTheseCredentialsValid = i.GetBoolean(1);
-            connectionWithDatabase.Close();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
             return areTheseCredentialsValid;
 
 

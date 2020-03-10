@@ -21,8 +21,10 @@ namespace ChantemerleApi.Services
             bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
 
 
+            //check if it's admin
             if (hasAdminInDatabaseOverApi)
             {
+
                 contactInfoDao.changeContactInfoByModelInDatabase(contactInfo);
 
                 //change to success response and return 

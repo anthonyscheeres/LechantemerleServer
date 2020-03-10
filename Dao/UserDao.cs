@@ -39,7 +39,7 @@ namespace ChantemerleApi.Dao
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);
 
-            connectionWithDatabase.Open();
+            connectionWithDatabase.Open(); //open the connection
 
 
             using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
@@ -47,11 +47,11 @@ namespace ChantemerleApi.Dao
 
             command.Parameters.AddWithValue("token", token);
 
-            command.Prepare();
+            command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
             string hasAdmin = i.GetString(1);
-            connectionWithDatabase.Close();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
             return hasAdmin;
         }
 
@@ -63,7 +63,7 @@ namespace ChantemerleApi.Dao
         {
             const bool is_super_user = false;
             using var connectionWithDatabase = new NpgsqlConnection(cs);
-            connectionWithDatabase.Open();
+            connectionWithDatabase.Open(); //open the connection
 
 
             var sqlQueryForRegistingUser = "INSERT INTO app_users(username, password, is_super_user, email, token) VALUES(@username, @password, @is_super_user, @email, concat(md5(@username), md5((random()::text))));";
@@ -77,10 +77,10 @@ namespace ChantemerleApi.Dao
 
 
 
-            command.Prepare();
+            command.Prepare(); //Construct and optimize query
 
             command.ExecuteNonQuery();
-            connectionWithDatabase.Close();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
         }
 
 
@@ -118,7 +118,7 @@ namespace ChantemerleApi.Dao
         internal void changePasswordByUserIdInDatabase(string password, double id)
         {
             using var connectionWithDatabase = new NpgsqlConnection(cs);
-            connectionWithDatabase.Open();
+            connectionWithDatabase.Open(); //open the connection
 
 
             var sqlQueryForRegistingUser = "update  app_users set password = @password where id = @id;";
@@ -131,10 +131,10 @@ namespace ChantemerleApi.Dao
 
 
 
-            command.Prepare();
+            command.Prepare(); //Construct and optimize query
 
             command.ExecuteNonQuery();
-            connectionWithDatabase.Close();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
         }
 
 
@@ -146,7 +146,7 @@ namespace ChantemerleApi.Dao
         internal void changePasswordByUsernameInDatabase(string username, string password)
         {
             using var connectionWithDatabase = new NpgsqlConnection(cs);
-            connectionWithDatabase.Open();
+            connectionWithDatabase.Open(); //open the connection
 
 
             var sqlQueryForRegistingUser = "update  app_users set password = @password where username = @username;";
@@ -159,10 +159,10 @@ namespace ChantemerleApi.Dao
 
 
 
-            command.Prepare();
+            command.Prepare(); //Construct and optimize query
 
             command.ExecuteNonQuery();
-            connectionWithDatabase.Close();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
         }
 
 
@@ -174,7 +174,7 @@ namespace ChantemerleApi.Dao
         internal void deleteUserByUsername(UserModel user)
         {
             using var connectionWithDatabase = new NpgsqlConnection(cs);
-            connectionWithDatabase.Open();
+            connectionWithDatabase.Open(); //open the connection
 
 
             var sqlQueryForRegistingUser = "delete from app_users where username = @username";
@@ -182,10 +182,10 @@ namespace ChantemerleApi.Dao
 
             command.Parameters.AddWithValue("username", user.username);
 
-            command.Prepare();
+            command.Prepare(); //Construct and optimize query
 
             command.ExecuteNonQuery();
-            connectionWithDatabase.Close();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
         }
     }
 }

@@ -31,17 +31,17 @@ namespace ChantemerleApi.Dao
         {
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);
-            connectionWithDatabase.Open();
+            connectionWithDatabase.Open(); //open the connection
 
 
             const string sqlQueryForRegistingUser = "INSERT INTO rooms(amount_of_beds) VALUES(@amount_of_beds)";
             using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
 
             command.Parameters.AddWithValue("amount_of_beds", amountOfBedsInTheRoom);
-            command.Prepare();
+            command.Prepare(); //Construct and optimize query
 
             command.ExecuteNonQuery();
-            connectionWithDatabase.Close();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
         }
 
         private string generateQueryForAllRoomsOitOrInOrder(bool isOutOfOrder)
