@@ -6,11 +6,13 @@
 
         public string password { get; set; }
 
-        public MailModel(string username, string password)
+        public string mailService { get; set; }
+
+        public MailModel(string username, string password, string mailService)
         {
             this.username = username;
             this.password = password;
+            this.mailService = mailService;
         }
-
     }
 }

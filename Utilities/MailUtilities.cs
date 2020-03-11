@@ -15,8 +15,9 @@ namespace ChantemerleApi.Utilities
     public class MailUtilities
 
     {
-        MailAddress fromAddress = new MailAddress(DataModel.getConfigModel().mailCredentials.username, "Chantemerle");
-        string fromPassword = DataModel.getConfigModel().mailCredentials.password;
+        private MailAddress fromAddress = new MailAddress(DataModel.getConfigModel().mailCredentials.username, "Chantemerle");
+        private string fromPassword = DataModel.getConfigModel().mailCredentials.password;
+        private string mailClient = DataModel.getConfigModel().mailCredentials.mailService;
 
         /**
 * @author Anthony Scheeres
@@ -26,14 +27,11 @@ namespace ChantemerleApi.Utilities
 
         }
 
-
-        /**
-* @author Anthony Scheeres
-*/
-        public MailUtilities(MailAddress fromAddress, string fromPassword)
+        public MailUtilities(MailAddress fromAddress, string fromPassword, string mailClient)
         {
             this.fromAddress = fromAddress;
             this.fromPassword = fromPassword;
+            this.mailClient = mailClient;
         }
 
 
@@ -67,7 +65,7 @@ namespace ChantemerleApi.Utilities
 
             var smtp = new SmtpClient
             {
-                Host = "smtp.gmail.com",
+                Host = this.mailClient,
                 Port = 587,
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
