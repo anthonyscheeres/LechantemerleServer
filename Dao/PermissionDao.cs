@@ -1,7 +1,9 @@
 ﻿using ChantemerleApi.Models;
-using Npgsql;
-using Newtonsoft.Json;
 using ChantemerleApi.Utilities;
+using Newtonsoft.Json;
+using Npgsql;
+using System;
+using System.Data;
 
 namespace ChantemerleApi.Dao
 {
@@ -32,7 +34,7 @@ namespace ChantemerleApi.Dao
             const string sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE username = @username AND password = @password)";
 
 
-           
+
             using var connectionWithDatabase = new NpgsqlConnection(cs);
 
             connectionWithDatabase.Open(); //open the connection
@@ -52,7 +54,12 @@ namespace ChantemerleApi.Dao
             command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
-            bool credentialsAreValid = i.GetBoolean(i.GetOrdinal("username"));
+            bool credentialsAreValid = false;
+            string columnName = "exists";
+            int index = (i.GetOrdinal("exists"));
+
+            PsqlUtilities.GetAll(i).ForEach(r => { Console.WriteLine(r.GetValue(0).ToString()); if (r.GetValue(0).ToString().ToLower() == "true") credentialsAreValid = true; });
+
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return credentialsAreValid;
 
@@ -85,7 +92,8 @@ namespace ChantemerleApi.Dao
             command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
-            bool areTheseCredentialsValid = i.GetBoolean(i.GetOrdinal("username"));
+            bool areTheseCredentialsValid = false;
+            PsqlUtilities.GetAll(i).ForEach(r => { Console.WriteLine(r.GetValue(0).ToString()); if (r.GetValue(0).ToString().ToLower() == "true") areTheseCredentialsValid = true; });
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return areTheseCredentialsValid;
 
@@ -101,9 +109,38 @@ namespace ChantemerleApi.Dao
             //using MD5 to construct a random and unique token
             const string sqlQueryForLoginUser = "update app_users set token = oncat(md5(@username), md5((random()::text))) where username = @username  ; select is_super_user, username, token, is_email_verified from app_users where username=@username;";
 
-            //send query 
-            string json = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForLoginUser);
-            return json;
+
+            /* command.Parameters.AddWithValue("username", username);
+             command.Prepare(); //Construct and optimize query
+*/
+
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+
+            connectionWithDatabase.Open(); //open the connection
+
+
+            using NpgsqlCommand cmd = new NpgsqlCommand(sqlQueryForLoginUser, connectionWithDatabase);
+            cmd.Parameters.AddWithValue("username", username);
+            cmd.Prepare(); //Construct and optimize query
+
+
+            using NpgsqlDataReader readerContainingTheDataFromTheDatabase = cmd.ExecuteReader();
+
+
+
+
+            var dataTable = new DataTable();
+            dataTable.Load(readerContainingTheDataFromTheDatabase);
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(dataTable);
+
+            connectionWithDatabase.Close(); //close the connection to save bandwith
+            return JSONString;
+
+
+
+
+
         }
 
 

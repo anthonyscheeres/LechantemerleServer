@@ -1,5 +1,7 @@
 ﻿using ChantemerleApi.Models;
+using ChantemerleApi.Utilities;
 using Npgsql;
+using System;
 
 namespace ChantemerleApi.Dao
 {
@@ -48,9 +50,10 @@ namespace ChantemerleApi.Dao
             command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
-            bool hasAdmin = i.GetBoolean(i.GetOrdinal("is_super_user"));
+            bool areTheseCredentialsValid= false;
+            PsqlUtilities.GetAll(i).ForEach(r => { Console.WriteLine(r.GetValue(0).ToString()); if (r.GetValue(0).ToString().ToLower() == "true") areTheseCredentialsValid = true; });
             connectionWithDatabase.Close(); //close the connection to save bandwith
-            return hasAdmin;
+            return areTheseCredentialsValid;
 
         }
 
@@ -98,6 +101,9 @@ namespace ChantemerleApi.Dao
             command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
+
+
+
             string hasAdmin = i.GetString(i.GetOrdinal("token"));
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return hasAdmin;
@@ -121,8 +127,10 @@ namespace ChantemerleApi.Dao
             command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
+            int id = 0;
+            PsqlUtilities.GetAll(i).ForEach(r => { Console.WriteLine(r.GetValue(0).ToString()); if (ValidateInputUtilities.isNumeric(r.GetValue(0).ToString())) id = int.Parse(r.GetValue(0).ToString()); });
+            if (id ==0) { throw new ArgumentNullException(); }
 
-            double id = i.GetDouble(i.GetOrdinal("id"));
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return id;
 

@@ -51,18 +51,18 @@ namespace ChantemerleApi.Services
 
             string response = failResponse;
             bool hasCorrectCrecdentials = false;
-
+/*
             try
-            {
+            {*/
                 //check if username and password combo exist only works if usernames stay unique
                 hasCorrectCrecdentials = permissionDao.checkUsernameAndPassword(username, password);
 
-            }
+      /*      }
             catch (InvalidOperationException error)
             {
                 //return the reponse so the unauthorised user doesn't get a token
                 return response;
-            }
+            }*/
 
             if (hasCorrectCrecdentials)
             {

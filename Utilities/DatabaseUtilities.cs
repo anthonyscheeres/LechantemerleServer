@@ -17,7 +17,7 @@ namespace ChantemerleApi.Utilities
 
         public DatabaseUtilities()
         {
- 
+
         }
 
         public string sendSelectQueryToDatabaseReturnJson(string sqlQuery)
@@ -37,19 +37,17 @@ namespace ChantemerleApi.Utilities
             connectionWithDatabase.Open(); //open the connection
 
 
-            using NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connectionWithDatabase);
+            using (NpgsqlCommand cmd = new NpgsqlCommand(sqlQuery, connectionWithDatabase))
+            using (NpgsqlDataReader readerContainingTheDataFromTheDatabase = cmd.ExecuteReader())
+            {
+                var dataTable = new DataTable();
+                dataTable.Load(readerContainingTheDataFromTheDatabase);
+                string JSONString = string.Empty;
+                JSONString = JsonConvert.SerializeObject(dataTable);
 
-            command.Prepare(); //Construct and optimize query
-
-            var readerContainingTheDataFromTheDatabase = command.ExecuteReader();
-
-            var dataTable = new DataTable();
-            dataTable.Load(readerContainingTheDataFromTheDatabase);
-            string JSONString = string.Empty;
-            JSONString = JsonConvert.SerializeObject(dataTable);
-
-            connectionWithDatabase.Close(); //close the connection to save bandwith
-            return JSONString;
+                connectionWithDatabase.Close(); //close the connection to save bandwith
+                return JSONString;
+            }
 
 
 
