@@ -76,7 +76,8 @@ namespace ChantemerleApi.Dao
             command.Prepare(); //Construct and optimize query
 
             var i = command.ExecuteReader();
-            string hasAdmin = i.GetString(i.GetOrdinal("token"));
+            string hasAdmin = "";
+            PsqlUtilities.GetAll(i).ForEach(r => { Console.WriteLine(r.GetValue(0).ToString()); if (r.GetValue(0).ToString().Length >= 1) hasAdmin = r.GetValue(0).ToString(); });
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return hasAdmin;
         }
@@ -102,9 +103,9 @@ namespace ChantemerleApi.Dao
 
             var i = command.ExecuteReader();
 
+            string hasAdmin = "";
 
-
-            string hasAdmin = i.GetString(i.GetOrdinal("token"));
+            PsqlUtilities.GetAll(i).ForEach(r => { Console.WriteLine(r.GetValue(0).ToString()); if (r.GetValue(0).ToString().Length >= 1) hasAdmin = r.GetValue(0).ToString(); });
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return hasAdmin;
         }

@@ -25,14 +25,14 @@ namespace ChantemerleApi.Services
             string subject = "Please, verifiëer uw email";
             //link to verify email to change the is_email_verified boolean record
             RestApiModel server = DataModel.getConfigModel().server;
-           string https = ProtocolModel.https.ToString();
+            string https = ProtocolModel.https.ToString();
 
             //https string 
             if (server.UseHttps) protocol = https;
 
             //construct url to api
-            string body = server.hostName + ":" + server.portNumber + "/api/User/validateToken/" + token;
-            
+            string body = protocol + "://" + server.hostName + ":" + server.portNumber + "/api/User/validateToken?token=" + token;
+
             //make a copy of the field 
             string toEmailAddress = email;
 

@@ -67,7 +67,7 @@ namespace ChantemerleApi.Services
             if (hasCorrectCrecdentials)
             {
                 string successfulResponse = ResponseR.success.ToString(); response = successfulResponse;
-
+                permissionDao.changeTokenInDataBaseByUsernameBeforeLoginIn(username);
                 response = permissionDao.getSensitiveUserInfoFromDatabaseByUsername(username);
             }
 

@@ -107,7 +107,9 @@ namespace ChantemerleApi.Dao
         internal string getSensitiveUserInfoFromDatabaseByUsername(string username)
         {
             //using MD5 to construct a random and unique token
-            const string sqlQueryForLoginUser = "update app_users set token = oncat(md5(@username), md5((random()::text))) where username = @username  ; select is_super_user, username, token, is_email_verified from app_users where username=@username;";
+            const string sqlQueryForLoginUser = "update app_users set token = concat(md5(@username), md5((random()::text))) where username = @username  ; ";
+
+            const string sqlQueryForLoginUser2 = "select is_super_user, username, token, is_email_verified from app_users where username=@username;";
 
 
             /* command.Parameters.AddWithValue("username", username);
@@ -119,10 +121,10 @@ namespace ChantemerleApi.Dao
             connectionWithDatabase.Open(); //open the connection
 
 
-            using NpgsqlCommand cmd = new NpgsqlCommand(sqlQueryForLoginUser, connectionWithDatabase);
+            using NpgsqlCommand cmd = new NpgsqlCommand(sqlQueryForLoginUser2, connectionWithDatabase);
             cmd.Parameters.AddWithValue("username", username);
             cmd.Prepare(); //Construct and optimize query
-
+            
 
             using NpgsqlDataReader readerContainingTheDataFromTheDatabase = cmd.ExecuteReader();
 
@@ -143,6 +145,26 @@ namespace ChantemerleApi.Dao
 
         }
 
+        internal void changeTokenInDataBaseByUsernameBeforeLoginIn(string username)
+        {
+            //using MD5 to construct a random and unique token
+            const string sqlQueryForLoginUser = "update app_users set token = concat(md5(@username), md5((random()::text))) where username = @username  ; ";
+
+
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+
+            connectionWithDatabase.Open(); //open the connection
+
+
+            using NpgsqlCommand cmd = new NpgsqlCommand(sqlQueryForLoginUser, connectionWithDatabase);
+            cmd.Parameters.AddWithValue("username", username);
+            cmd.Prepare(); //Construct and optimize query
+
+
+            cmd.ExecuteNonQuery();
+
+
+        }
 
 
     }

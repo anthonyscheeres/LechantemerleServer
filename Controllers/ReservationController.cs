@@ -19,7 +19,7 @@ namespace ChantemerleApi.Controllers
         ReservationService reservationService = new ReservationService();
 
 
-        // GET: api/Reservation/getAccpetedReservation/{token}
+        // GET: api/Reservation/getAccpetedReservation?token={token}
         [Route("getAcceptedReservation")]
         [HttpGet("{token}")]
         public string getAccpetedReservation(string token)
@@ -29,7 +29,7 @@ namespace ChantemerleApi.Controllers
 
 
 
-        // PUT: api/Reservation/updateAcceptResevation/{token}
+        // PUT: api/Reservation/updateAcceptResevation?token={token}
         [Route("updateAcceptResevation")]
         [HttpPut("{token}")]
         public string updateAdminAcceptResevationByModel(string token, [FromBody] ReservationModel reservation)
@@ -46,7 +46,7 @@ namespace ChantemerleApi.Controllers
             return reservationService.getPendingReservation();
         }
 
-        // POST: api/Reservation/addPendingReservation/{token}
+        // POST: api/Reservation/addPendingReservation?token={token}
         [Route("addPendingReservation")]
         [HttpPost("{token}")]
         public string addPendingReservation([FromBody] ReservationModel reservation, string token)
@@ -55,7 +55,7 @@ namespace ChantemerleApi.Controllers
         }
 
 
-        // PUT: api/Reservation/claimReservations/{token}
+        // PUT: api/Reservation/claimReservations?token={token}
         [Route("claimReservations")]
         [HttpPut("{token}")]
         public string customerAcceptPendingReservation(string token, [FromBody] ReservationModel reservation)
@@ -64,7 +64,7 @@ namespace ChantemerleApi.Controllers
             return reservationService.customerAcceptPendingReservationPotential(reservation, token);
         }
 
-        //DELETE : api/Reservation/deleteReservation/{token}
+        //DELETE : api/Reservation/deleteReservation?token={token}
         [Route("deleteReservation")]
         [HttpDelete("{token}")]
         public string deleteReservation(string token, [FromBody] ReservationModel reservation)

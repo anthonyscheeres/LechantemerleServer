@@ -20,7 +20,7 @@ namespace ChantemerleApi.Controllers
         }
 
 
-        // POST api/room/addRoom/{token}
+        // POST api/room/addRoom?token={token}
 
         [Route("addRoom")]
         [HttpPost("{token}")]

@@ -8,6 +8,12 @@ namespace ChantemerleApi.Utilities
 {
     public static class PsqlUtilities
     {
+
+
+/*
+ *This methode doesn't seem to work with less rows than 2
+ * 
+             */
         public static object GetString(this NpgsqlDataReader source, string colname)
         {
             if (string.IsNullOrEmpty(colname))

@@ -21,7 +21,7 @@ namespace ChantemerleApi.Controllers
 
 
 
-        // PUT: api/ContactInfo/ChangeContactInfo/{token}
+        // PUT: api/ContactInfo/ChangeContactInfo?token={token}
         [Route("changeContactInfo")]
         [HttpPut("{token}")]
         public string changeContactInfo(string token, [FromBody] ContactInfoModel contactInfo)
