@@ -89,7 +89,7 @@ namespace ChantemerleApi.Services
             string email = null;
 
          
-                email = userDao.getEmailUsingToken(token);
+                email = userDao.getEmailUsingTokenThrowNewException(token);
         
 
 

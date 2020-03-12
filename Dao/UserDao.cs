@@ -33,7 +33,7 @@ namespace ChantemerleApi.Dao
         /**
 * @author Anthony Scheeres
 */
-        internal string getEmailUsingToken(string token)
+        private string getEmailUsingToken(string token)
         {
 
             var sqlQueryForRegistingUser = "select email from app_users where token = @token";
@@ -49,14 +49,23 @@ namespace ChantemerleApi.Dao
             command.Parameters.AddWithValue("token", token);
 
             command.Prepare(); //Construct and optimize query
-            string hasAdmin = "";
+            string emailToReturn = "";
             var i = command.ExecuteReader();
-            PsqlUtilities.GetAll(i).ForEach(r => { Console.WriteLine(r.GetValue(0).ToString()); if (r.GetValue(0).ToString().Length >= 1) hasAdmin = r.GetValue(0).ToString(); });
+            PsqlUtilities.GetAll(i).ForEach(r => { Console.WriteLine(r.GetValue(0).ToString()); if (r.GetValue(0).ToString().Length >= 1) emailToReturn = r.GetValue(0).ToString(); });
             connectionWithDatabase.Close(); //close the connection to save bandwith
-            if (hasAdmin == null) { throw new ArgumentNullException(); }
 
-            return hasAdmin;
+            return emailToReturn;
         }
+        internal string getEmailUsingTokenThrowNewException(string token)
+        {
+            string email = getEmailUsingToken(token);
+
+
+            if (email == null) { throw new ArgumentNullException(); }
+
+            return email;
+        }
+
 
 
         /**
@@ -112,7 +121,7 @@ namespace ChantemerleApi.Dao
             bool areTheseCredentialsValid = false;
 
             PsqlUtilities.GetAll(i).ForEach(r => { Console.WriteLine(r.GetValue(0).ToString()); if (r.GetValue(0).ToString().ToLower() == "true") areTheseCredentialsValid = true; });
-           
+
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return areTheseCredentialsValid;
 

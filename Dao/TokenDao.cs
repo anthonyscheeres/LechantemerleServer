@@ -111,7 +111,7 @@ namespace ChantemerleApi.Dao
         }
 
 
-        internal double TokenToUserId(string token)
+        private double TokenToUserIdn(string token)
         {
             var sqlQueryForRegistingUser = "select id from app_users where token=@token";
 
@@ -130,13 +130,23 @@ namespace ChantemerleApi.Dao
             var i = command.ExecuteReader();
             int id = 0;
             PsqlUtilities.GetAll(i).ForEach(r => { Console.WriteLine(r.GetValue(0).ToString()); if (ValidateInputUtilities.isNumeric(r.GetValue(0).ToString())) id = int.Parse(r.GetValue(0).ToString()); });
-            if (id ==0) { throw new ArgumentNullException(); }
+         
 
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return id;
 
         }
+        internal double TokenToUserIdThrowsException(string token)
+        {
+            double id = TokenToUserIdn(token);
 
+
+            if (id == 0) { throw new ArgumentNullException(); }
+
+      
+            return id;
+
+        }
 
 
     }

@@ -45,7 +45,7 @@ namespace ChantemerleApi.Services
 */
         internal double TokenToUserId()
         {
-            return tokenDao.TokenToUserId(this.token);
+            return tokenDao.TokenToUserIdThrowsException(this.token);
         }
 
     }
