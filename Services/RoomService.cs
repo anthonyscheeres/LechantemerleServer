@@ -21,15 +21,22 @@ namespace ChantemerleApi.Services
         internal string ValidateAddRoom(RoomModel roomModel, string token)
         {
             if (roomModel == null) throw new ArgumentNullException(nameof(roomModel));
+            return AddRoom(roomModel, token);
+        }
+
+        private string AddRoom(RoomModel roomModel, string token)
+        {
             TokenService tokenService = new TokenService(token);
-            string failResponse = ResponseR.fail.ToString(); 
+            string successResponse = ResponseR.success.ToString();
+
             tokenService.getPermissionFromDatabaseByTokenIsAdmin();
             string response;
-                roomDao.sendQueryToDatabaseToAddBed(roomModel.amountOfBeds);
-                response = ResponseR.success.ToString();
-    
+
+            roomDao.sendQueryToDatabaseToAddBed(roomModel.amountOfBeds);
+            response = successResponse;
             return response;
         }
+
 
 
         /**

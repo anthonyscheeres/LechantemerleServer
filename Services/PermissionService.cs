@@ -1,6 +1,7 @@
 ﻿using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
 using System;
+using System.Security.Authentication;
 
 namespace ChantemerleApi.Services
 {
@@ -45,29 +46,33 @@ namespace ChantemerleApi.Services
 */
         private string loginUser(string username, string password)
         {
+        
+       
+                //check if username and password combo exist only works if usernames stay unique
+               checkUsernameAndPassword(username, password);
             //response fail message
 
             string failResponse = ResponseR.fail.ToString();
 
             string response = failResponse;
-            bool hasCorrectCrecdentials = false;
-
-       
-                //check if username and password combo exist only works if usernames stay unique
-                hasCorrectCrecdentials = permissionDao.checkUsernameAndPassword(username, password);
 
 
-            if (hasCorrectCrecdentials)
-            {
                 string successfulResponse = ResponseR.success.ToString(); response = successfulResponse;
                 permissionDao.changeTokenInDataBaseByUsernameBeforeLoginIn(username);
                 response = permissionDao.getSensitiveUserInfoFromDatabaseByUsername(username);
-            }
+  
 
 
             return response;
         }
 
+        private void checkUsernameAndPassword(string username, string password)
+        {
+            if (!permissionDao.checkUsernameAndPassword(username, password))
+            {
+                throw new AuthenticationException();
+            }
+        }
 
 
     }

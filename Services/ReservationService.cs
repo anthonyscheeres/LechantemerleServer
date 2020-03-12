@@ -27,6 +27,10 @@ namespace ChantemerleApi.Services
             return response;
         }
 
+
+        /**
+* @author Anthony Scheeres
+*/
         internal string addPendingReservation(ReservationModel reservation, string token)
         {
             if (reservation == null) throw new ArgumentNullException(nameof(reservation));
@@ -48,6 +52,10 @@ namespace ChantemerleApi.Services
             return response;
         }
 
+
+        /**
+* @author Anthony Scheeres
+*/
         internal string customerAcceptPendingReservationPotential(ReservationModel reservation, string token)
         {
             if (reservation == null) throw new ArgumentNullException(nameof(reservation));
@@ -73,6 +81,10 @@ namespace ChantemerleApi.Services
             return response;
         }
 
+
+        /**
+* @author Anthony Scheeres
+*/
         internal string updateAdminAcceptResevationByModel(string token, ReservationModel reservation)
         {
             if (reservation == null) throw new ArgumentNullException(nameof(reservation));

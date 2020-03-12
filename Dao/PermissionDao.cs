@@ -56,7 +56,7 @@ namespace ChantemerleApi.Dao
             var i = command.ExecuteReader();
             bool credentialsAreValid = false;
             string columnName = "exists";
-            int index = (i.GetOrdinal("exists"));
+           // int index = (i.GetOrdinal("exists"));
 
             PsqlUtilities.GetAll(i).ForEach(r => { Console.WriteLine(r.GetValue(0).ToString()); if (r.GetValue(0).ToString().ToLower() == "true") credentialsAreValid = true; });
 
