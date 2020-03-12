@@ -66,23 +66,12 @@ namespace ChantemerleApi.Services
 
             string response = ResponseR.success.ToString();
 
-            try
-            {
+       
                 //check if the token is valide
                 double id = tokenService.TokenToUserId();
 
                 userDao.changePasswordByUserIdInDatabase(user.password, id);
 
-
-
-            }
-            //catch if no id was found in database based on the token
-            catch (InvalidOperationException error)
-            {
-
-                response = ResponseR.fail.ToString();
-                return response;
-            }
 
             return response;
 
@@ -99,14 +88,9 @@ namespace ChantemerleApi.Services
             UserDao userDao = new UserDao();
             string email = null;
 
-            try
-            {
+         
                 email = userDao.getEmailUsingToken(token);
-            }
-            catch (InvalidOperationException)
-            {
-                return response;
-            }
+        
 
 
 
@@ -131,7 +115,7 @@ namespace ChantemerleApi.Services
             {
                 tokenService.TokenToUserId();
             }
-            catch (InvalidOperationException error)
+            catch (ArgumentNullException error)
             {
                 response = failMessage;
                 return "URL was expired or invalide please try again!";

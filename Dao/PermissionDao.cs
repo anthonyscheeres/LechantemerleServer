@@ -61,6 +61,8 @@ namespace ChantemerleApi.Dao
             PsqlUtilities.GetAll(i).ForEach(r => { Console.WriteLine(r.GetValue(0).ToString()); if (r.GetValue(0).ToString().ToLower() == "true") credentialsAreValid = true; });
 
             connectionWithDatabase.Close(); //close the connection to save bandwith
+
+
             return credentialsAreValid;
 
 

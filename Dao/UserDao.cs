@@ -53,6 +53,8 @@ namespace ChantemerleApi.Dao
             var i = command.ExecuteReader();
             PsqlUtilities.GetAll(i).ForEach(r => { Console.WriteLine(r.GetValue(0).ToString()); if (r.GetValue(0).ToString().Length >= 1) hasAdmin = r.GetValue(0).ToString(); });
             connectionWithDatabase.Close(); //close the connection to save bandwith
+            if (hasAdmin == null) { throw new ArgumentNullException(); }
+
             return hasAdmin;
         }
 
@@ -110,6 +112,7 @@ namespace ChantemerleApi.Dao
             bool areTheseCredentialsValid = false;
 
             PsqlUtilities.GetAll(i).ForEach(r => { Console.WriteLine(r.GetValue(0).ToString()); if (r.GetValue(0).ToString().ToLower() == "true") areTheseCredentialsValid = true; });
+           
             connectionWithDatabase.Close(); //close the connection to save bandwith
             return areTheseCredentialsValid;
 
@@ -186,8 +189,8 @@ namespace ChantemerleApi.Dao
             using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
 
 
-            command.Parameters.AddWithValue("username", username);
-            command.Parameters.AddWithValue("password", password);
+            command.Parameters.AddWithValue("username", username); // add username
+            command.Parameters.AddWithValue("password", password); //add password
 
 
 

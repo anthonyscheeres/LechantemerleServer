@@ -1,5 +1,4 @@
 ﻿using ChantemerleApi.Dao;
-using System;
 using System.Security.Authentication;
 
 namespace ChantemerleApi.Services
@@ -27,21 +26,17 @@ namespace ChantemerleApi.Services
             //default response
             bool response = false;
 
-            try
-            {
 
-                response = tokenDao.getPermissionFromDatabaseByTokenHasAdmin(this.token);
 
-            }
+            response = tokenDao.getPermissionFromDatabaseByTokenHasAdmin(this.token);
 
-            catch (InvalidOperationException error)
-            {
-                //pars error means a problem in the query. 
-                response = false;
-            }
+            if (response != true) throw new AuthenticationException();
 
             return response;
         }
+
+
+
 
 
 
