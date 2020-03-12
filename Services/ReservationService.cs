@@ -19,13 +19,11 @@ namespace ChantemerleApi.Services
 
             TokenService tokenService = new TokenService(token);
 
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
-            if (hasAdminInDatabaseOverApi)
-            {
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+          
                 response = ResponseR.success.ToString();
                 reservationDao.deleteReservationByIdInDatabase(reservation.id);
-            }
-
+       
             return response;
         }
 
@@ -40,13 +38,12 @@ namespace ChantemerleApi.Services
             TokenService tokenService = new TokenService(token);
 
 
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
-            if (hasAdminInDatabaseOverApi)
-            {
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+        
             
                 reservationDao.addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(reservation);
                 response = ResponseR.success.ToString();
-            }
+      
 
             return response;
         }
@@ -81,13 +78,11 @@ namespace ChantemerleApi.Services
             if (reservation == null) throw new ArgumentNullException(nameof(reservation));
             TokenService tokenService = new TokenService(token);
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
-            if (hasAdminInDatabaseOverApi)
-            {
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+          
                 response = ResponseR.success.ToString();
                 reservationDao.updateAcceptResevationByModelInDatbase(reservation.id);
-            }
-
+            
             return response;
         }
 
@@ -104,13 +99,11 @@ namespace ChantemerleApi.Services
             TokenService tokenService = new TokenService(token);
 
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
-            if (hasAdminInDatabaseOverApi)
-            {
+             tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+          
 
                 response = validateGetReservation(isAccepted);
-            }
-
+            
             return response;
 
         }

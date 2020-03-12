@@ -21,7 +21,7 @@ namespace ChantemerleApi.Services
         /**
     * @author Anthony Scheeres
     */
-        internal bool getPermissionFromDatabaseByTokenIsAdmin()
+        internal void getPermissionFromDatabaseByTokenIsAdmin()
         {
             //default response
             bool response = false;
@@ -32,7 +32,6 @@ namespace ChantemerleApi.Services
 
             if (response != true) throw new AuthenticationException();
 
-            return response;
         }
 
 

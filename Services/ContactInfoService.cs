@@ -18,20 +18,15 @@ namespace ChantemerleApi.Services
             TokenService tokenService = new TokenService(token);
             //failed response by default
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+       
 
-
-            //check if it's admin
-            if (hasAdminInDatabaseOverApi)
-            {
 
                 contactInfoDao.changeContactInfoByModelInDatabase(contactInfo);
 
                 //change to success response and return 
                 response = ResponseR.success.ToString();
                
-            }
-
+         
             //return fail or success response
             return response;
         }

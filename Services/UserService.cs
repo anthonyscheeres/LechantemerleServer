@@ -33,11 +33,10 @@ namespace ChantemerleApi.Services
         {
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
             TokenService tokenService = new TokenService(token);
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
-            if (hasAdminInDatabaseOverApi)
-            {
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+       
                 response = userDao.showAllUsersIncludingAdmins();
-            }
+      
 
             return response;
         }
@@ -196,12 +195,11 @@ namespace ChantemerleApi.Services
 
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
             TokenService tokenService = new TokenService(token);
-            bool hasAdminInDatabaseOverApi = tokenService.getPermissionFromDatabaseByTokenIsAdmin();
-            if (hasAdminInDatabaseOverApi)
-            {
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+       
                 userDao.deleteUserByUsername(user);
                 response = ResponseR.success.ToString();
-            }
+        
             return response;
 
         }
