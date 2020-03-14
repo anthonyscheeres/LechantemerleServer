@@ -20,10 +20,10 @@ namespace ChantemerleApi.Services
             TokenService tokenService = new TokenService(token);
 
             tokenService.getPermissionFromDatabaseByTokenIsAdmin();
-          
-                response = ResponseR.success.ToString();
-                reservationDao.deleteReservationByIdInDatabase(reservation.id);
-       
+
+            response = ResponseR.success.ToString();
+            reservationDao.deleteReservationByIdInDatabase(reservation.id);
+
             return response;
         }
 
@@ -43,11 +43,11 @@ namespace ChantemerleApi.Services
 
 
             tokenService.getPermissionFromDatabaseByTokenIsAdmin();
-        
-            
-                reservationDao.addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(reservation);
-                response = ResponseR.success.ToString();
-      
+
+
+            reservationDao.addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(reservation);
+            response = ResponseR.success.ToString();
+
 
             return response;
         }
@@ -91,10 +91,10 @@ namespace ChantemerleApi.Services
             TokenService tokenService = new TokenService(token);
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
             tokenService.getPermissionFromDatabaseByTokenIsAdmin();
-          
-                response = ResponseR.success.ToString();
-                reservationDao.updateAcceptResevationByModelInDatbase(reservation.id);
-            
+
+            response = ResponseR.success.ToString();
+            reservationDao.updateAcceptResevationByModelInDatbase(reservation.id);
+
             return response;
         }
 
@@ -111,11 +111,11 @@ namespace ChantemerleApi.Services
             TokenService tokenService = new TokenService(token);
 
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
-             tokenService.getPermissionFromDatabaseByTokenIsAdmin();
-          
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
 
-                response = validateGetReservation(isAccepted);
-            
+
+            response = validateGetReservation(isAccepted);
+
             return response;
 
         }
@@ -126,7 +126,7 @@ namespace ChantemerleApi.Services
         private string validateGetReservation(bool isAccepted)
         {
 
-         
+
             string response = reservationDao.getReservations(isAccepted);
 
             return response;

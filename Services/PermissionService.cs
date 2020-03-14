@@ -1,6 +1,5 @@
 ﻿using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
-using System;
 using System.Security.Authentication;
 
 namespace ChantemerleApi.Services
@@ -11,7 +10,7 @@ namespace ChantemerleApi.Services
 */
     internal class PermissionService
     {
-        private readonly PermissionDao permissionDao = new PermissionDao();
+
 
 
         /**
@@ -46,10 +45,10 @@ namespace ChantemerleApi.Services
 */
         private string loginUser(string username, string password)
         {
-        
-       
-                //check if username and password combo exist only works if usernames stay unique
-               checkUsernameAndPassword(username, password);
+            PermissionDao permissionDao = new PermissionDao(username);
+
+            //check if username and password combo exist only works if usernames stay unique
+            checkUsernameAndPassword(username, password);
             //response fail message
 
             string failResponse = ResponseR.fail.ToString();
@@ -57,10 +56,10 @@ namespace ChantemerleApi.Services
             string response = failResponse;
 
 
-                string successfulResponse = ResponseR.success.ToString(); response = successfulResponse;
-                permissionDao.changeTokenInDataBaseByUsernameBeforeLoginIn(username);
-                response = permissionDao.getSensitiveUserInfoFromDatabaseByUsername(username);
-  
+            string successfulResponse = ResponseR.success.ToString(); response = successfulResponse;
+            permissionDao.changeTokenInDataBaseByUsernameBeforeLoginIn();
+            response = permissionDao.getSensitiveUserInfoFromDatabaseByUsername();
+
 
 
             return response;
@@ -68,7 +67,9 @@ namespace ChantemerleApi.Services
 
         private void checkUsernameAndPassword(string username, string password)
         {
-            if (!permissionDao.checkUsernameAndPassword(username, password))
+            PermissionDao permissionDao = new PermissionDao(username);
+
+            if (!permissionDao.checkUsernameAndPassword(password))
             {
                 throw new AuthenticationException();
             }

@@ -1,6 +1,5 @@
 ﻿using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
-using System;
 
 namespace ChantemerleApi.Services
 {
@@ -18,15 +17,15 @@ namespace ChantemerleApi.Services
             TokenService tokenService = new TokenService(token);
             //failed response by default
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
-       
 
 
-                contactInfoDao.changeContactInfoByModelInDatabase(contactInfo);
 
-                //change to success response and return 
-                response = ResponseR.success.ToString();
-               
-         
+            contactInfoDao.changeContactInfoByModelInDatabase(contactInfo);
+
+            //change to success response and return 
+            response = ResponseR.success.ToString();
+
+
             //return fail or success response
             return response;
         }

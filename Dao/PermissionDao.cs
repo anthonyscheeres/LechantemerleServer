@@ -11,25 +11,26 @@ namespace ChantemerleApi.Dao
     {
         private readonly DatabaseUtilities databaseUtilities = new DatabaseUtilities();
         private string cs = DataModel.getConfigModel().databaseCredentials.cs;
+        private string username = "";
 
-        internal PermissionDao(string cs)
+        public PermissionDao(string cs, string username)
         {
             this.cs = cs;
+            this.username = username;
         }
 
-
-        /**
-* @author Anthony Scheeres
-*/
-        internal PermissionDao()
+        public PermissionDao(string username)
         {
+            this.username = username;
         }
+
+
 
 
         /**
 * @author Anthony Scheeres
 */
-        internal bool checkUsernameAndPassword(string username, string password)
+        internal bool checkUsernameAndPassword(string password)
         {
             const string sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE username = @username AND password = @password)";
 
@@ -71,7 +72,7 @@ namespace ChantemerleApi.Dao
         /**
 * @author Anthony Scheeres
 */
-        internal bool checkUsernameAndToken(string username, string token)
+        internal bool checkUsernameAndToken( string token)
         {
             const string sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE token = @token AND username = @username)";
 
@@ -106,7 +107,7 @@ namespace ChantemerleApi.Dao
         /**
 * @author Anthony Scheeres
 */
-        internal string getSensitiveUserInfoFromDatabaseByUsername(string username)
+        internal string getSensitiveUserInfoFromDatabaseByUsername()
         {
             //using MD5 to construct a random and unique token
             const string sqlQueryForLoginUser = "update app_users set token = concat(md5(@username), md5((random()::text))) where username = @username  ; ";
@@ -147,7 +148,7 @@ namespace ChantemerleApi.Dao
 
         }
 
-        internal void changeTokenInDataBaseByUsernameBeforeLoginIn(string username)
+        internal void changeTokenInDataBaseByUsernameBeforeLoginIn()
         {
             //using MD5 to construct a random and unique token
             const string sqlQueryForLoginUser = "update app_users set token = concat(md5(@username), md5((random()::text))) where username = @username  ; ";
