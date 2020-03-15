@@ -36,7 +36,7 @@ namespace ChantemerleApi.Dao
         internal void changeContactInfoByModelInDatabase(ContactInfoModel contactInfo)
         {
             //const query for updating each record of the table
-            const string sqlQueryForChangingContactInfo = "update contact_information_owner set house_nickname = @house_nickname, place = @place ,address = @address,postal_code = @postal_code ,family_name = @family_name,telephone = @telephone,mail = @mail IF @@ROWCOUNT = 0 insert into contact_information_owner(house_nickname, place ,address ,postal_code,family_name,telephone,mail) values(@house_nickname, @place ,@address,@postal_code ,@family_name,@telephone, @mail); ";
+            const string sqlQueryForChangingContactInfo = "IF @@ROWCOUNT = 0 insert into contact_information_owner(house_nickname, place ,address ,postal_code,family_name,telephone,mail) values(@house_nickname, @place ,@address,@postal_code ,@family_name,@telephone, @mail); update contact_information_owner set house_nickname = @house_nickname; update contact_information_owner set place = @place; update contact_information_owner set address = @address; update contact_information_owner set postal_code = @postal_code; update contact_information_owner set family_name = @family_name; update contact_information_owner set telephone = @telephone; update contact_information_owner set mail = @mail" ;
 
             using var connectionWithDatabase = new NpgsqlConnection(cs); //start new Npgsql instance for connecting with an postgres database//start new Npgsql instance for connecting with an postgres database
             connectionWithDatabase.Open(); //open the connection

@@ -4,7 +4,7 @@ using System;
 using System.IO;
 
 
-namespace ChantemerleApi.Utilities
+namespace ChantemerleApi.Utilities 
 {
     public class ConfigFileInDocumetsFolderUtililities
     {
@@ -20,7 +20,7 @@ namespace ChantemerleApi.Utilities
         }
 
 
-        public void writeDataModelToJsonFileInDocumetsFolder()
+        public void writeDataModelToJsonFileInDocumetsFolder() 
         {
             //Construct path to file
             string pathToFile = path + filename;

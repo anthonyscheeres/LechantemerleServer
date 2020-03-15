@@ -1,6 +1,7 @@
 ﻿using ChantemerleApi.Models;
 using ChantemerleApi.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace ChantemerleApi.Controllers
 {
@@ -16,6 +17,7 @@ namespace ChantemerleApi.Controllers
         [HttpGet]
         public string getContactInfo()
         {
+
             return contactInfoService.getContactInfoAsJsonFormatForPublicUsers();
         }
 
@@ -24,8 +26,9 @@ namespace ChantemerleApi.Controllers
         // PUT: api/ContactInfo/ChangeContactInfo?token={token}
         [Route("changeContactInfo")]
         [HttpPut("{token}")]
-        public string changeContactInfo(string token, [FromBody] ContactInfoModel contactInfo)
+        public string changeContactInfo([FromBody] ContactInfoModel contactInfo, [FromQuery]  string token)
         {
+            Console.WriteLine("Token : "+token);
             return contactInfoService.validateChangeContactInfo(token, contactInfo);
         }
     }

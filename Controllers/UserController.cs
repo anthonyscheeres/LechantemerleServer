@@ -14,7 +14,7 @@ namespace ChantemerleApi.Controllers
         // GET: api/User/showAllUsers
         [Route("showAllUsers")]
         [HttpGet("{token}")]
-        public string Get(string token)
+        public string Get([FromQuery] string token)
         {
             return userService.validateShowAllUsersIncludingAdmins(token); ;
         }
@@ -32,7 +32,7 @@ namespace ChantemerleApi.Controllers
         // PUT: api/User/chanceUsernamePassword?token={token}
         [HttpPut("{token}")]
         [Route("chanceUsernamePassword")]
-        public string letAnUserChangeItsOwnUsernameOrPassword(string token, [FromBody] UserModel user)
+        public string letAnUserChangeItsOwnUsernameOrPassword([FromQuery] string token, [FromBody] UserModel user)
         {
 
             return userService.letAnUserChangeItsOwnUsernameOrPassword(user, token);
@@ -50,7 +50,7 @@ namespace ChantemerleApi.Controllers
         // GET: api/User/validateToken?token={token}
         [HttpGet("token")]
         [Route("validateToken")]
-        public string validateToken(string token)
+        public string validateToken([FromQuery] string token)
         {
           
             return userService.validateToken(token);
@@ -72,7 +72,7 @@ namespace ChantemerleApi.Controllers
         [HttpPost("token")]
         [Route("validateMail")]
 
-        public string sendNewValidateEmailLink(string token)
+        public string sendNewValidateEmailLink([FromQuery] string token)
         {
             return userService.validateMailAgain(token);
         }

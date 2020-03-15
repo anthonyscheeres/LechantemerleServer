@@ -9,5 +9,8 @@
             this.amountOfBeds = amountOfBeds;
         }
 
+        public RoomModel()
+        {
+        }
     }
 }

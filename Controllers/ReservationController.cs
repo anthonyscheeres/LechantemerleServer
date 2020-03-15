@@ -22,7 +22,7 @@ namespace ChantemerleApi.Controllers
         // GET: api/Reservation/getAccpetedReservation?token={token}
         [Route("getAcceptedReservation")]
         [HttpGet("{token}")]
-        public string getAccpetedReservation(string token)
+        public string getAccpetedReservation([FromQuery] string token)
         {
             return reservationService.getAccpetedReservation(token);
         }
@@ -32,7 +32,7 @@ namespace ChantemerleApi.Controllers
         // PUT: api/Reservation/updateAcceptResevation?token={token}
         [Route("updateAcceptResevation")]
         [HttpPut("{token}")]
-        public string updateAdminAcceptResevationByModel(string token, [FromBody] ReservationModel reservation)
+        public string updateAdminAcceptResevationByModel([FromQuery] string token, [FromBody] ReservationModel reservation)
         {
 
             return reservationService.updateAdminAcceptResevationByModel(token, reservation);
@@ -49,7 +49,7 @@ namespace ChantemerleApi.Controllers
         // POST: api/Reservation/addPendingReservation?token={token}
         [Route("addPendingReservation")]
         [HttpPost("{token}")]
-        public string addPendingReservation([FromBody] ReservationModel reservation, string token)
+        public string addPendingReservation([FromBody] ReservationModel reservation, [FromQuery] string token)
         {
             return reservationService.addPendingReservation(reservation, token);
         }
@@ -58,7 +58,7 @@ namespace ChantemerleApi.Controllers
         // PUT: api/Reservation/claimReservations?token={token}
         [Route("claimReservations")]
         [HttpPut("{token}")]
-        public string customerAcceptPendingReservation(string token, [FromBody] ReservationModel reservation)
+        public string customerAcceptPendingReservation([FromQuery] string token, [FromBody] ReservationModel reservation)
         {
 
             return reservationService.customerAcceptPendingReservationPotential(reservation, token);
@@ -67,7 +67,7 @@ namespace ChantemerleApi.Controllers
         //DELETE : api/Reservation/deleteReservation?token={token}
         [Route("deleteReservation")]
         [HttpDelete("{token}")]
-        public string deleteReservation(string token, [FromBody] ReservationModel reservation)
+        public string deleteReservation([FromQuery] string token, [FromBody] ReservationModel reservation)
         {
 
 

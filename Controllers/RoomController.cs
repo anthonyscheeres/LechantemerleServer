@@ -24,7 +24,7 @@ namespace ChantemerleApi.Controllers
 
         [Route("addRoom")]
         [HttpPost("{token}")]
-        public string addRoom(string token, [FromBody] RoomModel room)
+        public string addRoom([FromQuery] string token, [FromBody] RoomModel room)
         {
             return roomService.ValidateAddRoom(room, token);
         }

@@ -23,16 +23,40 @@ namespace ChantemerleApi.Services
     */
         internal void getPermissionFromDatabaseByTokenIsAdmin()
         {
+            getPermissionFromDatabaseByTokenIsAdmin(token);
+
+        }
+
+
+        /**
+* @author Anthony Scheeres
+*/
+        internal void getPermissionFromDatabaseByTokenIsAdmin(string tok)
+        {
+            getPermissionFromDatabaseByTokenIsAdmin1(tok);
+
+        }
+
+
+
+        /**
+    * @author Anthony Scheeres
+    */
+       private void getPermissionFromDatabaseByTokenIsAdmin1(string token)
+        {
             //default response
             bool response = false;
 
 
 
-            response = tokenDao.getPermissionFromDatabaseByTokenHasAdmin(this.token);
+            response = tokenDao.getPermissionFromDatabaseByTokenHasAdmin(token);
 
             if (response != true) throw new AuthenticationException();
 
         }
+
+
+
 
 
 
@@ -44,7 +68,7 @@ namespace ChantemerleApi.Services
 */
         internal double TokenToUserId()
         {
-            return tokenDao.TokenToUserIdThrowsException(this.token);
+            return tokenDao.TokenToUserIdThrowsException(token);
         }
 
     }

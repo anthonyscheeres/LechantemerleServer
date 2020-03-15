@@ -92,7 +92,7 @@ D:\school\Csharp\ChantemerleApi\obj\Debug\netcoreapp3.1\ChantemerleApi.dll
 D:\school\Csharp\ChantemerleApi\obj\Debug\netcoreapp3.1\ChantemerleApi.pdb
 D:\school\Csharp\ChantemerleApi\obj\Debug\netcoreapp3.1\ChantemerleApi.csprojAssemblyReference.cache
 D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\YamlDotNet.dll
-D:\school\Csharp\ChantemerleApi\obj\Debug\netcoreapp3.1\ChantemerleApi.MvcApplicationPartsAssemblyInfo.cache
 D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
 D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\System.Web.Http.dll
 D:\school\Csharp\ChantemerleApi\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+D:\school\Csharp\ChantemerleApi\obj\Debug\netcoreapp3.1\ChantemerleApi.MvcApplicationPartsAssemblyInfo.cache

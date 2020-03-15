@@ -15,6 +15,8 @@ namespace ChantemerleApi.Services
         internal string validateChangeContactInfo(string token, ContactInfoModel contactInfo)
         {
             TokenService tokenService = new TokenService(token);
+            //if token is invalide throw exception
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
             //failed response by default
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
 
