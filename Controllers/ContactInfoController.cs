@@ -28,7 +28,7 @@ namespace ChantemerleApi.Controllers
         [HttpPut("{token}")]
         public string changeContactInfo([FromBody] ContactInfoModel contactInfo, [FromQuery]  string token)
         {
-            Console.WriteLine("Token : "+token);
+            
             return contactInfoService.validateChangeContactInfo(token, contactInfo);
         }
     }
