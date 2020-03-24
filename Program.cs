@@ -17,32 +17,21 @@ namespace ChantemerleApi
         {
             ConfigFileInDocumetsFolderUtililities directoryUtilitiescs = new ConfigFileInDocumetsFolderUtililities("config.json");
             directoryUtilitiescs.writeDataModelToJsonFileInDocumetsFolder();
-            string address = "http://localhost:4003/";
-            if (args.Length != 0)
-            {
-                address = args[0];
-
-            }
+ 
 
 
-            var host = new WebHostBuilder()
-    .UseKestrel()
-    .UseContentRoot(Directory.GetCurrentDirectory())
-    .UseIISIntegration()
-    .UseStartup<Startup>()
-    .UseUrls(address)
-    .Build();
-
-            host.Run();
-
-
-            // CreateHostBuilder(args).Build().Run();
+             CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseUrls("http://0.0.0.0:8081/");
+                    webBuilder.UseKestrel();
+                    webBuilder.UseContentRoot(Directory.GetCurrentDirectory());
+                    webBuilder.UseIISIntegration();
+
                     webBuilder.UseStartup<Startup>();
                 });
     }
