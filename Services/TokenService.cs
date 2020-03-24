@@ -31,7 +31,7 @@ namespace ChantemerleApi.Services
         /**
 * @author Anthony Scheeres
 */
-        internal void getPermissionFromDatabaseByTokenIsAdmin(string tok)
+        private void getPermissionFromDatabaseByTokenIsAdmin(string tok)
         {
             getPermissionFromDatabaseByTokenIsAdmin1(tok);
 
@@ -58,7 +58,15 @@ namespace ChantemerleApi.Services
 
 
 
+        internal double TokenToUserId()
+        {
+            return TokenToUserId(token);
+        }
 
+        private  double TokenToUserId(string token)
+        {
+            return TokenToUserId2(token);
+        }
 
 
 
@@ -66,7 +74,7 @@ namespace ChantemerleApi.Services
         /**
 * @author Anthony Scheeres
 */
-        internal double TokenToUserId()
+        private double TokenToUserId2(string token)
         {
             return tokenDao.TokenToUserIdThrowsException(token);
         }

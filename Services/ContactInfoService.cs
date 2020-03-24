@@ -16,7 +16,7 @@ namespace ChantemerleApi.Services
         {
             TokenService tokenService = new TokenService(token);
             //if token is invalide throw exception
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
             //failed response by default
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
 
