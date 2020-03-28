@@ -49,6 +49,7 @@ namespace ChantemerleApi.Controllers
         // POST: api/Reservation/addPendingReservation?token={token}
         [Route("addPendingReservation")]
         [HttpPost("{token}")]
+       
         public string addPendingReservation([FromBody] ReservationModel reservation, [FromQuery] string token)
         {
             return reservationService.addPendingReservation(reservation, token);
