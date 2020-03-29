@@ -11,7 +11,7 @@ namespace ChantemerleApi.Controllers
     {
         RoomService roomService = new RoomService();
 
-        // GET: api/room/listAvailableRooms
+        // GET: api/Room/listAvailableRooms
         [Route("listAvailableRooms")]
         [HttpGet]
         public string getAllAvailableRoomsForReservation()
@@ -19,7 +19,7 @@ namespace ChantemerleApi.Controllers
             return roomService.getAllAvailableRoomsForReservation();
         }
 
-        // PUT: api/Reservation/updateImgRoom?token={token}
+        // PUT: api/Room/updateImgRoom?token={token}
         [Route("updateImgRoom")]
         [HttpPut("{token}")]
         public string updateImgRoom([FromQuery] string token, [FromBody] RoomModel room)
@@ -28,7 +28,7 @@ namespace ChantemerleApi.Controllers
 
         }
 
-        // POST api/room/addRoom?token={token}
+        // POST api/Room/addRoom?token={token}
 
         [Route("addRoom")]
         [HttpPost("{token}")]
