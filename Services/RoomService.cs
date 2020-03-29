@@ -39,7 +39,28 @@ namespace ChantemerleApi.Services
 
         internal string ValidateChangeRoomImg(RoomModel room, string token)
         {
-            throw new NotImplementedException();
+            TokenService tokenService = new TokenService(token);
+            string successResponse = ResponseR.success.ToString();
+
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+            string response;
+
+            roomDao.sendQueryToDatabaseToChangeBedImg(room.img, room.id);
+            response = successResponse;
+            return response;
+        }
+
+        internal string ValidateChangeRoombeds(RoomModel room, string token)
+        {
+            TokenService tokenService = new TokenService(token);
+            string successResponse = ResponseR.success.ToString();
+
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+            string response;
+
+            roomDao.sendQueryToDatabaseToChangeAmountBeds(room.amountOfBeds, room.id);
+            response = successResponse;
+            return response;
         }
 
 

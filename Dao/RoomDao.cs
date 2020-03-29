@@ -44,6 +44,39 @@ namespace ChantemerleApi.Dao
             connectionWithDatabase.Close(); //close the connection to save bandwith
         }
 
+        internal void sendQueryToDatabaseToChangeBedImg(string img, int id)
+        {
+
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            connectionWithDatabase.Open(); //open the connection
+
+
+            const string sqlQueryForRegistingUser = "update rooms set img = @img where id = @id;";
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+            command.Parameters.AddWithValue("img", img);
+            command.Parameters.AddWithValue("id", id);
+            command.Prepare(); //Construct and optimize query
+
+            command.ExecuteNonQuery();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
+        }
+
+        internal void sendQueryToDatabaseToChangeAmountBeds(int amountOfBeds, int id)
+        {
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            connectionWithDatabase.Open(); //open the connection
+
+
+            const string sqlQueryForRegistingUser = "update rooms set amount_of_beds = @amountOfBeds where id = @id;";
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+            command.Parameters.AddWithValue("amountOfBeds", amountOfBeds);
+            command.Parameters.AddWithValue("id", id);
+            command.Prepare(); //Construct and optimize query
+
+            command.ExecuteNonQuery();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
+        }
+
         private string generateQueryForAllRoomsOitOrInOrder(bool isOutOfOrder)
         {
 

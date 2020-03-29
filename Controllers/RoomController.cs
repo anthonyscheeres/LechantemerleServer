@@ -28,6 +28,19 @@ namespace ChantemerleApi.Controllers
 
         }
 
+
+        // PUT: api/Room/updatAmountOfBedsRoom?token={token}
+        [Route("updatAmountOfBedsRoom")]
+        [HttpPut("{token}")]
+        public string updateBedsRoom([FromQuery] string token, [FromBody] RoomModel room)
+        {
+            return roomService.ValidateChangeRoombeds(room, token);
+
+        }
+
+
+
+
         // POST api/Room/addRoom?token={token}
 
         [Route("addRoom")]
