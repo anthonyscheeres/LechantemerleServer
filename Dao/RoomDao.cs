@@ -34,10 +34,11 @@ namespace ChantemerleApi.Dao
             connectionWithDatabase.Open(); //open the connection
 
 
-            const string sqlQueryForRegistingUser = "INSERT INTO rooms(amount_of_beds) VALUES(@amount_of_beds)";
+            const string sqlQueryForRegistingUser = "INSERT INTO rooms(amount_of_beds, out_of_order) VALUES(@amount_of_beds, @out_of_order)";
             using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
 
             command.Parameters.AddWithValue("amount_of_beds", amountOfBedsInTheRoom);
+            command.Parameters.AddWithValue("out_of_order", false);
             command.Prepare(); //Construct and optimize query
 
             command.ExecuteNonQuery();
