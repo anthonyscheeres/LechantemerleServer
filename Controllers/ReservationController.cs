@@ -38,6 +38,9 @@ namespace ChantemerleApi.Controllers
             return reservationService.updateAdminAcceptResevationByModel(token, reservation);
         }
 
+      
+
+
         // GET: api/Reservation/getPendingReservation
         [Route("getPendingReservation")]
         [HttpGet]

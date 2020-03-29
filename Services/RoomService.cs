@@ -37,6 +37,11 @@ namespace ChantemerleApi.Services
             return response;
         }
 
+        internal string ValidateChangeRoomImg(RoomModel room, string token)
+        {
+            throw new NotImplementedException();
+        }
+
 
 
         /**

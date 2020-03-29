@@ -19,6 +19,14 @@ namespace ChantemerleApi.Controllers
             return roomService.getAllAvailableRoomsForReservation();
         }
 
+        // PUT: api/Reservation/updateImgRoom?token={token}
+        [Route("updateImgRoom")]
+        [HttpPut("{token}")]
+        public string updateImgRoom([FromQuery] string token, [FromBody] RoomModel room)
+        {
+            return roomService.ValidateChangeRoomImg(room, token);
+
+        }
 
         // POST api/room/addRoom?token={token}
 
