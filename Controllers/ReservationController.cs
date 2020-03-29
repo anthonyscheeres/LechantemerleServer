@@ -46,6 +46,16 @@ namespace ChantemerleApi.Controllers
             return reservationService.getPendingReservation();
         }
 
+        // GET: api/Reservation/getPendingReservation
+        [Route("getPendingReservation")]
+        [HttpGet("{id}")]
+        public string getPendingReservation([FromQuery] int id)
+        {
+            return reservationService.getPendingReservation(id);
+        }
+
+
+
         // POST: api/Reservation/addPendingReservation?token={token}
         [Route("addPendingReservation")]
         [HttpPost("{token}")]
@@ -54,6 +64,9 @@ namespace ChantemerleApi.Controllers
         {
             return reservationService.addPendingReservation(reservation, token);
         }
+
+
+
 
 
         // PUT: api/Reservation/claimReservations?token={token}

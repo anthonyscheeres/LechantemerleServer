@@ -52,6 +52,7 @@ namespace ChantemerleApi.Services
             return response;
         }
 
+     
 
         /**
 * @author Anthony Scheeres
@@ -102,6 +103,20 @@ namespace ChantemerleApi.Services
         {
             const bool isAccepted = false;
             return validateGetReservation(isAccepted);
+        }
+
+        internal string getPendingReservation(int id)
+        {
+            const bool isAccepted = false;
+            return validateGetReservation(isAccepted, id);
+        }
+
+        private string validateGetReservation(bool isAccepted, int id)
+        {
+
+            string response = reservationDao.getReservations(isAccepted, id);
+
+            return response;
         }
 
         internal string getAccpetedReservation(string token)
