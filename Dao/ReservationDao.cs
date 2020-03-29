@@ -21,7 +21,7 @@ namespace ChantemerleApi.Dao
 
         private string constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(bool isAccepted)
         {
-            const string sqlQueryFroGettingReservationInformation = "select app_users.username, app_users.email, reservations.time_from::TIMESTAMP::DATE, reservations.time_till::TIMESTAMP::DATE, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at::TIMESTAMP::DATE  from reservations left join app_users on reservations.user_id = app_users.id";
+            const string sqlQueryFroGettingReservationInformation = "select rooms.out_of_order,rooms.img, rooms.amount_of_beds, rooms.id as 'name', app_users.username, app_users.email, reservations.time_from::TIMESTAMP::DATE, reservations.time_till::TIMESTAMP::DATE, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at::TIMESTAMP::DATE  from reservations left join app_users on reservations.id = app_users.id left join reservations on reservations.id = rooms.id;";
 
             string sqlDontSelectPastResrvations = " and reservations.time_till>now()";
 
