@@ -62,6 +62,22 @@ namespace ChantemerleApi.Dao
             connectionWithDatabase.Close(); //close the connection to save bandwith
         }
 
+        internal void sendQueryToDatabaseToDeleteRoom(int id)
+        {
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            connectionWithDatabase.Open(); //open the connection
+
+
+            const string sqlQueryForRegistingUser = "delete from rooms where id = @id;";
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+           
+            command.Parameters.AddWithValue("id", id);
+            command.Prepare(); //Construct and optimize query
+
+            command.ExecuteNonQuery();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
+        }
+
         internal void sendQueryToDatabaseToChangeAmountBeds(int amountOfBeds, int id)
         {
             using var connectionWithDatabase = new NpgsqlConnection(cs);

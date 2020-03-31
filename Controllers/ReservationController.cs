@@ -57,6 +57,13 @@ namespace ChantemerleApi.Controllers
             return reservationService.getPendingReservation(id);
         }
 
+        // GET: api/Reservation/getReservation
+        [Route("getReservation")]
+        [HttpGet("{token}")]
+        public string getPendingReservation([FromQuery] string token)
+        {
+            return reservationService.getReservation(token);
+        }
 
 
         // POST: api/Reservation/addPendingReservation?token={token}

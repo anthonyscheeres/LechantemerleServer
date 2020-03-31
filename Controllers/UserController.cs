@@ -77,6 +77,16 @@ namespace ChantemerleApi.Controllers
             return userService.validateMailAgain(token);
         }
 
+        // GET: api/User/validateGetProfile?token={token}
+        [HttpGet("token")]
+        [Route("validateGetProfile")]
+        public string validateProfileToken([FromQuery] string token)
+        {
+
+            return userService.validateProfile(token);
+
+        }
+
 
     }
 }

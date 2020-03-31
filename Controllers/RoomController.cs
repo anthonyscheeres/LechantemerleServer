@@ -38,12 +38,18 @@ namespace ChantemerleApi.Controllers
 
         }
 
+        // DELETE: api/Room/deleteRoom?token={token}
+        [Route("deleteRoom")]
+        [HttpDelete("{token}")]
+        public string deleteRoom([FromQuery] string token, [FromBody] RoomModel room)
+        {
+            return roomService.ValidateRemoveRoom(room, token);
+        }
+    
 
+    // POST api/Room/addRoom?token={token}
 
-
-        // POST api/Room/addRoom?token={token}
-
-        [Route("addRoom")]
+    [Route("addRoom")]
         [HttpPost("{token}")]
         public string addRoom([FromQuery] string token, [FromBody] RoomModel room)
         {

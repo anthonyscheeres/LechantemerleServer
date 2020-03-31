@@ -96,6 +96,20 @@ namespace ChantemerleApi.Dao
             connectionWithDatabase.Close(); //close the connection to save bandwith
         }
 
+        internal string getProfileInformationFromDatabase(double id)
+        {
+
+            //construct the sql query here
+            string sqlQueryForRegistingUser = "select username, email from app_users where id="+id;
+
+
+            //send query to database
+            string json = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForRegistingUser);
+
+            //send database response data back 
+            return json;
+        }
+
         internal bool isEnailValideByModel(string token)
         {
             const string sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE token = @token AND is_email_verified = true)";

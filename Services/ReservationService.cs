@@ -82,6 +82,22 @@ namespace ChantemerleApi.Services
             return response;
         }
 
+        internal string getReservation(string token)
+        {
+            TokenService tokenService = new TokenService(token);
+
+            string response = ResponseR.success.ToString();
+
+
+            //check if the token is valide
+            double id = tokenService.TokenToUserId();
+
+            response = reservationDao.getProfileResrvationInformationFromDatabase(id);
+
+
+            return response;
+        }
+
 
         /**
 * @author Anthony Scheeres
