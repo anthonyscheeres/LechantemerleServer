@@ -100,7 +100,7 @@ namespace ChantemerleApi.Dao
         {
 
             //construct the sql query here
-            string sqlQueryForRegistingUser = "select username, email from app_users where id="+id;
+            string sqlQueryForRegistingUser = "select is_super_user, is_email_verified, created_at::timestamp::date, username, email, id from app_users where id=" + id;
 
 
             //send query to database
