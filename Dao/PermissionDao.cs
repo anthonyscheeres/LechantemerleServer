@@ -32,7 +32,7 @@ namespace ChantemerleApi.Dao
 */
         internal bool checkUsernameAndPassword(string password)
         {
-            const string sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE username = @username AND password = @password)";
+            const string sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE username = @username AND password = concat(md5(@username), md5(@password)))";
 
 
 
@@ -168,6 +168,9 @@ namespace ChantemerleApi.Dao
 
 
         }
+
+
+
 
 
     }

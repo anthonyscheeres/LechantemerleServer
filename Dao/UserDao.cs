@@ -79,7 +79,7 @@ namespace ChantemerleApi.Dao
             connectionWithDatabase.Open(); //open the connection
 
 
-            var sqlQueryForRegistingUser = "INSERT INTO app_users(username, password, is_super_user, email,  is_email_verified, token) VALUES(@username, @password, @is_super_user, @email,  @is_email_verified,concat(md5(@username), md5((random()::text))));";
+            var sqlQueryForRegistingUser = "INSERT INTO app_users(username, password, is_super_user, email,  is_email_verified, token) VALUES(@username, concat(md5(@username), md5(@password)), @is_super_user, @email,  @is_email_verified,concat(md5(@username), md5((random()::text))));";
             using NpgsqlCommand command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
 
             //add parameters 
@@ -170,24 +170,24 @@ namespace ChantemerleApi.Dao
         }
 
 
-
         /**
 * @author Anthony Scheeres
 */
-        internal void changePasswordByUserIdInDatabase(string password, double id)
+        internal void changePasswordByUserIdInDatabase(string password, double id, string username)
         {
+
             using var connectionWithDatabase = new NpgsqlConnection(cs);
             connectionWithDatabase.Open(); //open the connection
 
 
-            var sqlQueryForRegistingUser = "update  app_users set password = @password where id = @id;";
+            var sqlQueryForRegistingUser = "update  app_users set password = concat(md5(@username), md5(@password)) where id = @id;";
             using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
 
 
             command.Parameters.AddWithValue("id", id);
             command.Parameters.AddWithValue("password", password);
 
-
+            command.Parameters.AddWithValue("username", username);
 
 
             command.Prepare(); //Construct and optimize query
@@ -195,8 +195,6 @@ namespace ChantemerleApi.Dao
             command.ExecuteNonQuery();
             connectionWithDatabase.Close(); //close the connection to save bandwith
         }
-
-
 
 
         /**

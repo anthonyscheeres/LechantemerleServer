@@ -69,7 +69,7 @@ namespace ChantemerleApi.Services
                 //check if the token is valide
                 double id = tokenService.TokenToUserId();
 
-                userDao.changePasswordByUserIdInDatabase(user.password, id);
+                userDao.changePasswordByUserIdInDatabase(user.password, id, user.username);
 
 
             return response;
