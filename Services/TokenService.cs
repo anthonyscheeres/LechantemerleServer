@@ -23,7 +23,7 @@ namespace ChantemerleApi.Services
     */
         internal void getPermissionFromDatabaseByTokenIsAdmin()
         {
-            getPermissionFromDatabaseByTokenIsAdmin(token);
+            getPermissionFromDatabaseByTokenIsAdmin(this.token);
 
         }
 
