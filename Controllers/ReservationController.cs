@@ -88,6 +88,15 @@ namespace ChantemerleApi.Controllers
             return reservationService.customerAcceptPendingReservationPotential(reservation, token);
         }
 
+
+        // GET: api/Reservation/getReservation
+        [Route("getUsersReservations")]
+        [HttpGet("{token}")]
+        public string getUsersReservations([FromQuery] string token)
+        {
+            return reservationService.getAccpetedReservation(token);
+        }
+
         //DELETE : api/Reservation/deleteReservation?token={token}
         [Route("deleteReservation")]
         [HttpDelete("{token}")]
