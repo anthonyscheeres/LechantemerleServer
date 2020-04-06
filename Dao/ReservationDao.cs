@@ -103,9 +103,19 @@ namespace ChantemerleApi.Dao
             return jsonString;
         }
 
-        internal void customerAcceptPendingReservationPotentialInDatabase(double userId, int id)
+
+        internal string getUsersReservations()
         {
-            const string sqlQueryForDeletingAnreservation = "update reservations set user_id = @user_id where id = @id;";
+            const string query = "select * from reservations where user_id = @user_id and time_till >= current_timestamp;";
+
+            string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(query);
+            return jsonString;
+        }
+
+
+        internal void customerAcceptPendingReservationPotentialInDatabase(double userId, int id, string time_from, string time_till)
+        {
+            const string sqlQueryForDeletingAnreservation = "update reservations set user_id = @user_id where roomno = @id and time_from::timestamp::date = @time_from and time_till::timestamp::dates = @time_till;";
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);
             connectionWithDatabase.Open(); //open the connection
@@ -116,6 +126,8 @@ namespace ChantemerleApi.Dao
 
             command.Parameters.AddWithValue("id", id);
             command.Parameters.AddWithValue("user_id", userId);
+            command.Parameters.AddWithValue("time_from", time_from);
+            command.Parameters.AddWithValue("time_till", time_till);
             command.Prepare(); //Construct and optimize query
 
             command.ExecuteNonQuery();

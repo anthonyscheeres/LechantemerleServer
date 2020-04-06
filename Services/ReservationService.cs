@@ -52,7 +52,24 @@ namespace ChantemerleApi.Services
             return response;
         }
 
-     
+     internal string getUserResrvations(string token)
+        {
+
+            //pass token to responsible service
+            TokenService tokenService = new TokenService(token);
+            string failResponse = ResponseR.fail.ToString(); string response = failResponse; //default failed response 
+
+            double userId = tokenService.TokenToUserId();
+            string successResponse = ResponseR.success.ToString();
+
+            successResponse =  reservationDao.getUsersReservations();
+
+            return successResponse;
+
+
+        }
+
+
 
         /**
 * @author Anthony Scheeres
@@ -74,7 +91,7 @@ namespace ChantemerleApi.Services
                 // token to user id here 
                 double userId = tokenService.TokenToUserId();
                 string successResponse = ResponseR.success.ToString();
-                reservationDao.customerAcceptPendingReservationPotentialInDatabase(userId, reservation.id);
+                reservationDao.customerAcceptPendingReservationPotentialInDatabase(userId, reservation.roomno, reservation.time_from, reservation.time_till);
 
 
             }
