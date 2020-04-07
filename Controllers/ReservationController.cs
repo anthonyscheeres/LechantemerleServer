@@ -89,12 +89,14 @@ namespace ChantemerleApi.Controllers
         }
 
 
-        // GET: api/Reservation/getReservation
+
+
+        // GET: api/Reservation/getUsersReservations?token={token}
         [Route("getUsersReservations")]
         [HttpGet("{token}")]
         public string getUsersReservations([FromQuery] string token)
         {
-            return reservationService.getAccpetedReservation(token);
+            return reservationService.getUserResrvations(token);
         }
 
         //DELETE : api/Reservation/deleteReservation?token={token}
