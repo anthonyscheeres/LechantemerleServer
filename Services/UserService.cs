@@ -197,7 +197,7 @@ namespace ChantemerleApi.Services
             //link to verify email to change the is_email_verified boolean record
             RestApiModel server = DataModel.getConfigModel().server;
             if (server.UseHttps) protocol = ProtocolModel.https.ToString();
-            string body = server.hostName + ":" + server.portNumber + "/api/User/validateToken/" + token;
+            string body = "http://" + server.hostName + ":" + server.portNumber + "/api/User/validateToken/" + token;
 
 
             mailUtilities.sendEmailToAdressWithABodyAndSubjectUsingCredentialsInDataModel(toEmailAddress, username, subject, body);
