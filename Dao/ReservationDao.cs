@@ -44,6 +44,13 @@ namespace ChantemerleApi.Dao
             return sqlQueryFroGettingReservationInformationConstuctedBasedOnWheterIsAccpetedOrNot;
         }
 
+
+
+
+
+
+
+
         internal void addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(ReservationModel reservation)
         {
             const string sqlQueryForDeletingAnreservation = "insert into reservations(roomno, time_from, time_till, price, accepted_by_super_user) values(@roomno, @created_at, @time_from, @time_till, @price, @accepted_by_super_user);";
@@ -59,7 +66,7 @@ namespace ChantemerleApi.Dao
             command.Parameters.AddWithValue("time_from", reservation.time_from);
             command.Parameters.AddWithValue("time_till", reservation.time_till);
             command.Parameters.AddWithValue("price", reservation.price);
-            command.Parameters.AddWithValue("accepted_by_super_user", reservation.accepted_by_super_user);
+            command.Parameters.AddWithValue("accepted_by_super_user", false);
 
             command.Prepare(); //Construct and optimize query
 
