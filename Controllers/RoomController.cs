@@ -19,6 +19,9 @@ namespace ChantemerleApi.Controllers
             return roomService.getAllAvailableRoomsForReservation();
         }
 
+
+
+
         // PUT: api/Room/updateImgRoom?token={token}
         [Route("updateImgRoom")]
         [HttpPut("{token}")]

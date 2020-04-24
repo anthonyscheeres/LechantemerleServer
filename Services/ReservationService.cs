@@ -1,6 +1,7 @@
 ﻿using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
 using System;
+using System.Threading;
 
 namespace ChantemerleApi.Services
 {
@@ -43,16 +44,58 @@ namespace ChantemerleApi.Services
 
 
             tokenService.getPermissionFromDatabaseByTokenIsAdmin();
-
-
             reservationDao.addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(reservation);
             response = ResponseR.success.ToString();
 
 
+            if (reservation.everyMonth)
+            {
+                //do on new thread
+                new Thread(() =>
+                {
+                    Thread.CurrentThread.IsBackground = true;
+                    addResrvationForEveryMonth(reservation); //this methode calls itself multiple times
+
+
+
+                }).Start();
+
+            }
+
+
+
+
             return response;
         }
+        internal void addResrvationForEveryMonth(ReservationModel reservation)
+        {
+            int start = 1;
 
-     internal string getUserResrvations(string token)
+            int aantalMaandenInEenJaar = 12 - start;
+
+
+            //start a loop
+            for (int index = start; index < aantalMaandenInEenJaar; index++)
+            {
+                sendAddedMonths(index, reservation);
+
+
+            }
+        }
+
+
+
+        internal void sendAddedMonths(int index, ReservationModel reservation)
+        {
+            ReservationModel rservation = reservation;//refresh base model
+
+            rservation.time_from.AddMonths(index);//add month from index use a for loop to send reser
+            rservation.time_till.AddMonths(index);
+            reservationDao.addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(rservation);
+        }
+
+
+        internal string getUserResrvations(string token)
         {
 
             //pass token to responsible service
@@ -62,7 +105,7 @@ namespace ChantemerleApi.Services
             double userId = tokenService.TokenToUserId();
             string successResponse = ResponseR.success.ToString();
 
-            successResponse =  reservationDao.getUsersReservations();
+            successResponse = reservationDao.getUsersReservations();
 
             return successResponse;
 
@@ -91,7 +134,7 @@ namespace ChantemerleApi.Services
                 // token to user id here 
                 double userId = tokenService.TokenToUserId();
                 string successResponse = ResponseR.success.ToString();
-                reservationDao.customerAcceptPendingReservationPotentialInDatabase(userId, reservation.roomno, reservation.time_from, reservation.time_till);
+                reservationDao.customerAcceptPendingReservationPotentialInDatabase(userId, reservation.roomno, reservation.time_from.ToString(), reservation.time_till.ToString());
 
 
             }

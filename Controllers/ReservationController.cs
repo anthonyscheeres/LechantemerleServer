@@ -19,10 +19,10 @@ namespace ChantemerleApi.Controllers
         ReservationService reservationService = new ReservationService();
 
 
-        // GET: api/Reservation/getAccpetedReservation?token={token}
-        [Route("getAcceptedReservation")]
+        // GET: api/Reservation/getPendingResrvationsAdmin?token={token}
+        [Route("getPendingResrvationsAdmin")]
         [HttpGet("{token}")]
-        public string getAccpetedReservation([FromQuery] string token)
+        public string getPendingResrvationsAdmin([FromQuery] string token)
         {
             return reservationService.getAccpetedReservation(token);
         }

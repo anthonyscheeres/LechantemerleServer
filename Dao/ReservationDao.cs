@@ -53,7 +53,7 @@ namespace ChantemerleApi.Dao
 
         internal void addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(ReservationModel reservation)
         {
-            const string sqlQueryForDeletingAnreservation = "insert into reservations(roomno, time_from, time_till, price, accepted_by_super_user) values(@roomno, @created_at, @time_from, @time_till, @price, @accepted_by_super_user);";
+            const string sqlQueryForDeletingAnreservation = "insert into reservations(roomno, time_from, time_till, price, accepted_by_super_user) values(@roomno, @time_from, @time_till, @price, @accepted_by_super_user);";
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);
             connectionWithDatabase.Open(); //open the connection
