@@ -67,6 +67,12 @@ namespace ChantemerleApi.Services
 
             return response;
         }
+
+        internal string getPendingDatesByIdReservation(int id)
+        {
+            return reservationDao.selectRoomAvailableTimesById(id);
+        }
+
         internal void addResrvationForEveryMonth(ReservationModel reservation)
         {
             int start = 1;
@@ -89,8 +95,8 @@ namespace ChantemerleApi.Services
         {
             ReservationModel rservation = reservation;//refresh base model
 
-            rservation.time_from.AddMonths(index);//add month from index use a for loop to send reser
-            rservation.time_till.AddMonths(index);
+            rservation.time_from = rservation.time_from.AddMonths(index);//add month from index use a for loop to send reser
+            rservation.time_till = rservation.time_till.AddMonths(index);
             reservationDao.addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(rservation);
         }
 

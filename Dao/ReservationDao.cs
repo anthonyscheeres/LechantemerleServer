@@ -44,12 +44,12 @@ namespace ChantemerleApi.Dao
             return sqlQueryFroGettingReservationInformationConstuctedBasedOnWheterIsAccpetedOrNot;
         }
 
-
-
-
-
-
-
+        internal string selectRoomAvailableTimesById(int id)
+        {
+            string query = "select time_from::timestamp::date, time_till::timestamp::date, price from reservations left join rooms on reservations.roomno = rooms.id where reservations.roomno=" + id;
+            string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(query);
+            return jsonString;
+        }
 
         internal void addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(ReservationModel reservation)
         {
@@ -76,7 +76,7 @@ namespace ChantemerleApi.Dao
 
         internal string getProfileResrvationInformationFromDatabase(double id)
         {
-            string sqlQueryFroGettingReservationInformation = string.Format("select rooms.out_of_order,rooms.img, rooms.amount_of_beds, rooms.id as {0}, app_users.username, app_users.email, app_users.id, reservations.time_from::TIMESTAMP::DATE, reservations.time_till::TIMESTAMP::DATE, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id as {1}, reservations.created_at::TIMESTAMP::DATE  from reservations left join app_users on reservations.id = app_users.id left join rooms on reservations.roomno = rooms.id", "name", "reservationsId");
+            string sqlQueryFroGettingReservationInformation = string.Format("select rooms.out_of_order, rooms.amount_of_beds, rooms.id as {0}, app_users.username, app_users.email, app_users.id, reservations.time_from::TIMESTAMP::DATE, reservations.time_till::TIMESTAMP::DATE, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id as {1}, reservations.created_at::TIMESTAMP::DATE  from reservations left join app_users on reservations.id = app_users.id left join rooms on reservations.roomno = rooms.id", "name", "reservationsId");
             Console.WriteLine(sqlQueryFroGettingReservationInformation);
             string query = sqlQueryFroGettingReservationInformation + " where id=" + id;
             string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(query);

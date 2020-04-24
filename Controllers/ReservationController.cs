@@ -37,8 +37,13 @@ namespace ChantemerleApi.Controllers
 
             return reservationService.updateAdminAcceptResevationByModel(token, reservation);
         }
-
-      
+        // GET: api/Reservation/getPendingDatesByIdReservation?id={id}
+        [Route("getPendingDatesByIdReservation")]
+        [HttpGet("{id}")]
+        public string getPendingDatesByIdReservation([FromQuery] int id)
+        {
+            return reservationService.getPendingDatesByIdReservation(id);
+        }
 
 
         // GET: api/Reservation/getPendingReservation
