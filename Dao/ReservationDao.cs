@@ -46,7 +46,7 @@ namespace ChantemerleApi.Dao
 
         internal string selectRoomAvailableTimesById(int id)
         {
-            string query = "select time_from::timestamp::date, time_till::timestamp::date, price from reservations left join rooms on reservations.roomno = rooms.id where reservations.roomno=" + id;
+            string query = "select reservations.id, time_from::timestamp::date, time_till::timestamp::date, price from reservations left join rooms on reservations.roomno = rooms.id where reservations.roomno=" + id;
             string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(query);
             return jsonString;
         }
@@ -120,9 +120,9 @@ namespace ChantemerleApi.Dao
         }
 
 
-        internal void customerAcceptPendingReservationPotentialInDatabase(double userId, int id, string time_from, string time_till)
+        internal void customerAcceptPendingReservationPotentialInDatabase(double userId, int id)
         {
-            const string sqlQueryForDeletingAnreservation = "update reservations set user_id = @user_id where roomno = @id and time_from::timestamp::date = @time_from and time_till::timestamp::dates = @time_till;";
+            const string sqlQueryForDeletingAnreservation = "update reservations set user_id = @user_id where id = @id";
 
             using var connectionWithDatabase = new NpgsqlConnection(cs);
             connectionWithDatabase.Open(); //open the connection
@@ -133,8 +133,7 @@ namespace ChantemerleApi.Dao
 
             command.Parameters.AddWithValue("id", id);
             command.Parameters.AddWithValue("user_id", userId);
-            command.Parameters.AddWithValue("time_from", time_from);
-            command.Parameters.AddWithValue("time_till", time_till);
+   
             command.Prepare(); //Construct and optimize query
 
             command.ExecuteNonQuery();

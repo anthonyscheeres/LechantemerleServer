@@ -140,7 +140,7 @@ namespace ChantemerleApi.Services
                 // token to user id here 
                 double userId = tokenService.TokenToUserId();
                 string successResponse = ResponseR.success.ToString();
-                reservationDao.customerAcceptPendingReservationPotentialInDatabase(userId, reservation.roomno, reservation.time_from.ToString(), reservation.time_till.ToString());
+                reservationDao.customerAcceptPendingReservationPotentialInDatabase(userId, reservation.id);
 
 
             }
