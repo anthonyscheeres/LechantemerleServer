@@ -27,7 +27,7 @@ namespace ChantemerleApi.Controllers
             return reservationService.getAccpetedReservation(token);
         }
 
-
+        
 
         // PUT: api/Reservation/updateAcceptResevation?token={token}
         [Route("updateAcceptResevation")]
@@ -113,5 +113,17 @@ namespace ChantemerleApi.Controllers
 
             return reservationService.validatDeleteReservationByModel(reservation, token);
         }
+
+        //DELETE : api/Reservation/deleteAllReservations?token={token}
+        [Route("deleteAllReservations")]
+        [HttpDelete("{token}")]
+        public string deleteAllReservations([FromQuery] string token)
+        {
+
+
+            return reservationService.validatDeleteReservationAll(token);
+        }
     }
+
+
 }

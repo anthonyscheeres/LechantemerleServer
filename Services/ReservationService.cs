@@ -148,6 +148,29 @@ namespace ChantemerleApi.Services
             return response;
         }
 
+        internal string validatDeleteReservationAll(string token)
+        {
+            //initialize default objects
+            TokenService tokenService = new TokenService(token);
+            string failResponse = ResponseR.fail.ToString(); 
+            string response = failResponse;
+            string succesResponse = ResponseR.success.ToString();
+            response = succesResponse;
+
+            //throw exeption and end the code
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+
+            //change http response 
+            response = succesResponse;
+
+            //execute query
+            reservationDao.deleteAll();
+
+
+            return response;
+
+        }
+
         internal string getReservation(string token)
         {
             TokenService tokenService = new TokenService(token);

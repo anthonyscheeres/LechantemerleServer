@@ -101,6 +101,25 @@ namespace ChantemerleApi.Dao
             connectionWithDatabase.Close(); //close the connection to save bandwith
         }
 
+        internal void deleteAll()
+        {
+            const string sqlQueryForDeletingAllreservation = "delete from reservations;";
+          
+            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            connectionWithDatabase.Open(); //open the connection
+
+
+
+            using var command = new NpgsqlCommand(sqlQueryForDeletingAllreservation, connectionWithDatabase);
+
+            
+
+            command.Prepare(); //Construct and optimize query
+
+            command.ExecuteNonQuery();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
+        }
+
         internal string getReservations(bool isAccepted, int id)
         {
             string sqlQueryForRegistingUser = constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(isAccepted);
