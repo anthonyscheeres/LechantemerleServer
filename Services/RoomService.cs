@@ -1,4 +1,5 @@
-﻿using ChantemerleApi.Dao;
+﻿using anthonyscheeresApi.Providers;
+using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
 using System;
 
@@ -13,7 +14,7 @@ namespace ChantemerleApi.Services
     {
 
         private readonly RoomDao roomDao = new RoomDao();
-
+        TokenService tokenService = ServiceProvider.getToken();
 
         /**
 * @author Anthony Scheeres
@@ -26,10 +27,10 @@ namespace ChantemerleApi.Services
 
         private string AddRoom(RoomModel roomModel, string token)
         {
-            TokenService tokenService = new TokenService(token);
+            
             string successResponse = ResponseR.success.ToString();
 
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
             string response;
 
             roomDao.sendQueryToDatabaseToAddBed(roomModel.amountOfBeds);
@@ -39,10 +40,10 @@ namespace ChantemerleApi.Services
 
         internal string ValidateChangeRoomImg(RoomModel room, string token)
         {
-            TokenService tokenService = new TokenService(token);
+            
             string successResponse = ResponseR.success.ToString();
 
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
             string response;
 
             roomDao.sendQueryToDatabaseToChangeBedImg(room.img, room.id);
@@ -52,10 +53,10 @@ namespace ChantemerleApi.Services
 
         internal string ValidateRemoveRoom(RoomModel room, string token)
         {
-            TokenService tokenService = new TokenService(token);
+            
             string successResponse = ResponseR.success.ToString();
 
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
             string response;
 
             roomDao.sendQueryToDatabaseToDeleteRoom(room.id);
@@ -65,10 +66,10 @@ namespace ChantemerleApi.Services
 
         internal string ValidateChangeRoombeds(RoomModel room, string token)
         {
-            TokenService tokenService = new TokenService(token);
+            
             string successResponse = ResponseR.success.ToString();
 
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
             string response;
 
             roomDao.sendQueryToDatabaseToChangeAmountBeds(room.amountOfBeds, room.id);

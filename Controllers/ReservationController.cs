@@ -1,4 +1,5 @@
-﻿using ChantemerleApi.Models;
+﻿using anthonyscheeresApi.Providers;
+using ChantemerleApi.Models;
 using ChantemerleApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ namespace ChantemerleApi.Controllers
     public class ReservationController : ControllerBase
     {
         //default  reservation service connection
-        ReservationService reservationService = new ReservationService();
+        ReservationService reservationService = ServiceProvider.getResrvation();
 
 
         // GET: api/Reservation/getPendingResrvationsAdmin?token={token}

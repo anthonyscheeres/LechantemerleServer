@@ -1,4 +1,5 @@
-﻿using ChantemerleApi.Models;
+﻿using anthonyscheeresApi.Providers;
+using ChantemerleApi.Models;
 using ChantemerleApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,7 +10,7 @@ namespace ChantemerleApi.Controllers
     [ApiController]
     public class ContactInfoController : ControllerBase
     {
-        ContactInfoService contactInfoService = new ContactInfoService();
+        ContactInfoService contactInfoService = ServiceProvider.getContact();
 
 
         // GET: api/ContactInfo/getContactInfo

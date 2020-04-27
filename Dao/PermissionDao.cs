@@ -12,13 +12,13 @@ namespace ChantemerleApi.Dao
     {
         private readonly DatabaseUtilities databaseUtilities = new DatabaseUtilities();
        
-        private string username = "";
+   
 
    
 
-        public PermissionDao(string username)
+        public PermissionDao()
         {
-            this.username = username;
+        
         }
 
 
@@ -27,7 +27,7 @@ namespace ChantemerleApi.Dao
         /**
 * @author Anthony Scheeres
 */
-        internal bool checkUsernameAndPassword(string password)
+        internal bool checkUsernameAndPassword(string password, string username)
         {
             const string sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE username = @username AND password = concat(md5(@username), md5(@password)))";
 
@@ -69,7 +69,7 @@ namespace ChantemerleApi.Dao
         /**
 * @author Anthony Scheeres
 */
-        internal bool checkUsernameAndToken( string token)
+        internal bool checkUsernameAndToken( string token, string username)
         {
             const string sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE token = @token AND username = @username)";
 
@@ -104,7 +104,7 @@ namespace ChantemerleApi.Dao
         /**
 * @author Anthony Scheeres
 */
-        internal string getSensitiveUserInfoFromDatabaseByUsername()
+        internal string getSensitiveUserInfoFromDatabaseByUsername(string username)
         {
             //using MD5 to construct a random and unique token
             const string sqlQueryForLoginUser = "update app_users set token = concat(md5(@username), md5((random()::text))) where username = @username  ; ";
@@ -145,7 +145,7 @@ namespace ChantemerleApi.Dao
 
         }
 
-        internal void changeTokenInDataBaseByUsernameBeforeLoginIn()
+        internal void changeTokenInDataBaseByUsernameBeforeLoginIn(string username)
         {
             //using MD5 to construct a random and unique token
             const string sqlQueryForLoginUser = "update app_users set token = concat(md5(@username), md5((random()::text))) where username = @username  ; ";

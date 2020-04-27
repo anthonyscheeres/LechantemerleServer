@@ -1,4 +1,5 @@
-﻿using ChantemerleApi.Dao;
+﻿using anthonyscheeresApi.Providers;
+using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
 using System;
@@ -11,8 +12,9 @@ namespace ChantemerleApi.Services
 	 */
     public class UserService
     {
+        private readonly UserDao userDao = DaoProvider.getUser();
+        private readonly TokenService tokenService = ServiceProvider.getToken();
 
-        private readonly UserDao userDao = new UserDao();
 
 
 
@@ -32,8 +34,8 @@ namespace ChantemerleApi.Services
         internal string validateShowAllUsersIncludingAdmins(string token)
         {
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
-            TokenService tokenService = new TokenService(token);
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+          
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
        
                 response = userDao.showAllUsersIncludingAdmins();
       
@@ -60,14 +62,13 @@ namespace ChantemerleApi.Services
 */
         internal string letAnUserChangeItsOwnUsernameOrPassword(UserModel user, string token)
         {
-            //Get tokenServices by passsing the token
-            TokenService tokenService = new TokenService(token);
+ 
 
             string response = ResponseR.success.ToString();
 
        
                 //check if the token is valide
-                double id = tokenService.TokenToUserId();
+                double id = tokenService.TokenToUserId(token);
 
                 userDao.changePasswordByUserIdInDatabase(user.password, id, user.username);
 
@@ -103,13 +104,13 @@ namespace ChantemerleApi.Services
 
         internal string validateProfile(string token)
         {        //Get tokenServices by passsing the token
-            TokenService tokenService = new TokenService(token);
+     
 
             string response = ResponseR.success.ToString();
 
 
             //check if the token is valide
-            double id = tokenService.TokenToUserId();
+            double id = tokenService.TokenToUserId(token);
 
            response= userDao.getProfileInformationFromDatabase(id);
 
@@ -128,10 +129,10 @@ namespace ChantemerleApi.Services
         {
             string failMessage = "URL was expired or invalide please try again!";
             string response = failMessage;
-            TokenService tokenService = new TokenService(token);
+      
             try
             {
-                tokenService.TokenToUserId();
+                tokenService.TokenToUserId(token);
             }
             catch (ArgumentNullException error)
             {
@@ -160,7 +161,7 @@ namespace ChantemerleApi.Services
             {
                 registerUser(username, password, email);
 
-                TokenDao tokenDao = new TokenDao();
+                TokenDao tokenDao =DaoProvider.getToken();
 
                 string token = tokenDao.getTokenByUsernameExtremelyClassified(username);
 
@@ -213,8 +214,8 @@ namespace ChantemerleApi.Services
             if (user == null) throw new ArgumentNullException(nameof(user));
 
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
-            TokenService tokenService = new TokenService(token);
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin();
+         
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
        
                 userDao.deleteUserByUsername(user);
                 response = ResponseR.success.ToString();

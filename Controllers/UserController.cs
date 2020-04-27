@@ -1,4 +1,5 @@
-﻿using ChantemerleApi.Services;
+﻿using anthonyscheeresApi.Providers;
+using ChantemerleApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -8,8 +9,8 @@ namespace ChantemerleApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        PermissionService permissionService = new PermissionService();
-        UserService userService = new UserService();
+        PermissionService permissionService = ServiceProvider.getPermission();
+        UserService userService = ServiceProvider.getUser();
 
         // GET: api/User/showAllUsers
         [Route("showAllUsers")]

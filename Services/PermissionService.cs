@@ -1,4 +1,5 @@
-﻿using ChantemerleApi.Dao;
+﻿using anthonyscheeresApi.Providers;
+using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
 using System.Security.Authentication;
 
@@ -10,7 +11,11 @@ namespace ChantemerleApi.Services
 */
     internal class PermissionService
     {
+        PermissionDao permissionDao = DaoProvider.getPermission();
+        internal PermissionService()
+        {
 
+        }
 
 
         /**
