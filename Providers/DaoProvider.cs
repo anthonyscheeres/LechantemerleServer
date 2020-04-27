@@ -42,7 +42,7 @@ namespace anthonyscheeresApi.Providers
         {
             if (tokenDao ==null)
             {
-                tokenDao =DaoProvider.getToken();
+                tokenDao = new TokenDao();
             }
             return tokenDao;
         }

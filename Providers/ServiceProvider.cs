@@ -41,7 +41,7 @@ namespace anthonyscheeresApi.Providers
             {
                 if (tokenService == null)
                 {
-                    tokenService = ServiceProvider.getToken();
+                tokenService = new TokenService();
                 }
                 return tokenService;
             }
