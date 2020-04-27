@@ -1,7 +1,6 @@
 ﻿using ChantemerleApi.Models;
 using ChantemerleApi.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace ChantemerleApi.Controllers
 {
@@ -27,7 +26,7 @@ namespace ChantemerleApi.Controllers
             return reservationService.getAccpetedReservation(token);
         }
 
-        
+
 
         // PUT: api/Reservation/updateAcceptResevation?token={token}
         [Route("updateAcceptResevation")]
@@ -74,7 +73,7 @@ namespace ChantemerleApi.Controllers
         // POST: api/Reservation/addPendingReservation?token={token}
         [Route("addPendingReservation")]
         [HttpPost("{token}")]
-       
+
         public string addPendingReservation([FromBody] ReservationModel reservation, [FromQuery] string token)
         {
             return reservationService.addPendingReservation(reservation, token);

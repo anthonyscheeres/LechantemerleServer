@@ -1,4 +1,5 @@
-﻿using ChantemerleApi.Models;
+﻿using anthonyscheeresApi.Providers;
+using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
 using Npgsql;
 using System;
@@ -13,7 +14,6 @@ namespace ChantemerleApi.Dao
 */
     public class ContactInfoDao
     {
-        private string cs = DataModel.getConfigModel().databaseCredentials.cs;
         private DatabaseUtilities databaseUtilities = new DatabaseUtilities();
         /**
 * @author Anthony Scheeres
@@ -21,14 +21,7 @@ namespace ChantemerleApi.Dao
         public ContactInfoDao()
         {
         }
-        /**
-* @author Anthony Scheeres
-*/
-        public ContactInfoDao(string cs)
-        {
-            this.cs = cs;
-        }
-
+  
 
         /**
 * @author Anthony Scheeres
@@ -38,7 +31,7 @@ namespace ChantemerleApi.Dao
             //const query for updating each record of the table
             const string sqlQueryForChangingContactInfo = "update contact_information_owner set house_nickname = @house_nickname; update contact_information_owner set place = @place; update contact_information_owner set address = @address; update contact_information_owner set postal_code = @postal_code; update contact_information_owner set family_name = @family_name; update contact_information_owner set telephone = @telephone; update contact_information_owner set mail = @mail";
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs); //start new Npgsql instance for connecting with an postgres database//start new Npgsql instance for connecting with an postgres database
+            using var connectionWithDatabase = ConnectionProvider.getProvide(); //start new Npgsql instance for connecting with an postgres database//start new Npgsql instance for connecting with an postgres database
             connectionWithDatabase.Open(); //open the connection
 
 

@@ -1,4 +1,5 @@
-﻿using ChantemerleApi.Models;
+﻿using anthonyscheeresApi.Providers;
+using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
 using Npgsql;
 using System;
@@ -7,17 +8,8 @@ namespace ChantemerleApi.Dao
 {
     public class TokenDao
     {
-        private string cs = DataModel.getConfigModel().databaseCredentials.cs;
+  
 
-
-
-        /**
-   * @author Anthony Scheeres
-   */
-        public TokenDao(string cs)
-        {
-            this.cs = cs;
-        }
 
 
 
@@ -37,7 +29,7 @@ namespace ChantemerleApi.Dao
 
             var sqlQueryForRegistingUser = "select is_super_user from app_users where token= @token";
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
 
             connectionWithDatabase.Open(); //open the connection
 
@@ -63,7 +55,7 @@ namespace ChantemerleApi.Dao
 
             var sqlQueryForRegistingUser = "select token from app_users where username = @username";
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
 
             connectionWithDatabase.Open(); //open the connection
 
@@ -89,7 +81,7 @@ namespace ChantemerleApi.Dao
 
             var sqlQueryForRegistingUser = "select token from app_users where id = @id";
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
 
             connectionWithDatabase.Open(); //open the connection
 
@@ -115,7 +107,7 @@ namespace ChantemerleApi.Dao
         {
             var sqlQueryForRegistingUser = "select id from app_users where token=@token";
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
 
             connectionWithDatabase.Open(); //open the connection
 

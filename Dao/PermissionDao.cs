@@ -1,4 +1,5 @@
-﻿using ChantemerleApi.Models;
+﻿using anthonyscheeresApi.Providers;
+using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
 using Newtonsoft.Json;
 using Npgsql;
@@ -10,14 +11,10 @@ namespace ChantemerleApi.Dao
     public class PermissionDao
     {
         private readonly DatabaseUtilities databaseUtilities = new DatabaseUtilities();
-        private string cs = DataModel.getConfigModel().databaseCredentials.cs;
+       
         private string username = "";
 
-        public PermissionDao(string cs, string username)
-        {
-            this.cs = cs;
-            this.username = username;
-        }
+   
 
         public PermissionDao(string username)
         {
@@ -36,7 +33,7 @@ namespace ChantemerleApi.Dao
 
 
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
 
             connectionWithDatabase.Open(); //open the connection
 
@@ -76,7 +73,7 @@ namespace ChantemerleApi.Dao
         {
             const string sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE token = @token AND username = @username)";
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
 
             connectionWithDatabase.Open(); //open the connection
 
@@ -119,7 +116,7 @@ namespace ChantemerleApi.Dao
              command.Prepare(); //Construct and optimize query
 */
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
 
             connectionWithDatabase.Open(); //open the connection
 
@@ -154,7 +151,7 @@ namespace ChantemerleApi.Dao
             const string sqlQueryForLoginUser = "update app_users set token = concat(md5(@username), md5((random()::text))) where username = @username  ; ";
 
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
 
             connectionWithDatabase.Open(); //open the connection
 

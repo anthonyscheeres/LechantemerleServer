@@ -1,4 +1,5 @@
-﻿using ChantemerleApi.Models;
+﻿using anthonyscheeresApi.Providers;
+using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
 using Npgsql;
 using System;
@@ -55,7 +56,7 @@ namespace ChantemerleApi.Dao
         {
             const string sqlQueryForDeletingAnreservation = "insert into reservations(roomno, time_from, time_till, price, accepted_by_super_user) values(@roomno, @time_from, @time_till, @price, @accepted_by_super_user);";
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -87,7 +88,7 @@ namespace ChantemerleApi.Dao
         {
             const string sqlQueryForDeletingAnreservation = "delete from reservations where id = @id";
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -105,7 +106,7 @@ namespace ChantemerleApi.Dao
         {
             const string sqlQueryForDeletingAllreservation = "delete from reservations;";
           
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -143,7 +144,7 @@ namespace ChantemerleApi.Dao
         {
             const string sqlQueryForDeletingAnreservation = "update reservations set user_id = @user_id where id = @id";
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -163,7 +164,7 @@ namespace ChantemerleApi.Dao
         {
             const string sqlQueryForDeletingAnreservation = "update reservations set accepted_by_super_user = @accepted_by_super_user where id = @id;";
             const bool accepted_by_super_user = true;
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
             connectionWithDatabase.Open(); //open the connection
 
 

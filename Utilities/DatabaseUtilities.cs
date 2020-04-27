@@ -1,4 +1,5 @@
-﻿using ChantemerleApi.Models;
+﻿using anthonyscheeresApi.Providers;
+using ChantemerleApi.Models;
 using Newtonsoft.Json;
 using Npgsql;
 using System.Data;
@@ -8,12 +9,6 @@ namespace ChantemerleApi.Utilities
     public class DatabaseUtilities
     {
 
-        private string cs = DataModel.getConfigModel().databaseCredentials.cs;
-
-        public DatabaseUtilities(string cs)
-        {
-            this.cs = cs;
-        }
 
         public DatabaseUtilities()
         {
@@ -22,17 +17,14 @@ namespace ChantemerleApi.Utilities
 
         public string sendSelectQueryToDatabaseReturnJson(string sqlQuery)
         {
-            return sendSelectQueryToDatabaseReturnJsonPrivate(sqlQuery, cs);
+            return sendSelectQueryToDatabaseReturnJsonPrivate(sqlQuery);
         }
 
-        public string sendSelectQueryToDatabaseReturnJson(string sqlQuery, string cs)
-        {
-            return sendSelectQueryToDatabaseReturnJsonPrivate(sqlQuery, cs);
-        }
+  
 
-        private string sendSelectQueryToDatabaseReturnJsonPrivate(string sqlQuery, string cs)
+        private string sendSelectQueryToDatabaseReturnJsonPrivate(string sqlQuery)
         {
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
 
             connectionWithDatabase.Open(); //open the connection
 

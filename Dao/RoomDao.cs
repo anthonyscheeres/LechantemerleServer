@@ -1,4 +1,5 @@
-﻿using ChantemerleApi.Models;
+﻿using anthonyscheeresApi.Providers;
+using ChantemerleApi.Models;
 using ChantemerleApi.Utilities;
 using Newtonsoft.Json;
 using Npgsql;
@@ -16,13 +17,7 @@ namespace ChantemerleApi.Dao
 */
 
         private DatabaseUtilities databaseUtilities = new DatabaseUtilities();
-        private string cs = DataModel.getConfigModel().databaseCredentials.cs;
-
-        public RoomDao(string cs)
-        {
-            this.cs = cs;
-        }
-
+  
         public RoomDao()
         {
         }
@@ -30,7 +25,7 @@ namespace ChantemerleApi.Dao
         internal void sendQueryToDatabaseToAddBed(int amountOfBedsInTheRoom)
         {
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -48,7 +43,7 @@ namespace ChantemerleApi.Dao
         internal void sendQueryToDatabaseToChangeBedImg(string img, int id)
         {
 
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -64,7 +59,7 @@ namespace ChantemerleApi.Dao
 
         internal void sendQueryToDatabaseToDeleteRoom(int id)
         {
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -80,7 +75,7 @@ namespace ChantemerleApi.Dao
 
         internal void sendQueryToDatabaseToChangeAmountBeds(int amountOfBeds, int id)
         {
-            using var connectionWithDatabase = new NpgsqlConnection(cs);
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
             connectionWithDatabase.Open(); //open the connection
 
 
