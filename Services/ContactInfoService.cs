@@ -1,10 +1,12 @@
-﻿using ChantemerleApi.Dao;
+﻿using anthonyscheeresApi.Providers;
+using ChantemerleApi.Dao;
 using ChantemerleApi.Models;
 
 namespace ChantemerleApi.Services
 {
     public class ContactInfoService
     {
+        TokenService tokenService = ServiceProvider.getToken();
         private readonly ContactInfoDao contactInfoDao = DaoProvider.getContact();
 
         internal string getContactInfoAsJsonFormatForPublicUsers()

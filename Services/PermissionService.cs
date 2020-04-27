@@ -11,6 +11,7 @@ namespace ChantemerleApi.Services
 */
     internal class PermissionService
     {
+     
         PermissionDao permissionDao = DaoProvider.getPermission();
         internal PermissionService()
         {
@@ -50,7 +51,7 @@ namespace ChantemerleApi.Services
 */
         private string loginUser(string username, string password)
         {
-            PermissionDao permissionDao = new PermissionDao(username);
+            
 
             //check if username and password combo exist only works if usernames stay unique
             checkUsernameAndPassword(username, password);
@@ -62,8 +63,8 @@ namespace ChantemerleApi.Services
 
 
             string successfulResponse = ResponseR.success.ToString(); response = successfulResponse;
-            permissionDao.changeTokenInDataBaseByUsernameBeforeLoginIn();
-            response = permissionDao.getSensitiveUserInfoFromDatabaseByUsername();
+            permissionDao.changeTokenInDataBaseByUsernameBeforeLoginIn(username);
+            response = permissionDao.getSensitiveUserInfoFromDatabaseByUsername(username);
 
 
 
@@ -72,9 +73,9 @@ namespace ChantemerleApi.Services
 
         private void checkUsernameAndPassword(string username, string password)
         {
-            PermissionDao permissionDao = new PermissionDao(username);
+            bool hasValidePass = permissionDao.checkUsernameAndPassword(password, username);
 
-            if (!permissionDao.checkUsernameAndPassword(password))
+            if (!hasValidePass)
             {
                 throw new AuthenticationException();
             }
