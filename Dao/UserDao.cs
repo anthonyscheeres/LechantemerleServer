@@ -219,7 +219,27 @@ namespace ChantemerleApi.Dao
             connectionWithDatabase.Close(); //close the connection to save bandwith
         }
 
+        internal void makeEmailValide(string token)
+        {
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            connectionWithDatabase.Open(); //open the connection
 
+
+            var sqlQueryForRegistingUser = "update  app_users set is_email_verified = true where token = @token;";
+            using var command = new NpgsqlCommand(sqlQueryForRegistingUser, connectionWithDatabase);
+
+
+            command.Parameters.AddWithValue("token", token); // add username
+         
+
+
+
+
+            command.Prepare(); //Construct and optimize query
+
+            command.ExecuteNonQuery();
+            connectionWithDatabase.Close(); //close the connection to save bandwith
+        }
 
 
         /**

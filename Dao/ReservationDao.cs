@@ -47,7 +47,13 @@ namespace ChantemerleApi.Dao
 
         internal bool CheckOverlappingDatesInDatabase(DateTime time_from, DateTime time_till, int kamerId)
         {
-          const string query = " if exists(select id from reservations where kamerId=@kamerId and @promotionStart <= time_from::timestamp::date and time_till::timestamp::date <= @promotionEnd )";
+
+
+
+
+            const string query = "select exists (select * from reservations where roomno=@roomno and time_till::timestamp::date <= @time_till ::date and @time_from::date <= time_from::timestamp::date)";
+
+
 
 
             using var connectionWithDatabase = ConnectionProvider.getProvide();
@@ -57,17 +63,18 @@ namespace ChantemerleApi.Dao
 
             using var command = new NpgsqlCommand(query, connectionWithDatabase);
 
+            var typpe = "yyyy-MM-dd";
 
-            command.Parameters.AddWithValue("promotionEnd", time_till);
+            command.Parameters.AddWithValue("time_till", time_till.ToString(typpe));
 
-            command.Parameters.AddWithValue("promotionStart", time_from);
-
-
-            command.Parameters.AddWithValue("kamerId", kamerId);
+            command.Parameters.AddWithValue("time_from", time_from.ToString(typpe));
 
 
+            command.Parameters.AddWithValue("roomno", kamerId);
+          
             command.Prepare(); //Construct and optimize query
 
+        
             var i = command.ExecuteReader();
             bool credentialsAreValid = false;
 
@@ -90,8 +97,11 @@ namespace ChantemerleApi.Dao
             return jsonString;
         }
 
-        internal void addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(ReservationModel reservation)
+        internal void addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(ReservationModel reservation) //throws exception
         {
+            CheckOverlappingDatesInDatabase(reservation.time_from, reservation.time_till, reservation.roomno);
+
+
             const string sqlQueryForDeletingAnreservation = "insert into reservations(roomno, time_from, time_till, price, accepted_by_super_user) values(@roomno, @time_from, @time_till, @price, @accepted_by_super_user);";
 
             using var connectionWithDatabase = ConnectionProvider.getProvide();

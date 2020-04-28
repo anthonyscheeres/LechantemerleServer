@@ -141,7 +141,11 @@ namespace ChantemerleApi.Services
 
             }
 
+
+
             string successMessage = "Success; Your account has been verified!";
+            userDao.makeEmailValide(token);
+
 
             return successMessage;
 

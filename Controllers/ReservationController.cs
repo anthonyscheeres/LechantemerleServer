@@ -77,7 +77,7 @@ namespace ChantemerleApi.Controllers
 
         public string addPendingReservation([FromBody] ReservationModel reservation, [FromQuery] string token)
         {
-            return reservationService.addPendingReservation(reservation, token);
+            return reservationService.ValidateAddPendingReservation(reservation, token);
         }
 
 

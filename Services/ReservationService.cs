@@ -33,7 +33,7 @@ namespace ChantemerleApi.Services
 
         internal void CheckOverlappingDatesInDatabase(ReservationModel r )
         {
-            if (reservationDao.CheckOverlappingDatesInDatabase(r.time_from, r.time_till, r.id)){
+            if (reservationDao.CheckOverlappingDatesInDatabase(r.time_from, r.time_till, r.roomno)){
                 throw new Exception();
             }
 
@@ -42,7 +42,7 @@ namespace ChantemerleApi.Services
         /**
 * @author Anthony Scheeres
 */
-        internal string addPendingReservation(ReservationModel reservation, string token)
+        internal string ValidateAddPendingReservation(ReservationModel reservation, string token)
         {
             if (reservation == null) throw new ArgumentNullException(nameof(reservation));
 
@@ -50,12 +50,12 @@ namespace ChantemerleApi.Services
 
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
 
-          
+       
 
 
             tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
 
-            this.CheckOverlappingDatesInDatabase(reservation);
+   
 
 
 
@@ -98,6 +98,7 @@ namespace ChantemerleApi.Services
             //start a loop
             for (int index = start; index < aantalMaandenInEenJaar; index++)
             {
+
                 sendAddedMonths(index, reservation);
 
 
@@ -112,7 +113,18 @@ namespace ChantemerleApi.Services
 
             rservation.time_from = rservation.time_from.AddMonths(index);//add month from index use a for loop to send reser
             rservation.time_till = rservation.time_till.AddMonths(index);
-            reservationDao.addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(rservation);
+
+            try
+            {
+
+                reservationDao.addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(rservation);
+            }
+            catch (Exception)
+            {
+
+            }
+
+
         }
 
 
@@ -147,6 +159,7 @@ namespace ChantemerleApi.Services
             //check if user his email is validated
             UserDao userDao = new UserDao();
             bool isEmaillValid = userDao.isEnailValideByModel(token);
+
 
             if (isEmaillValid)
             {
