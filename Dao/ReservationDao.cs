@@ -23,7 +23,7 @@ namespace ChantemerleApi.Dao
         private string constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(bool isAccepted)
         {
          
-            string sqlQueryFroGettingReservationInformation = string.Format("select rooms.out_of_order,rooms.img, rooms.amount_of_beds, rooms.id as {0}, app_users.username, app_users.email, reservations.time_from::TIMESTAMP::DATE, reservations.time_till::TIMESTAMP::DATE, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at::TIMESTAMP::DATE  from reservations left join app_users on reservations.id = app_users.id left join rooms on reservations.roomno = rooms.id", "name");
+            string sqlQueryFroGettingReservationInformation = string.Format("select rooms.out_of_order,rooms.img, rooms.amount_of_beds, rooms.id as {0}, app_users.username, app_users.email, reservations.time_from::TIMESTAMP::DATE, reservations.time_till::TIMESTAMP::DATE, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at::TIMESTAMP::DATE  from reservations left join app_users on reservations.user_id = app_users.id left join rooms on reservations.roomno = rooms.id", "name");
             Console.WriteLine(sqlQueryFroGettingReservationInformation);
             string sqlDontSelectPastResrvations = " and reservations.time_till>now()";
 
@@ -45,9 +45,47 @@ namespace ChantemerleApi.Dao
             return sqlQueryFroGettingReservationInformationConstuctedBasedOnWheterIsAccpetedOrNot;
         }
 
+        internal bool CheckOverlappingDatesInDatabase(DateTime time_from, DateTime time_till)
+        {
+          const string query = " if exists(    select id from reservations where  @promotionStart <= time_from and time_till <= @promotionEnd )";
+
+
+            using var connectionWithDatabase = ConnectionProvider.getProvide();
+
+            connectionWithDatabase.Open(); //open the connection
+
+
+            using var command = new NpgsqlCommand(query, connectionWithDatabase);
+
+
+            command.Parameters.AddWithValue("promotionEnd", time_till);
+
+            command.Parameters.AddWithValue("promotionStart", time_from);
+
+
+
+
+
+            command.Prepare(); //Construct and optimize query
+
+            var i = command.ExecuteReader();
+            bool credentialsAreValid = false;
+
+            // int index = (i.GetOrdinal("exists"));
+
+            PsqlUtilities.GetAll(i).ForEach(r => {  if (r.GetValue(0).ToString().ToLower() == "true") credentialsAreValid = true; });
+
+            connectionWithDatabase.Close(); //close the connection to save bandwith
+
+
+            return credentialsAreValid;
+
+
+        }
+
         internal string selectRoomAvailableTimesById(int id)
         {
-            string query = "select reservations.id, time_from::timestamp::date, time_till::timestamp::date, price from reservations left join rooms on reservations.roomno = rooms.id where reservations.roomno=" + id;
+            string query = "select reservations.id, time_from::timestamp::date, time_till::timestamp::date, price from reservations left join rooms on reservations.roomno = rooms.id where user_id is null and reservations.roomno=" + id;
             string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(query);
             return jsonString;
         }
@@ -77,7 +115,7 @@ namespace ChantemerleApi.Dao
 
         internal string getProfileResrvationInformationFromDatabase(double id)
         {
-            string sqlQueryFroGettingReservationInformation = string.Format("select rooms.out_of_order, rooms.amount_of_beds, rooms.id as {0}, app_users.username, app_users.email, app_users.id, reservations.time_from::TIMESTAMP::DATE, reservations.time_till::TIMESTAMP::DATE, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id as {1}, reservations.created_at::TIMESTAMP::DATE  from reservations left join app_users on reservations.id = app_users.id left join rooms on reservations.roomno = rooms.id", "name", "reservationsId");
+            string sqlQueryFroGettingReservationInformation = string.Format("select rooms.amount_of_beds, rooms.id as {0}, app_users.username, app_users.email, app_users.id, reservations.time_from::TIMESTAMP::DATE, reservations.time_till::TIMESTAMP::DATE, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id as {1}, reservations.created_at::TIMESTAMP::DATE  from reservations left join app_users on reservations.user_id = app_users.id left join rooms on reservations.roomno = rooms.id", "name", "reservationsId");
             Console.WriteLine(sqlQueryFroGettingReservationInformation);
             string query = sqlQueryFroGettingReservationInformation + " where id=" + id;
             string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(query);

@@ -30,6 +30,15 @@ namespace ChantemerleApi.Services
         }
 
 
+
+        internal void CheckOverlappingDatesInDatabase(DateTime time_from, DateTime time_till)
+        {
+            if (reservationDao.CheckOverlappingDatesInDatabase(time_from, time_till)){
+                throw new Exception();
+            }
+
+        }
+
         /**
 * @author Anthony Scheeres
 */
@@ -45,6 +54,11 @@ namespace ChantemerleApi.Services
 
 
             tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+
+            this.CheckOverlappingDatesInDatabase(reservation.time_from, reservation.time_till);
+
+
+
             reservationDao.addPendingResevationByModelInDatbaseSoTheCustomerCanClaimIt(reservation);
             response = ResponseR.success.ToString();
 
