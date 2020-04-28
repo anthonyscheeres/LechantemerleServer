@@ -23,7 +23,7 @@ namespace ChantemerleApi.Dao
         private string constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(bool isAccepted)
         {
          
-            string sqlQueryFroGettingReservationInformation = string.Format("select rooms.out_of_order,rooms.img, rooms.amount_of_beds, rooms.id as {0}, app_users.username, app_users.email, reservations.time_from::TIMESTAMP::DATE, reservations.time_till::TIMESTAMP::DATE, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at::TIMESTAMP::DATE  from reservations left join app_users on reservations.user_id = app_users.id left join rooms on reservations.roomno = rooms.id", "name");
+            string sqlQueryFroGettingReservationInformation = string.Format("select rooms.img, rooms.amount_of_beds, rooms.id as {0}, app_users.username, app_users.email, reservations.time_from::TIMESTAMP::DATE, reservations.time_till::TIMESTAMP::DATE, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at::TIMESTAMP::DATE  from reservations left join app_users on reservations.user_id = app_users.id left join rooms on reservations.roomno = rooms.id", "name");
             Console.WriteLine(sqlQueryFroGettingReservationInformation);
             string sqlDontSelectPastResrvations = " and reservations.time_till>now()";
 
@@ -45,9 +45,9 @@ namespace ChantemerleApi.Dao
             return sqlQueryFroGettingReservationInformationConstuctedBasedOnWheterIsAccpetedOrNot;
         }
 
-        internal bool CheckOverlappingDatesInDatabase(DateTime time_from, DateTime time_till)
+        internal bool CheckOverlappingDatesInDatabase(DateTime time_from, DateTime time_till, int kamerId)
         {
-          const string query = " if exists(    select id from reservations where  @promotionStart <= time_from and time_till <= @promotionEnd )";
+          const string query = " if exists(select id from reservations where kamerId=@kamerId and @promotionStart <= time_from::timestamp::date and time_till::timestamp::date <= @promotionEnd )";
 
 
             using var connectionWithDatabase = ConnectionProvider.getProvide();
@@ -63,7 +63,7 @@ namespace ChantemerleApi.Dao
             command.Parameters.AddWithValue("promotionStart", time_from);
 
 
-
+            command.Parameters.AddWithValue("kamerId", kamerId);
 
 
             command.Prepare(); //Construct and optimize query
