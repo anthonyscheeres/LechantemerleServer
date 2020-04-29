@@ -190,7 +190,7 @@ namespace ChantemerleApi.Dao
 
         internal void customerAcceptPendingReservationPotentialInDatabase(double userId, int id)
         {
-            const string sqlQueryForDeletingAnreservation = "update reservations set user_id = @user_id where id = @id";
+            const string sqlQueryForDeletingAnreservation = "update reservations set user_id = @user_id where id = @id and where user_id is null";
 
             using var connectionWithDatabase = ConnectionProvider.getProvide();
             connectionWithDatabase.Open(); //open the connection
