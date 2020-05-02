@@ -25,8 +25,8 @@ create table reservations (
 	checkIndate TIMESTAMP,
 	roomno integer,
 	created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (roomno) REFERENCES rooms(id) ON UPDATE CASCADE,
-	FOREIGN KEY (user_id) REFERENCES app_users(id) ON UPDATE CASCADE,
+	FOREIGN KEY (roomno) REFERENCES rooms(id) on delete cascade,
+	FOREIGN KEY (user_id) REFERENCES app_users(id) on delete cascade,
 	time_from TIMESTAMP WITH TIME ZONE,
 	time_till TIMESTAMP WITH TIME ZONE,
 	price decimal(12,2),
@@ -54,7 +54,7 @@ insert into contact_information_owner(house_nickname, place, address, postal_cod
 	'Le Chantemerle',
 	'Alphen Aan den Rijn',
 	'Burgemeester Visserpark 16',
-	'2405 CP',
+	'2405 CR',
 	'Scheeres',
 	'0172 6056 24',
 	'info@chantemerle.nl'
@@ -64,7 +64,7 @@ insert into contact_information_owner(house_nickname, place, address, postal_cod
 insert into app_users (is_super_user, username, password) values(
 	TRUE,
 	'admin',
-	'the best password in the world'
+		concat(md5('admin'), md5('************************************'))
 
 );
 

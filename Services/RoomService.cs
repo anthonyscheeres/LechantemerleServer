@@ -51,6 +51,23 @@ namespace ChantemerleApi.Services
             return response;
         }
 
+        internal string ValidateupdatDescription(RoomModel room, string token)
+        {
+            string successResponse = ResponseR.success.ToString();
+
+            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            string response;
+
+            roomDao.sendQueryToDatabaseToChangeDescription(room.description, room.id);
+            response = successResponse;
+            return response;
+        }
+
+        internal string getRoomDescription(int id)
+        {
+            return roomDao.getDescriptionById(id);
+        }
+
         internal string ValidateRemoveRoom(RoomModel room, string token)
         {
             

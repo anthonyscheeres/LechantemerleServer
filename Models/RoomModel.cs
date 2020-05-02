@@ -7,11 +7,14 @@
 
         public int id { get; set; }
 
-        public RoomModel(int amountOfBeds, string img, int id)
+        public string description { get; set; }
+
+        public RoomModel(int amountOfBeds, string img, int id, string description)
         {
             this.amountOfBeds = amountOfBeds;
             this.img = img;
             this.id = id;
+            this.description = description;
         }
 
         public RoomModel()

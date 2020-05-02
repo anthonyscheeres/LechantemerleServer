@@ -31,6 +31,22 @@ namespace ChantemerleApi.Controllers
             return roomService.ValidateChangeRoomImg(room, token);
 
         }
+        [Route("getRoomDescription")]
+        [HttpGet("{id}")]
+        public string getRoomDescription([FromQuery]  int id)
+        {
+           return roomService.getRoomDescription(id);
+        }
+
+
+        // PUT: api/Room/updatDescription?token={token}
+        [Route("updatDescription")]
+        [HttpPut("{token}")]
+        public string updatDescription([FromQuery] string token, [FromBody] RoomModel room)
+        {
+            return roomService.ValidateupdatDescription(room, token);
+
+        }
 
 
         // PUT: api/Room/updatAmountOfBedsRoom?token={token}

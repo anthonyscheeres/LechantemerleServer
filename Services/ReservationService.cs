@@ -110,9 +110,11 @@ namespace ChantemerleApi.Services
         internal void sendAddedMonths(int index, ReservationModel reservation)
         {
             ReservationModel rservation = reservation;//refresh base model
+            int daysOfTheWeek = 7;
+            int days = index * daysOfTheWeek;
 
-            rservation.time_from = rservation.time_from.AddMonths(index);//add month from index use a for loop to send reser
-            rservation.time_till = rservation.time_till.AddMonths(index);
+            rservation.time_from = rservation.time_from.AddDays(days);//add month from index use a for loop to send reser
+            rservation.time_till = rservation.time_till.AddDays(days);
 
             try
             {
