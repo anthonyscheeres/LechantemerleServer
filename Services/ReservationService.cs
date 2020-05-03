@@ -156,7 +156,7 @@ namespace ChantemerleApi.Services
 
 
             //pass token to responsible service
-            
+            string successResponse = ResponseR.success.ToString();
             string failResponse = ResponseR.fail.ToString(); string response = failResponse; //default failed response 
             //check if user his email is validated
             UserDao userDao = new UserDao();
@@ -167,11 +167,15 @@ namespace ChantemerleApi.Services
             {
                 // token to user id here 
                 double userId = tokenService.TokenToUserId(token);
-                string successResponse = ResponseR.success.ToString();
+              
                 reservationDao.customerAcceptPendingReservationPotentialInDatabase(userId, reservation.id);
 
 
+                response = successResponse;
             }
+
+
+
 
             return response;
         }
