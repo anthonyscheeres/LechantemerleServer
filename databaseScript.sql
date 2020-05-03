@@ -15,7 +15,8 @@ create table rooms (
 	id serial PRIMARY KEY,
 	created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 	amount_of_beds integer,
-	img text
+	img text,
+description text
 );
 
 
