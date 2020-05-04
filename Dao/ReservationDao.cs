@@ -92,7 +92,7 @@ namespace ChantemerleApi.Dao
 
         internal string selectRoomAvailableTimesById(int id)
         {
-            string query = "select reservations.id, time_from::timestamp::date, time_till::timestamp::date, price from reservations left join rooms on reservations.roomno = rooms.id where user_id is null and reservations.roomno=" + id;
+            string query = "select reservations.id, time_from::timestamp::date, time_till::timestamp::date, price from reservations left join rooms on reservations.roomno = rooms.id where user_id is null and time_from::timestamp::date>current_date and reservations.roomno=" + id;
             string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(query);
             return jsonString;
         }
