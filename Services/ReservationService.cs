@@ -13,13 +13,22 @@ namespace ChantemerleApi.Services
     public class ReservationService
     {
         TokenService tokenService = ServiceProvider.getToken();
-        private readonly ReservationDao reservationDao = new ReservationDao();
+        private readonly ReservationDao reservationDao = DaoProvider.getResrvation();
         internal string validatDeleteReservationByModel(ReservationModel reservation, string token)
         {
             if (reservation == null) throw new ArgumentNullException(nameof(reservation)); //if model is null throw error to protect from json injection
-            string failResponse = ResponseR.fail.ToString(); string response = failResponse;
 
-            
+          //initialize default objects
+
+            string successResponse, failResponse, response;
+
+            successResponse = ResponseR.success.ToString();
+            failResponse = ResponseR.fail.ToString();
+            response = failResponse; //default failed response 
+
+
+
+
 
             tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
 
@@ -48,9 +57,15 @@ namespace ChantemerleApi.Services
 
             // admin adds a Reservation 
 
-            string failResponse = ResponseR.fail.ToString(); string response = failResponse;
+            //initialize default objects
 
-       
+            string successResponse, failResponse, response;
+
+            successResponse = ResponseR.success.ToString();
+            failResponse = ResponseR.fail.ToString();
+            response = failResponse; //default failed response 
+
+
 
 
             tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
@@ -92,11 +107,11 @@ namespace ChantemerleApi.Services
         {
             int start = 1;
 
-            int aantalMaandenInEenJaar = 12 - start;
+            int aantalWeken = 12 - start;
 
 
             //start a loop
-            for (int index = start; index < aantalMaandenInEenJaar; index++)
+            for (int index = start; index < aantalWeken; index++)
             {
 
                 sendAddedMonths(index, reservation);
@@ -132,13 +147,20 @@ namespace ChantemerleApi.Services
 
         internal string getUserResrvations(string token)
         {
+            //initialize default objects
 
-            string failResponse = ResponseR.fail.ToString(); string response = failResponse; //default failed response 
+            string successResponse, failResponse, response;
+
+            successResponse = ResponseR.success.ToString();
+            failResponse = ResponseR.fail.ToString();
+            response = failResponse; //default failed response 
+
+
 
             double userId = tokenService.TokenToUserId(token);
-            string successResponse = ResponseR.success.ToString();
+            response = successResponse;
 
-            successResponse = reservationDao.getUsersReservations();
+            response = reservationDao.getUsersReservations();
 
             return successResponse;
 
@@ -155,11 +177,16 @@ namespace ChantemerleApi.Services
             if (reservation == null) throw new ArgumentNullException(nameof(reservation));
 
 
-            //pass token to responsible service
-            string successResponse = ResponseR.success.ToString();
-            string failResponse = ResponseR.fail.ToString(); string response = failResponse; //default failed response 
+            string successResponse, failResponse, response;
+
+            successResponse = ResponseR.success.ToString();
+            failResponse = ResponseR.fail.ToString();
+            response = failResponse; //default failed response 
+
+
+
             //check if user his email is validated
-            UserDao userDao = new UserDao();
+            UserDao userDao = DaoProvider.getUser();
             bool isEmaillValid = userDao.isEnailValideByModel(token);
 
 
@@ -183,17 +210,19 @@ namespace ChantemerleApi.Services
         internal string validatDeleteReservationAll(string token)
         {
             //initialize default objects
-            
-            string failResponse = ResponseR.fail.ToString(); 
-             string response = failResponse;
-            string succesResponse = ResponseR.success.ToString();
-            response = succesResponse;
+
+            string successResponse, failResponse, response;
+
+            successResponse = ResponseR.success.ToString();
+            failResponse = ResponseR.fail.ToString();
+            response = failResponse; //default failed response 
+
 
             //throw exeption and end the code
             tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
 
             //change http response 
-            response = succesResponse;
+            response = successResponse;
 
             //execute query
             reservationDao.deleteAll();
@@ -205,9 +234,14 @@ namespace ChantemerleApi.Services
 
         internal string getReservation(string token)
         {
-            
 
-            string response = ResponseR.success.ToString();
+            string successResponse, failResponse, response;
+
+            successResponse = ResponseR.success.ToString();
+            failResponse = ResponseR.fail.ToString();
+            response = failResponse; //default failed response 
+
+
 
 
             //check if the token is valide
@@ -226,8 +260,18 @@ namespace ChantemerleApi.Services
         internal string updateAdminAcceptResevationByModel(string token, ReservationModel reservation)
         {
             if (reservation == null) throw new ArgumentNullException(nameof(reservation));
-            
-            string failResponse = ResponseR.fail.ToString(); string response = failResponse;
+
+            //initialize default objects
+
+            string successResponse, failResponse, response;
+
+            successResponse = ResponseR.success.ToString();
+            failResponse = ResponseR.fail.ToString();
+            response = failResponse; //default failed response 
+
+
+
+
             tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
 
             response = ResponseR.success.ToString();
@@ -260,9 +304,16 @@ namespace ChantemerleApi.Services
         {
             const bool isAccepted = true;
 
-            
 
-            string failResponse = ResponseR.fail.ToString(); string response = failResponse;
+            //initialize default objects
+
+            string successResponse, failResponse, response;
+
+            successResponse = ResponseR.success.ToString();
+            failResponse = ResponseR.fail.ToString();
+            response = failResponse; //default failed response 
+
+
             tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
 
 

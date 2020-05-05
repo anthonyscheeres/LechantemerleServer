@@ -58,8 +58,10 @@ namespace ChantemerleApi.Controllers
         [Route("getPendingReservation")]
         [HttpGet("{id}")]
         public string getPendingReservation([FromQuery] int id)
+
         {
-            return reservationService.getPendingReservation(id);
+            string response = reservationService.getPendingReservation(id);
+            return response;
         }
 
         // GET: api/Reservation/getReservation

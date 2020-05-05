@@ -31,6 +31,8 @@ namespace ChantemerleApi.Controllers
             return roomService.ValidateChangeRoomImg(room, token);
 
         }
+
+        // GET: api/Room/getRoomDescription?id={id}
         [Route("getRoomDescription")]
         [HttpGet("{id}")]
         public string getRoomDescription([FromQuery]  int id)

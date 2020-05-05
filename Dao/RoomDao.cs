@@ -10,22 +10,25 @@ using System.Threading.Tasks;
 
 namespace ChantemerleApi.Dao
 {
-    public class RoomDao
+    public class RoomDao : DaoBase
     {
         /**
 * @author Anthony Scheeres
 */
 
-        private DatabaseUtilities databaseUtilities = new DatabaseUtilities();
+       
   
-        public RoomDao()
+        public RoomDao(NpgsqlConnection connection)
         {
+            _connection = connection;
+          
+            
         }
 
         internal void sendQueryToDatabaseToAddBed(int amountOfBedsInTheRoom)
         {
 
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -43,7 +46,7 @@ namespace ChantemerleApi.Dao
         internal void sendQueryToDatabaseToChangeBedImg(string img, int id)
         {
 
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -59,7 +62,7 @@ namespace ChantemerleApi.Dao
 
         internal void sendQueryToDatabaseToChangeDescription(string description, int id)
         {
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -76,14 +79,14 @@ namespace ChantemerleApi.Dao
         internal string getDescriptionById(int id)
         {
             string query = "select description, img, id, amount_of_beds from rooms where id=" + id;
-
+            DatabaseUtilities databaseUtilities = new DatabaseUtilities();
             string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(query);
             return jsonString;
         }
 
         internal void sendQueryToDatabaseToDeleteRoom(int id)
         {
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -99,7 +102,7 @@ namespace ChantemerleApi.Dao
 
         internal void sendQueryToDatabaseToChangeAmountBeds(int amountOfBeds, int id)
         {
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -116,13 +119,15 @@ namespace ChantemerleApi.Dao
         private string generateQueryForAllRoomsOitOrInOrder(bool isOutOfOrder)
         {
 
-            string sqlQueryForRegistingUser = "select * from rooms";
-            //hard coded queries
-            string queryExtensionToSelectOutOfOrder = " where rooms.out_of_order  = TRUE";
-            string queryExtensionToSelectNotOutOfOrder = " where rooms.out_of_order  = FALSE";
-            string orderBy = " order by id";
+            string sqlQueryForRegistingUser, queryExtensionToSelectOutOfOrder, queryExtensionToSelectNotOutOfOrder, orderBy, tooAdTooQuery;
 
-            string tooAdTooQuery = queryExtensionToSelectNotOutOfOrder;
+            sqlQueryForRegistingUser = "select * from rooms";
+            //hard coded queries
+         queryExtensionToSelectOutOfOrder = " where rooms.out_of_order  = TRUE";
+         queryExtensionToSelectNotOutOfOrder = " where rooms.out_of_order  = FALSE";
+        orderBy = " order by id";
+
+            tooAdTooQuery = queryExtensionToSelectNotOutOfOrder;
 
             //you want to display in or the out of order rooms
             if (isOutOfOrder)
@@ -142,7 +147,7 @@ namespace ChantemerleApi.Dao
 
             //construct the sql query here
             string sqlQueryForRegistingUser = generateQueryForAllRoomsOitOrInOrder(isOutOfOrder);
-
+            DatabaseUtilities databaseUtilities = new DatabaseUtilities();
 
             //send query to database
             string json = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForRegistingUser);

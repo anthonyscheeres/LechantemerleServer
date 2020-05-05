@@ -13,7 +13,7 @@ namespace ChantemerleApi.Services
     public class RoomService
     {
 
-        private readonly RoomDao roomDao = new RoomDao();
+        private readonly RoomDao roomDao = DaoProvider.getRoom();
         TokenService tokenService = ServiceProvider.getToken();
 
         /**

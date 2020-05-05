@@ -6,25 +6,23 @@ using System;
 
 namespace ChantemerleApi.Dao
 {
-    public class ReservationDao
+    public class ReservationDao : DaoBase
     {
-        private string cs = DataModel.getConfigModel().databaseCredentials.cs;
-        private DatabaseUtilities databaseUtilities = new DatabaseUtilities();
 
-        public ReservationDao(string cs)
+
+        public ReservationDao(NpgsqlConnection connection)
         {
-            this.cs = cs;
+            _connection = connection;
+      
         }
 
-        public ReservationDao()
-        {
-        }
+   
 
         private string constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(bool isAccepted)
         {
          
             string sqlQueryFroGettingReservationInformation = string.Format("select rooms.img, rooms.amount_of_beds, rooms.id as {0}, app_users.username, app_users.email, reservations.time_from::TIMESTAMP::DATE, reservations.time_till::TIMESTAMP::DATE, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id, reservations.created_at::TIMESTAMP::DATE  from reservations left join app_users on reservations.user_id = app_users.id left join rooms on reservations.roomno = rooms.id", "name");
-            Console.WriteLine(sqlQueryFroGettingReservationInformation);
+        
             string sqlDontSelectPastResrvations = " and reservations.time_till>now()";
 
             const string queryExtensionToSelectAcceptedReservations = " where reservations.user_id IS NOT NULL";
@@ -56,7 +54,7 @@ namespace ChantemerleApi.Dao
 
 
 
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
 
             connectionWithDatabase.Open(); //open the connection
 
@@ -92,6 +90,7 @@ namespace ChantemerleApi.Dao
 
         internal string selectRoomAvailableTimesById(int id)
         {
+            DatabaseUtilities databaseUtilities = new DatabaseUtilities();
             string query = "select reservations.id, time_from::timestamp::date, time_till::timestamp::date, price from reservations left join rooms on reservations.roomno = rooms.id where user_id is null and time_from::timestamp::date>current_date and reservations.roomno=" + id;
             string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(query);
             return jsonString;
@@ -104,7 +103,7 @@ namespace ChantemerleApi.Dao
 
             const string sqlQueryForDeletingAnreservation = "insert into reservations(roomno, time_from, time_till, price, accepted_by_super_user) values(@roomno, @time_from, @time_till, @price, @accepted_by_super_user);";
 
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -126,7 +125,7 @@ namespace ChantemerleApi.Dao
         internal string getProfileResrvationInformationFromDatabase(double id)
         {
             string sqlQueryFroGettingReservationInformation = string.Format("select rooms.amount_of_beds, rooms.id as {0}, app_users.username, app_users.email, app_users.id, reservations.time_from::TIMESTAMP::DATE, reservations.time_till::TIMESTAMP::DATE, reservations.price, reservations.accepted_by_super_user,reservations.roomno, reservations.id as {1}, reservations.created_at::TIMESTAMP::DATE  from reservations left join app_users on reservations.user_id = app_users.id left join rooms on reservations.roomno = rooms.id", "name", "reservationsId");
-            Console.WriteLine(sqlQueryFroGettingReservationInformation);
+            DatabaseUtilities databaseUtilities = new DatabaseUtilities();
             string query = sqlQueryFroGettingReservationInformation + " where id=" + id;
             string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(query);
             return jsonString;
@@ -136,7 +135,7 @@ namespace ChantemerleApi.Dao
         {
             const string sqlQueryForDeletingAnreservation = "delete from reservations where id = @id";
 
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -154,7 +153,7 @@ namespace ChantemerleApi.Dao
         {
             const string sqlQueryForDeletingAllreservation = "delete from reservations;";
           
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -173,7 +172,7 @@ namespace ChantemerleApi.Dao
         {
             string sqlQueryForRegistingUser = constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(isAccepted);
             sqlQueryForRegistingUser = sqlQueryForRegistingUser + " and where rooms=" + id;
-
+            DatabaseUtilities databaseUtilities = new DatabaseUtilities();
             string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForRegistingUser);
             return jsonString;
         }
@@ -182,7 +181,7 @@ namespace ChantemerleApi.Dao
         internal string getUsersReservations()
         {
             const string query = "select * from reservations where user_id = @user_id and time_till >= current_timestamp;";
-
+            DatabaseUtilities databaseUtilities = new DatabaseUtilities();
             string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(query);
             return jsonString;
         }
@@ -192,7 +191,7 @@ namespace ChantemerleApi.Dao
         {
             const string sqlQueryForDeletingAnreservation = "update reservations set user_id = @user_id where id = @id and user_id is null";
 
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -212,7 +211,7 @@ namespace ChantemerleApi.Dao
         {
             const string sqlQueryForDeletingAnreservation = "update reservations set accepted_by_super_user = @accepted_by_super_user where id = @id;";
             const bool accepted_by_super_user = true;
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -231,6 +230,7 @@ namespace ChantemerleApi.Dao
         internal string getReservations(bool isAccepted)
         {
             string sqlQueryForRegistingUser = constructSqlQueryForPreparedStatmentBasedOnWheterTheResrvationIsAccepted(isAccepted);
+            DatabaseUtilities databaseUtilities = new DatabaseUtilities();
             string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForRegistingUser);
             return jsonString;
         }

@@ -1,6 +1,7 @@
 ﻿
 
 using ChantemerleApi.Dao;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,21 @@ namespace anthonyscheeresApi.Providers
         private static RoomDao roomDao { get; set; }
         private static ReservationDao reservationDao { get; set; }
 
+       
         internal static ContactInfoDao getContact()
+
+
         {
-            if (contactInfoDao ==null)
+
+
+            if (contactInfoDao == null)
             {
-                contactInfoDao = new ContactInfoDao();
+                contactInfoDao = new ContactInfoDao(ConnectionProvider.getProvide());
             }
+       //     else contactInfoDao._connection = ConnectionProvider.getProvide();
+
+
+
             return contactInfoDao;
         }
 
@@ -32,8 +42,10 @@ namespace anthonyscheeresApi.Providers
         {
             if (permissionDao ==null)
             {
-                permissionDao = new PermissionDao();
+                permissionDao = new PermissionDao(ConnectionProvider.getProvide());
             }
+          //  else permissionDao._connection = ConnectionProvider.getProvide();
+
             return permissionDao;
         }
 
@@ -42,8 +54,10 @@ namespace anthonyscheeresApi.Providers
         {
             if (tokenDao ==null)
             {
-                tokenDao = new TokenDao();
+                tokenDao = new TokenDao(ConnectionProvider.getProvide());
             }
+           // else tokenDao._connection = ConnectionProvider.getProvide();
+
             return tokenDao;
         }
 
@@ -51,8 +65,10 @@ namespace anthonyscheeresApi.Providers
         {
             if (userDao == null)
             {
-                userDao = new UserDao();
+                userDao = new UserDao(ConnectionProvider.getProvide());
             }
+        //    else userDao._connection = ConnectionProvider.getProvide();
+
             return userDao;
 
         }
@@ -61,8 +77,10 @@ namespace anthonyscheeresApi.Providers
         {
             if (reservationDao == null)
             {
-                reservationDao = new ReservationDao();
+                reservationDao = new ReservationDao(ConnectionProvider.getProvide());
             }
+       //     else reservationDao._connection = ConnectionProvider.getProvide();
+
             return reservationDao;
         }
 
@@ -70,8 +88,10 @@ namespace anthonyscheeresApi.Providers
         {
             if (roomDao == null)
             {
-                roomDao = new RoomDao();
+                roomDao = new RoomDao(ConnectionProvider.getProvide());
             }
+       //     else roomDao._connection = ConnectionProvider.getProvide();
+
             return roomDao;
         }
 

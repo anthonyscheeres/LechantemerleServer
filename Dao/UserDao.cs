@@ -10,32 +10,26 @@ namespace ChantemerleApi.Dao
     /**
 	 * @author Anthony Scheeres
 	 */
-    public class UserDao
+    public class UserDao : DaoBase
     {
-      
-        private readonly DatabaseUtilities databaseUtilities = new DatabaseUtilities();
 
-        /**
-   * @author Anthony Scheeres
-   */
-    
-        /**
-   * @author Anthony Scheeres
-   */
-        public UserDao()
+        public UserDao(NpgsqlConnection connection)
         {
+            _connection = connection;
+          
         }
 
 
-        /**
-* @author Anthony Scheeres
+
+            /**
+    * @author Anthony Scheeres
 */
-        private string getEmailUsingToken(string token)
+            private string getEmailUsingToken(string token)
         {
 
             var sqlQueryForRegistingUser = "select email from app_users where token = @token";
 
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
 
             connectionWithDatabase.Open(); //open the connection
 
@@ -72,7 +66,7 @@ namespace ChantemerleApi.Dao
         {
             const bool is_super_user = false;
             const bool is_email_verified = false;
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -99,7 +93,7 @@ namespace ChantemerleApi.Dao
             //construct the sql query here
             string sqlQueryForRegistingUser = "select is_super_user, is_email_verified, created_at::timestamp::date, username, email, id from app_users where id=" + id;
 
-
+            DatabaseUtilities databaseUtilities = new DatabaseUtilities();
             //send query to database
             string json = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForRegistingUser);
 
@@ -111,7 +105,7 @@ namespace ChantemerleApi.Dao
         {
             const string sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE token = @token AND is_email_verified = true)";
 
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
 
             connectionWithDatabase.Open(); //open the connection
 
@@ -148,7 +142,7 @@ namespace ChantemerleApi.Dao
         {
             //query for selecting user credentials
             const string sqlQueryForLoginUser = "select username, is_super_user from app_users";
-
+            DatabaseUtilities databaseUtilities = new DatabaseUtilities();
             string json = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForLoginUser);
             return json;
         }
@@ -161,7 +155,7 @@ namespace ChantemerleApi.Dao
         internal string showAllUsersExcludingAdmins()
         {
             const string sqlQueryForLoginUser = "select username, is_super_user from app_users where  is_super_user = false";
-
+            DatabaseUtilities databaseUtilities = new DatabaseUtilities();
             string json = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForLoginUser);
             return json;
         }
@@ -173,7 +167,7 @@ namespace ChantemerleApi.Dao
         internal void changePasswordByUserIdInDatabase(string password, double id, string username)
         {
 
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -199,7 +193,7 @@ namespace ChantemerleApi.Dao
 */
         internal void changePasswordByUsernameInDatabase(string username, string password)
         {
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -221,7 +215,7 @@ namespace ChantemerleApi.Dao
 
         internal void makeEmailValide(string token)
         {
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -247,7 +241,7 @@ namespace ChantemerleApi.Dao
   */
         internal void deleteUserByUsername(UserModel user)
         {
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
             connectionWithDatabase.Open(); //open the connection
 
 

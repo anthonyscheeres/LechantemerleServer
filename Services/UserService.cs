@@ -85,7 +85,7 @@ namespace ChantemerleApi.Services
         internal string validateMailAgain(string token)
         {
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
-            UserDao userDao = new UserDao();
+            UserDao userDao = DaoProvider.getUser();
             string email = null;
 
          

@@ -12,26 +12,32 @@ namespace ChantemerleApi.Dao
     /**
 * @author Anthony Scheeres
 */
-    public class ContactInfoDao
+    public class ContactInfoDao : DaoBase
     {
-        private DatabaseUtilities databaseUtilities = new DatabaseUtilities();
+       
+
         /**
 * @author Anthony Scheeres
 */
-        public ContactInfoDao()
+        public ContactInfoDao(NpgsqlConnection connection)
         {
-        }
+            _connection = connection;
+         
+         
+           
+
+    }
   
 
         /**
 * @author Anthony Scheeres
 */
-        internal void changeContactInfoByModelInDatabase(ContactInfoModel contactInfo)
+        internal void changeContactInfoByModelInDatabase(ContactInfoModel contactInfo) 
         {
             //const query for updating each record of the table
             const string sqlQueryForChangingContactInfo = "update contact_information_owner set house_nickname = @house_nickname; update contact_information_owner set place = @place; update contact_information_owner set address = @address; update contact_information_owner set postal_code = @postal_code; update contact_information_owner set family_name = @family_name; update contact_information_owner set telephone = @telephone; update contact_information_owner set mail = @mail";
 
-            using var connectionWithDatabase = ConnectionProvider.getProvide(); //start new Npgsql instance for connecting with an postgres database//start new Npgsql instance for connecting with an postgres database
+            var connectionWithDatabase = _connection; //start new Npgsql instance for connecting with an postgres database//start new Npgsql instance for connecting with an postgres database
             connectionWithDatabase.Open(); //open the connection
 
 
@@ -68,6 +74,8 @@ namespace ChantemerleApi.Dao
         internal string getContactInfoAsJsonFormatForPublicUsersFromDatabase()
         {
             string sqlQueryForChangingContactInfo = "select * from contact_information_owner;";
+            DatabaseUtilities databaseUtilities = new DatabaseUtilities();
+
             string jsonString = databaseUtilities.sendSelectQueryToDatabaseReturnJson(sqlQueryForChangingContactInfo);
             return jsonString;
         }

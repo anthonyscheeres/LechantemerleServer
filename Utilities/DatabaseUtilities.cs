@@ -8,12 +8,8 @@ namespace ChantemerleApi.Utilities
 {
     public class DatabaseUtilities
     {
-
-
-        public DatabaseUtilities()
-        {
-
-        }
+        public NpgsqlConnection _connection = ConnectionProvider.getProvide();
+        
 
         public string sendSelectQueryToDatabaseReturnJson(string sqlQuery)
         {
@@ -24,7 +20,7 @@ namespace ChantemerleApi.Utilities
 
         private string sendSelectQueryToDatabaseReturnJsonPrivate(string sqlQuery)
         {
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
 
             connectionWithDatabase.Open(); //open the connection
 
@@ -38,9 +34,10 @@ namespace ChantemerleApi.Utilities
                 JSONString = JsonConvert.SerializeObject(dataTable);
 
                 connectionWithDatabase.Close(); //close the connection to save bandwith
+
+                
                 return JSONString;
             }
-
 
 
 

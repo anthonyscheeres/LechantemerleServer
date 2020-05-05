@@ -8,17 +8,14 @@ using System.Data;
 
 namespace ChantemerleApi.Dao
 {
-    public class PermissionDao
+    public class PermissionDao : DaoBase
     {
-        private readonly DatabaseUtilities databaseUtilities = new DatabaseUtilities();
-       
-   
+    
 
-   
-
-        public PermissionDao()
+        public PermissionDao(NpgsqlConnection connection)
         {
-        
+            _connection = connection;
+      
         }
 
 
@@ -33,7 +30,7 @@ namespace ChantemerleApi.Dao
 
 
 
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
 
             connectionWithDatabase.Open(); //open the connection
 
@@ -73,7 +70,7 @@ namespace ChantemerleApi.Dao
         {
             const string sqlQueryForRegistingUser = "SELECT EXISTS(SELECT * FROM app_users WHERE token = @token AND username = @username)";
 
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
 
             connectionWithDatabase.Open(); //open the connection
 
@@ -116,7 +113,7 @@ namespace ChantemerleApi.Dao
              command.Prepare(); //Construct and optimize query
 */
 
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
 
             connectionWithDatabase.Open(); //open the connection
 
@@ -151,7 +148,7 @@ namespace ChantemerleApi.Dao
             const string sqlQueryForLoginUser = "update app_users set token = concat(md5(@username), md5((random()::text))) where username = @username  ; ";
 
 
-            using var connectionWithDatabase = ConnectionProvider.getProvide();
+            var connectionWithDatabase = _connection;
 
             connectionWithDatabase.Open(); //open the connection
 
@@ -163,6 +160,7 @@ namespace ChantemerleApi.Dao
 
             cmd.ExecuteNonQuery();
 
+            connectionWithDatabase.Close();
 
         }
 
