@@ -4,9 +4,9 @@ using ChantemerleApi.Models;
 
 namespace ChantemerleApi.Services
 {
-    public class ContactInfoService
+    public class ContactInfoService : TokenService
     {
-        TokenService tokenService = ServiceProvider.getToken();
+      
         private readonly ContactInfoDao contactInfoDao = DaoProvider.getContact();
 
         internal string getContactInfoAsJsonFormatForPublicUsers()
@@ -18,7 +18,7 @@ namespace ChantemerleApi.Services
         {
             
             //if token is invalide throw exception
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            getPermissionFromDatabaseByTokenIsAdmin(token);
             //failed response by default
             string failResponse = ResponseR.fail.ToString(); string response = failResponse;
 

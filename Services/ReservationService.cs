@@ -10,9 +10,9 @@ namespace ChantemerleApi.Services
     /**
 * @author Anthony Scheeres
 */
-    public class ReservationService
+    public class ReservationService : TokenService
     {
-        TokenService tokenService = ServiceProvider.getToken();
+        
         private readonly ReservationDao reservationDao = DaoProvider.getResrvation();
         internal string validatDeleteReservationByModel(ReservationModel reservation, string token)
         {
@@ -30,7 +30,7 @@ namespace ChantemerleApi.Services
 
 
 
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            getPermissionFromDatabaseByTokenIsAdmin(token);
 
             response = ResponseR.success.ToString();
             reservationDao.deleteReservationByIdInDatabase(reservation.id);
@@ -68,7 +68,7 @@ namespace ChantemerleApi.Services
 
 
 
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            getPermissionFromDatabaseByTokenIsAdmin(token);
 
    
 
@@ -157,7 +157,7 @@ namespace ChantemerleApi.Services
 
 
 
-            double userId = tokenService.TokenToUserId(token);
+            double userId = TokenToUserId(token);
             response = successResponse;
 
             response = reservationDao.getUsersReservations();
@@ -193,7 +193,7 @@ namespace ChantemerleApi.Services
             if (isEmaillValid)
             {
                 // token to user id here 
-                double userId = tokenService.TokenToUserId(token);
+                double userId = TokenToUserId(token);
               
                 reservationDao.customerAcceptPendingReservationPotentialInDatabase(userId, reservation.id);
 
@@ -219,7 +219,7 @@ namespace ChantemerleApi.Services
 
 
             //throw exeption and end the code
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            getPermissionFromDatabaseByTokenIsAdmin(token);
 
             //change http response 
             response = successResponse;
@@ -245,7 +245,7 @@ namespace ChantemerleApi.Services
 
 
             //check if the token is valide
-            double id = tokenService.TokenToUserId(token);
+            double id = TokenToUserId(token);
 
             response = reservationDao.getProfileResrvationInformationFromDatabase(id);
 
@@ -272,7 +272,7 @@ namespace ChantemerleApi.Services
 
 
 
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            getPermissionFromDatabaseByTokenIsAdmin(token);
 
             response = ResponseR.success.ToString();
             reservationDao.updateAcceptResevationByModelInDatbase(reservation.id);
@@ -314,7 +314,7 @@ namespace ChantemerleApi.Services
             response = failResponse; //default failed response 
 
 
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            getPermissionFromDatabaseByTokenIsAdmin(token);
 
 
             response = validateGetReservation(isAccepted);

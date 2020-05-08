@@ -10,11 +10,11 @@ namespace ChantemerleApi.Services
     /**
 * @author Anthony Scheeres
 */
-    public class RoomService
+    public class RoomService : TokenService
     {
 
         private readonly RoomDao roomDao = DaoProvider.getRoom();
-        TokenService tokenService = ServiceProvider.getToken();
+
 
         /**
 * @author Anthony Scheeres
@@ -27,10 +27,10 @@ namespace ChantemerleApi.Services
 
         private string AddRoom(RoomModel roomModel, string token)
         {
-            
+
             string successResponse = ResponseR.success.ToString();
 
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            getPermissionFromDatabaseByTokenIsAdmin(token);
             string response;
 
             roomDao.sendQueryToDatabaseToAddBed(roomModel.amountOfBeds);
@@ -40,10 +40,10 @@ namespace ChantemerleApi.Services
 
         internal string ValidateChangeRoomImg(RoomModel room, string token)
         {
-            
+
             string successResponse = ResponseR.success.ToString();
 
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            getPermissionFromDatabaseByTokenIsAdmin(token);
             string response;
 
             roomDao.sendQueryToDatabaseToChangeBedImg(room.img, room.id);
@@ -55,7 +55,7 @@ namespace ChantemerleApi.Services
         {
             string successResponse = ResponseR.success.ToString();
 
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            getPermissionFromDatabaseByTokenIsAdmin(token);
             string response;
 
             roomDao.sendQueryToDatabaseToChangeDescription(room.description, room.id);
@@ -70,10 +70,10 @@ namespace ChantemerleApi.Services
 
         internal string ValidateRemoveRoom(RoomModel room, string token)
         {
-            
+
             string successResponse = ResponseR.success.ToString();
 
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            getPermissionFromDatabaseByTokenIsAdmin(token);
             string response;
 
             roomDao.sendQueryToDatabaseToDeleteRoom(room.id);
@@ -83,10 +83,10 @@ namespace ChantemerleApi.Services
 
         internal string ValidateChangeRoombeds(RoomModel room, string token)
         {
-            
+
             string successResponse = ResponseR.success.ToString();
 
-            tokenService.getPermissionFromDatabaseByTokenIsAdmin(token);
+            getPermissionFromDatabaseByTokenIsAdmin(token);
             string response;
 
             roomDao.sendQueryToDatabaseToChangeAmountBeds(room.amountOfBeds, room.id);
